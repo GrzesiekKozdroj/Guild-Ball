@@ -1,0 +1,32 @@
+:root {
+    --player1: ;
+    --player1withball: ;
+    --player2: ;
+    --player2withball: ;
+    --freeball: ;
+    --buttonactive: ;
+    --buttonfaded: ;
+    --playbook1stwrap: ;
+    --playbook2ndwrap: ;
+    --playbook3rdwrap: ;
+    --playbook4thwrap: ;
+    --pitchcolor: #1a883f ;
+    --meleerange: ;
+    --chargerange: ;
+    --sprintrange: ;
+    --jogrange: ;
+    --dodgerange: ;
+    --pushrange: ;
+    --charplayrange: ;
+
+}
+#testing{
+    color: rgba(133, 255, 102, 0.2);
+    color: rgba(123, 66, 42, 0.2);
+    color: rgba(237, 240, 57, 0.2);
+    color: rgba(112, 117, 185, 0.2);
+    color: rgba(170, 112, 185, 0.2);
+    color: rgba(134, 134, 141, 0.205);
+    color: rgb(133, 176, 233);
+    color: rgb(8, 21, 37);
+}

@@ -1,0 +1,347 @@
+<!doctype html>
+<html>
+
+<head>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=9">
+        <title>txt</title>
+        <style>
+          body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #F0F0F0;
+          }
+          canvas {
+  border: 1px solid black;
+}
+        </style>
+      </head>
+</head>
+
+<body>
+<canvas id="c" width="500" height="500"></canvas>
+<script>
+window.addEventListener("DOMContentLoaded", function()
+{
+    var image  = document.getElementById("html5");
+    var canvas = document.createElement("canvas");
+    document.body.appendChild(canvas);
+
+    canvas.width  = image.width;
+    canvas.height = image.height;
+
+    var context = canvas.getContext("2d");
+
+    context.drawImage(image, 0, 0);
+});
+
+// function init_canvas(){
+//     var img = new Image();
+//     img.src = './icons/Hunters/Skatha.jpg';
+//     img.width = 600;
+//     img.height = 800;
+//     canvas.beginPath();
+//     canvas.drawImage(img, 0, 0,600,800);
+//     canvas.fillStyle = 'rgba(120, 120, 50, .5)';
+//     canvas.fillRect(0,0,1200,900);
+//     canvas.beginPath();
+//     canvas.fillStyle = 'rgba(120, 120, 50, .8)';
+//     canvas.fillRect(420,420,720,720);
+
+//     $(document).mousemove(function(e){
+//         if(e.offsetX){
+//             mouse_position.x = e.offsetX;
+//             mouse_position.y = e.offsetY;
+//         }else if(e.layerY){
+//             mouse_position.x = e.layerX;
+//             mouse_position.y = e.layerY;
+//         }
+//         show_color();
+
+//     });
+// }
+
+
+// function show_color(){
+//     color  = canvas.getImageData(mouse_position.x,mouse_position.y,1,1).data;
+//     console.info("red: " + color[0] + " green: " + color[1] + " blue: " + color[2] + " alpha: " +color[3]);
+
+// }
+</script>
+
+    <!--   <section id="animation-project">
+      <label>X: </label><input type="number" id="x_in">
+      <label>Y: </label><input type="number" id="y_in">
+      <input type="button" id="move" value="MOVE">
+      <canvas id="canvasanimation" width=600 height=400></canvas>
+      <script>
+        var x = 100;
+var y = 50;
+var r = 10;
+var duration = 1000; // in ms
+var nextX, nextY;
+var startTime;
+
+function anim(time) {
+  if (!startTime) // it's the first frame
+    startTime = time;
+
+  // deltaTime should be in the range [0 ~ 1]
+  var deltaTime = (time - startTime) / duration;
+  // currentPos = previous position + (difference * deltaTime)
+  var currentX = x + ((nextX - x) * deltaTime);
+  var currentY = y + ((nextY - y) * deltaTime);
+
+  if (deltaTime >= 1) { // this means we ended our animation
+    x = nextX; // reset x variable
+    y = nextY; // reset y variable
+    startTime = null; // reset startTime
+    draw(x, y); // draw the last frame, at required position
+  } else {
+    draw(currentX, currentY);
+    requestAnimationFrame(anim); // do it again
+  }
+}
+
+
+move.onclick = e => {
+  nextX = +x_in.value || 0;
+  nextY = +y_in.value || 0;
+  anim();
+}
+// OP's code
+
+var WIDTH = 600;
+var HEIGHT = 400;
+
+var canvas = document.getElementById("canvasanimation");
+var ctx = canvas.getContext("2d");
+
+function circle(x, y, r) {
+  ctx.beginPath();
+  ctx.arc(x, y, r, 0, Math.PI * 2, true);
+  ctx.fill();
+}
+
+function clear() {
+  ctx.clearRect(0, 0, WIDTH, HEIGHT);
+}
+
+function draw(x, y) {
+  clear(WIDTH, HEIGHT);
+  ctx.fillStyle = "purple";
+  circle(x, y, r);
+}
+
+draw(x, y);
+      </script>
+  </section>
+<section>
+
+        <div>
+            <canvas id="canvas" width="400" height="300">
+                This text is displayed if your browser does not support HTML5 Canvas.
+            </canvas>
+            <canvas id="canvas2" width="400" height="300"></canvas>
+        </div>
+
+        <script type="text/javascript">
+            var canvas = document.getElementById("canvas");
+            var ctx = canvas.getContext("2d");
+            var x = 75;
+            var y = 50;
+            var WIDTH = 400;
+            var HEIGHT = 300;
+            var dragok = false;
+            //rysuje kwadrat
+            function rect(x, y, w, h) {
+                ctx.beginPath();
+                ctx.rect(x, y, w, h);
+                ctx.closePath();
+                ctx.fill();
+            }
+            //czysci canve
+            function clear() {
+                //ctx.clearRect(0, 0, WIDTH, HEIGHT);
+            }
+
+            function init() {
+                return setInterval(draw, 10);
+            }
+
+            function draw() {
+                clear();
+                ctx.fillStyle = "#FAF7F8";
+                rect(0, 0, WIDTH, HEIGHT);
+                ctx.fillStyle = "#444444";
+                rect(x - 15, y - 15, 30, 30);
+                draSmiley();
+                draSmiley2();
+            }
+
+            function myMove(e) {
+                if (dragok) {
+                    x = e.pageX - canvas.offsetLeft;
+                    y = e.pageY - canvas.offsetTop;
+                }
+            }
+
+            function myDown(e) {
+                if (e.pageX < x + 15 + canvas.offsetLeft && e.pageX > x - 15 +
+                    canvas.offsetLeft && e.pageY < y + 15 + canvas.offsetTop &&
+                    e.pageY > y - 15 + canvas.offsetTop) {
+                    x = e.pageX - canvas.offsetLeft;
+                    y = e.pageY - canvas.offsetTop;
+                    dragok = true;
+                    canvas.onmousemove = myMove;
+                }
+            }
+
+            function myUp() {
+                dragok = false;
+                canvas.onmousemove = null;
+            }
+
+            init();
+            canvas.onmousedown = myDown;
+            canvas.onmouseup = myUp;
+            ///////////////////////////////////0uch my eye//////////////////////;
+            const canvas2 = document.getElementById('canvas2');
+            const ctx2 = canvas2.getContext('2d');
+
+            canvas.addEventListener('mousemove', function (event) {
+                if (event.region) {
+                    console.log(event.region);
+                }
+            });
+
+            function draSmiley() {
+
+                ctx.beginPath();
+                ctx.arc(100, 100, 75, 0, 2 * Math.PI);
+                ctx.lineWidth = 5;
+                ctx.stroke();
+
+                // Eyes
+                ctx.beginPath();
+                ctx.arc(70, 80, 10, 0, 2 * Math.PI);
+                ctx.arc(130, 80, 10, 0, 2 * Math.PI);
+                ctx.fill();
+                ctx.addHitRegion({
+                    id: "eyes"
+                });
+
+                // Mouth
+                ctx.beginPath();
+                ctx.arc(100, 110, 50, 0, Math.PI);
+                ctx.stroke();
+            }
+
+            function draSmiley2() {
+
+                ctx.beginPath();
+                ctx.arc(200, 100, 75, 0, 2 * Math.PI);
+                ctx.lineWidth = 5;
+                ctx.stroke();
+
+                // Eyes
+                ctx.beginPath();
+                ctx.arc(230, 80, 10, 0, 2 * Math.PI);
+                ctx.arc(170, 80, 10, 0, 2 * Math.PI);
+                ctx.fill();
+                ctx.addHitRegion({
+                    id: "eyes2"
+                });
+
+                // Mouth
+                ctx.beginPath();
+                ctx.arc(200, 110, 50, 0, Math.PI);
+                ctx.stroke();
+            }
+
+            const members = [];
+
+function createMember(e) {
+  const div = document.createElement('div');
+  div.style.width = "40px";
+  div.style.height = "40px";
+  div.style.position = "absolute";
+  div.style.background = "#eee"
+  div.style.left = e.pageX + "px"
+  div.style.top = e.pageY + "px"
+  document.body.appendChild(div);
+  members.push(div);
+  checkMembers();
+}
+
+function checkMembers() {
+  if (members.length > 1)
+    for (let i=0; i<members.length; i++) {
+      const m1 = members[i];
+      m1.style.background = "#eee";
+    }
+  for (let i=0; i<members.length; i++) {
+    const m1 = members[i];
+    for (let j=i+1; j<members.length; j++) {
+      const m2 = members[j];
+      const minH = Math.min(m1.offsetLeft, m2.offsetLeft);
+      const maxH = Math.max(m1.offsetLeft, m2.offsetLeft);
+      const minW = Math.min(m1.offsetTop, m2.offsetTop);
+      const maxW = Math.max(m1.offsetTop, m2.offsetTop);
+      if (maxH - minH < 40 && maxW - minW < 40) {
+        m2.style.background = 'red';
+        m1.style.background = 'red'
+      }
+
+    }
+  }
+}
+
+document.addEventListener('click', createMember)
+        </script>
+
+    </section>
+
+<section>
+    <div id="container"></div>
+    <script>
+      var width = window.innerWidth;
+      var height = window.innerHeight;
+
+      var stage = new Konva.Stage({
+        container: 'container',
+        width: width,
+        height: height
+      });
+      var layer = new Konva.Layer();
+      stage.add(layer);
+
+      var n = 100, shape;
+      for (var i = 0; i < n; i++) {
+        shape = new Konva.Circle({
+          x: stage.width() * Math.random(),
+          y: stage.height() * Math.random(),
+          radius: 10 + 10 * Math.random(),
+          fill: Konva.Util.getRandomColor(),
+          stroke: 'black',
+          shadowEnabled: false,
+          draggable: true,
+        });
+        shape.strokeHitEnabled(false);
+        shape.shadowForStrokeEnabled(false);
+
+        layer.add(shape);
+      }
+
+      layer.draw();
+    </script>
+</section> -->
+
+  </body>
+
+
+
+</html>

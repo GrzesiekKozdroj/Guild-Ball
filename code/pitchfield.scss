@@ -1,0 +1,594 @@
+
+$borderColor: black;
+
+@import url('https://fonts.googleapis.com/css?family=Germania+One|IM+Fell+English|Merienda|Michroma|Satisfy');
+body {
+    background-color: black;
+    cursor: default;
+}
+*{
+    font-family:'IM Fell English';
+    cursor: none;
+}
+
+
+
+
+
+
+.testing{color:rgb(160, 144, 129);}
+#screentint{
+    position: absolute;
+    pointer-events: none;
+}
+
+
+#pitchfield, #terrains_layer, #gameItems, #players {
+    background: transparent;
+    background-size: cover;
+    /*height: 32in;
+    width: 32in;*/
+    position: absolute;
+    justify-self: space-between;
+    background-color: rgba(0, 0, 0, 0);
+};
+canvas{
+    top:1;left:1;
+}
+
+@keyframes hoovver {
+    100% {
+        box-shadow: inset 0px 0px 25px black, 0 0 15px blue, 0 0 20px darkblue;
+        border-style: inset;
+
+    }
+}
+section{
+    width: 100vw;
+    max-width: 1550px;
+}
+
+@keyframes optionz {
+    100% {
+        box-shadow: inset 0px 0px 25px black, 0 0 10px blue, 0 0 20px darkblue;
+        transform: scale(1.1, 1.1);
+        opacity: 1;
+    }
+}
+
+@keyframes helpfulBox {
+    100% {
+        opacity: 1;
+        background-color: hsla(55, 43%, 62%, .8);
+        min-width: 100px;
+        max-width: 300px;
+        min-height: 50px;
+        position: absolute;
+        display: inline-block;
+        border-radius: 30%;
+        border: 3px solid $borderColor;
+        border-left: 6px double $borderColor;
+        border-right: 6px double $borderColor;
+        font-size: 1rem;
+    }
+}
+button:hover{
+    animation: hoovver .3s forwards
+}
+
+@keyframes clicked {
+    100% {
+        box-shadow: 0px 0px 30px rgb(105, 105, 105);
+        transform: scale(0.9, 0.9);
+        border-style: inset;
+    }
+}
+
+#explainer {
+    opacity: 0;
+    background-color: hsla(55, 43%, 62%, .0);
+    min-width: 10px;
+    max-width: 30px;
+    min-height: 10px;
+    position: absolute;
+    display: inline-block;
+    border-radius: 0%;
+    border: 0px solid $borderColor;
+    border-left: 0px double $borderColor;
+    border-right: 0px double $borderColor;
+    display: flex;
+    font-size: 0.1rem;
+    justify-content: center;
+    align-items: center;
+
+    &:hover {
+        animation: helpfulBox 1s forwards
+    }
+}
+
+
+#app {
+    position: fixed;
+    background-color: rgb(119, 71, 8);
+    width: 420px;
+    height: 100vh;
+    left:1095px;
+    #appDisplay{
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    }
+    border-radius:10px;
+    * {
+        opacity: 1;
+    }
+}
+
+.opacifier {
+    opacity: 1
+}
+
+#squaddieName {
+    display: flex;
+    border: 3px solid $borderColor;
+    background-color: hsl(55, 43%, 62%);
+    border-radius: 15px;
+    padding: 0px;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    height: 28px;
+    margin: 5px;
+}
+
+#images {
+    display: flex;
+    flex-direction: row;
+}
+
+#conditions {
+    list-style: none;
+    display:flex;
+    flex-wrap:wrap;
+}
+
+#conditions li {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 39px;
+    height: 39px;
+    background-color: hsl(55, 43%, 62%);
+    border-radius: 40%;
+    border: 2px dotted $borderColor;
+    list-style: none;
+    padding:5px;
+
+    &:hover {
+        animation: hoovver .3s forwards
+    }
+}
+#condition-list{
+    display: flex;
+    width: 150px;
+    height: 146px;
+    flex-wrap: wrap;
+}
+
+#squaddieFace {
+    width: 146px;
+    height: 146px;
+    border-radius: 49%;
+    border: 5px solid $borderColor;
+}
+
+#squaddieStats {
+    text-align: center;
+}
+
+#squaddieStats tr th,
+#squaddieStats tr td {
+    border: 3px solid $borderColor;
+    height: 1.8rem;
+    background-color: hsl(55, 43%, 62%);
+    border-radius: 15px;
+    padding: 0px;
+}
+#squaddieStats td{
+    font-size:22px;
+}
+.plajbooks{
+    ul{
+
+    left:-20px;
+       ul{ display:flex; margin-top:14px;}
+    }
+}
+
+.hp {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: middle;
+    width: 400px;
+}
+.plajBookCell, .plajBookTopCell{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    list-style: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+    font-weight:800;
+    line-height: 0.9rem;
+    border: 2px solid $borderColor;
+    background-color: hsl(55, 43%, 62%);
+
+    &:hover {
+        animation: hoovver .3s forwards
+    }
+}
+.plajBookTopCell{margin-bottom:-10px;}
+.plajBookCell{margin-top:-10px}
+.playBookNull{
+    display:flex;
+    list-style:none;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border-radius: 50%;
+    width:0px;
+    height:0px;
+    font-size: 0.8rem;
+    font-weight:800;
+    line-height: 0.9rem;
+    border: 2px solid transparent;
+    opacity:0;
+}
+.busted{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    list-style: none;
+    border-radius: 25px;
+    width: 80px;
+    height: 25px;
+    font-size: 0.8rem;
+    font-weight:800;
+    line-height: 0.9rem;
+    border: 2px solid $borderColor;
+    background-color: hsl(55, 43%, 62%);
+
+    &:hover {
+        animation: hoovver .3s forwards
+    }
+}
+.hpli {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    border-radius: 50%;
+    width: 20px;
+    height: 18px;
+    border: 2px solid $borderColor;
+    background-color: hsl(55, 43%, 62%);
+}
+.hpliMin{
+    color: hsl(55, 43%, 62%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    border-radius: 50%;
+    width: 20px;
+    height: 18px;
+    border: 2px solid $borderColor;
+    background-color: rgb(124, 33, 33)
+}
+#actionButtons {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: middle;
+
+    div {
+        &:hover {
+            animation: optionz .5s forwards;
+        }
+    }
+}
+.teamPlays{
+    margin-top: -10px;
+    margin-bottom:30px;
+    width:90px;
+    height: 35px;
+}
+.clicked{animation: clicked .3s forwards;}
+
+#actionButtons div {
+    display: inline-block;
+    background-color: hsl(55, 43%, 62%);
+    border-radius: 25px;
+    min-width: 95px;
+    min-height: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 3px solid $borderColor;
+    font-weight: 700;
+    margin: 4px auto;
+}
+
+#resources tr {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+#momentumHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-right: 2px solid $borderColor;
+}
+
+#momentumCount {
+    border-right: 2px solid $borderColor;
+    min-width:35%;
+}
+
+#scoreHeader {
+    border-right: 2px solid $borderColor;
+}
+
+#scoreCount {
+    border-right: 2px solid $borderColor;
+    justify-self: flex-end;
+    min-width:31%;
+}
+.teaMenu{
+    max-height:120px;
+    overflow-y:scroll;
+    background-color: rgba(94, 93, 88, 0.31);
+    border-radius:20px;
+    width:370px;
+    position:relative;
+    margin:10px;
+    .pW8{
+        margin-left: -105px;
+        margin-top: -33px;
+    }
+}
+
+.die{
+    background-color:white;
+    width:30px;
+    height:30px;
+    margin:8px;
+    padding:1px;
+    font-family: veranda;
+    .die-eye{
+        border-radius:50%;
+        width:10px;
+        height:10px;
+        display:inline-block;
+        position:relative;
+        margin:1px;
+        padding:0;
+    }}
+    .dice-1{
+        .die-1{top:8px;left:9px;}
+    }
+    .dice-2{
+        .die-1{top:-2px;left:0px;}
+        .die-2{top:15px;left:2px;}
+    }
+    .dice-3{
+        .die-1{top:-2px;left:0px;}
+        .die-2{top:7px;left:-7px;}
+        .die-3{top:-2px;left:18px;}
+    }
+    .dice-4{
+        .die-1{top:-2px;left:0px;}
+        .die-2{top:-2px;left:2px;}
+        .die-3{top:-2px;left:0px;}
+        .die-4{top:-2px;left:2px;}
+    }
+    .dice-5{
+        .die-1{top:-2px;left:0px;}
+        .die-2{top:-2px;left:2px;}
+        .die-3{top:-2px;left:0px;}
+        .die-4{top:-2px;left:2px;}
+        .die-5{top:-29px;left:9px;}
+    }
+    .dice-6{
+        .die-1{top:-2px;left:0px;}
+        .die-2{top:-2px;left:2px;}
+        .die-3{top:-2px;left:0px;}
+        .die-4{top:-2px;left:2px;}
+        .die-5{top:-29px;left:0px;}
+        .die-6{top:-29px;left:2px;}
+    }
+
+    .message{
+        display:flex;
+        justify-content: center;
+        align-items: center;
+        color:rgb(214, 205, 205);
+    min-height:120px;
+    background-color: rgba(94, 93, 88, 0.31);
+    border-radius:20px;
+    width:370px;
+    position:relative;
+    margin:10px;
+    font-size:24px;
+    }
+.the-first-info {
+    overflow-y: scroll;
+    color: #d6cdcd;
+    height: 210px;
+    background-color: rgba(31, 31, 31, 0.31);
+    border-radius: 5px;
+    width: 370px;
+    position: relative;
+    margin: 513px auto 0 auto;
+    font-size: 24px;
+    text-align: justify;
+    padding: 12px;
+}
+.counterbox{
+    position:absolute;
+    background-color:rgba(160, 144, 129,.95);
+    width:150px;
+    border-radius:15px;
+    height:150px;
+    z-index:6;
+    color:white;
+    display:flex;
+    justify-content:space-evenly;
+    flex-wrap:wrap;
+    align-items:center;
+    border-radius:42%;
+    button{
+        top:-1px;
+        width:50px;
+        height:51px;
+        border-radius:48%;
+        display:flex;
+        justify-content:center;
+        font-size:12px;
+        font-weight:900;
+        width:51px;
+        padding-top: 7px;
+    }
+    .opt1{
+        background-color:red;
+        color:yellow;
+        width:50px;
+        order:2;
+    }
+    .opt2{
+        background-color:yellow;
+        color:blue;
+        width:50px;
+        order:2;
+    }
+    .opt3{
+        background-color:blue;
+        color:white;
+        width:50px;
+        order:2;
+    }
+    .opt4{
+        background-color:rgb(158, 65, 37);
+        color:rgb(223, 223, 140);
+        order:1;
+    }
+    .opt5{
+        background-color: greenyellow;
+        color: darkgreen;
+        order:1;
+    }
+    .opt6{
+        background-color:purple;
+        color:goldenrod;
+        order:3
+    }
+    .opt7{
+        background-color:rgb(39, 10, 39);
+        color:orange;
+        order:3
+    }
+}
+.snapBallButton{
+    position:absolute; 
+    display:inline-block; 
+    font-size:13px; 
+    font-weight:900; 
+    border-radius:50%; 
+    color:rgb(223, 221, 207); 
+    opacity: .59;
+    display:flex; 
+    justify-content:center; 
+    align-items:center; 
+    font-family:'IM Fell English'; 
+    z-index:6;
+    border-top:4px solid black;
+    border-bottom:4px solid black;
+    border-left: 4px solid white;
+    border-right: 4px solid white;
+    animation: hoovver .3s forwards;
+    &:hover{
+        opacity:1;
+    }
+}
+
+#terrains_layer{z-index:2}
+#gameItems{z-index:3}
+#players{z-index:5}
+//buttons index:6
+#screentint{z-index:7}
+//scrollbars test
+html {
+    overflow-y: auto;
+    background-color: transparent;
+    }
+    ::-webkit-scrollbar {
+        width: 10px;
+        height: 10px;
+        }
+        ::-webkit-scrollbar-button:start:decrement,
+::-webkit-scrollbar-button:end:increment  {
+height: 30px;
+display: block;
+background-color: transparent;
+}
+::-webkit-scrollbar-track-piece  {
+    background-color: #3b3b3b;
+    -webkit-border-radius: 6px;border-radius: 6px;
+    }
+    ::-webkit-scrollbar-thumb:vertical {
+        height: 50px;
+        background-color: #666;
+        border: 1px solid #eee;
+        -webkit-border-radius: 6px;border-radius: 6px;
+        }
+        @-moz-document url-prefix() {
+            .dice-1 .die-1{
+                top:6.5px;
+            }
+            .dice-4{
+                .die-1{top:-4px;left:-2px;}
+                .die-2{top:-4px;}
+                .die-3{top:-3px;left:-2px;}
+                .die-4{top:-3px;}
+            }
+            .dice-3{
+                .die-1{top:-4px;left:-2px;}
+                .die-2{top:6px;left:-8px;}
+                .die-3{top:-3px;left:19px;}
+            }
+            .dice-5{
+                .die-1{top:-4px; left:-2px;}
+                .die-2{top:-4px;}
+                .die-3{top:-3px;left:-2px;}
+                .die-5{top:-32px;}
+            }
+            .dice-6{ 
+                .die-1 {top: -4px; left: -2px;}
+                .die-2 {top: -4px; left: 2px;}
+                .die-3 {top: -3px; left: -2px;}
+                .die-5{top: -32px; left: -2px;}
+                .die-6{top: -32px;}
+            }
+            .snapBallButton:hover{
+                border-top-color: black;
+                border-bottom-color: black;
+                border-left-color: white;
+                border-right-color: white;
+            }
+        }
