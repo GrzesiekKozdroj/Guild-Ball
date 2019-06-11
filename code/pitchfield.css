@@ -10,7 +10,7 @@ body {
 }
 
 .testing {
-  color: #a09081;
+  color: rgba(141, 6, 6, 0.692);
 }
 
 #screentint {
@@ -507,6 +507,11 @@ button:hover {
   left: 2px;
 }
 
+.dice {
+  width: 200px;
+  max-height: 144px;
+}
+
 .message {
   display: flex;
   justify-content: center;
@@ -519,6 +524,8 @@ button:hover {
   position: relative;
   margin: 10px;
   font-size: 24px;
+  overflow-y: scroll;
+  max-height: 50px;
 }
 
 .the-first-info {
