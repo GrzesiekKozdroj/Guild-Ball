@@ -38,41 +38,40 @@ window.addEventListener("DOMContentLoaded", function()
     context.drawImage(image, 0, 0);
 });
 
-// function init_canvas(){
-//     var img = new Image();
-//     img.src = './icons/Hunters/Skatha.jpg';
-//     img.width = 600;
-//     img.height = 800;
-//     canvas.beginPath();
-//     canvas.drawImage(img, 0, 0,600,800);
-//     canvas.fillStyle = 'rgba(120, 120, 50, .5)';
-//     canvas.fillRect(0,0,1200,900);
-//     canvas.beginPath();
-//     canvas.fillStyle = 'rgba(120, 120, 50, .8)';
-//     canvas.fillRect(420,420,720,720);
+function init_canvas(){
+    var img = new Image();
+    img.src = './icons/Hunters/Skatha.jpg';
+    img.width = 600;
+    img.height = 800;
+    canvas.beginPath();
+    canvas.drawImage(img, 0, 0,600,800);
+    canvas.fillStyle = 'rgba(120, 120, 50, .5)';
+    canvas.fillRect(0,0,1200,900);
+    canvas.beginPath();
+    canvas.fillStyle = 'rgba(120, 120, 50, .8)';
+    canvas.fillRect(420,420,720,720);
 
-//     $(document).mousemove(function(e){
-//         if(e.offsetX){
-//             mouse_position.x = e.offsetX;
-//             mouse_position.y = e.offsetY;
-//         }else if(e.layerY){
-//             mouse_position.x = e.layerX;
-//             mouse_position.y = e.layerY;
-//         }
-//         show_color();
+    $(document).mousemove(function(e){
+        if(e.offsetX){
+            mouse_position.x = e.offsetX;
+            mouse_position.y = e.offsetY;
+        }else if(e.layerY){
+            mouse_position.x = e.layerX;
+            mouse_position.y = e.layerY;
+        }
+        show_color();
 
-//     });
-// }
+    });
+}
 
 
-// function show_color(){
-//     color  = canvas.getImageData(mouse_position.x,mouse_position.y,1,1).data;
-//     console.info("red: " + color[0] + " green: " + color[1] + " blue: " + color[2] + " alpha: " +color[3]);
+function show_color(){
+    color  = canvas.getImageData(mouse_position.x,mouse_position.y,1,1).data;
+    console.info("red: " + color[0] + " green: " + color[1] + " blue: " + color[2] + " alpha: " +color[3]);
 
-// }
+}
 </script>
-
-    <!--   <section id="animation-project">
+   <section id="animation-project">
       <label>X: </label><input type="number" id="x_in">
       <label>Y: </label><input type="number" id="y_in">
       <input type="button" id="move" value="MOVE">
@@ -230,9 +229,9 @@ draw(x, y);
                 ctx.arc(70, 80, 10, 0, 2 * Math.PI);
                 ctx.arc(130, 80, 10, 0, 2 * Math.PI);
                 ctx.fill();
-                ctx.addHitRegion({
-                    id: "eyes"
-                });
+               // ctx.addHitRegion({
+               //     id: "eyes"
+               // });
 
                 // Mouth
                 ctx.beginPath();
@@ -338,7 +337,7 @@ document.addEventListener('click', createMember)
 
       layer.draw();
     </script>
-</section> -->
+</section> 
 
   </body>
 
