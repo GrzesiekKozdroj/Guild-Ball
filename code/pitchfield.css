@@ -1,12 +1,33 @@
-@import url("https://fonts.googleapis.com/css?family=Germania+One|IM+Fell+English|Merienda|Michroma|Satisfy");
+@import url("https://fonts.googleapis.com/css?family=Germania+One|IM+Fell+English");
 body {
   background-color: black;
-  cursor: default;
+  cursor: none;
 }
 
 * {
   font-family: 'IM Fell English';
   cursor: none;
+  box-sizing: border-box;
+}
+
+.guildIco:hover, .rosterIco:hover, .guildRosterReverse:hover, .guildRosterForward:hover {
+  box-shadow: inset 0px 0px 25px white, 0 0 15px black, 0 0 20px darkblue, 0 0 200px rgba(60, 60, 82, 0.932);
+}
+
+.guildIco:active, .rosterIco:active, .guildRosterReverse:active, .guildRosterForward:active {
+  box-shadow: inset 0 0 7px black, inset 0 0 13px darkblue, 0 0 200px white, 0 0 20px rgba(255, 255, 255, 0.2);
+  border: solid rgba(58, 55, 55, 0.712);
+  width: 116px;
+  height: 116px;
+}
+
+.plajBookCell:hover, .plajBookTopCell:hover {
+  box-shadow: inset 0px 0px 25px white, 0 0 15px black, 0 0 20px darkblue, 0 0 200px rgba(60, 60, 82, 0.932);
+}
+
+.plajBookCell:active, .plajBookTopCell:active {
+  box-shadow: inset 0 0 7px black, inset 0 0 13px darkblue, 0 0 200px white, 0 0 20px rgba(255, 255, 255, 0.2);
+  border: solid rgba(58, 55, 55, 0.712);
 }
 
 .testing {
@@ -40,7 +61,7 @@ canvas {
   }
 }
 
-section {
+#gameScreen {
   width: 100vw;
   max-width: 1550px;
 }
@@ -176,10 +197,17 @@ button:hover {
 }
 
 #squaddieFace {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  overflow: hidden;
   width: 146px;
   height: 146px;
   border-radius: 49%;
   border: 5px solid black;
+  background-size: 10px;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 #squaddieStats {
@@ -237,10 +265,12 @@ button:hover {
 
 .plajBookTopCell {
   margin-bottom: -10px;
+  margin-left: -4px;
 }
 
 .plajBookCell {
   margin-top: -10px;
+  margin-left: -3px;
 }
 
 .playBookNull {
@@ -257,6 +287,7 @@ button:hover {
   line-height: 0.9rem;
   border: 2px solid transparent;
   opacity: 0;
+  margin-left: -6px;
 }
 
 .busted {
@@ -378,6 +409,10 @@ button:hover {
   margin: 10px;
 }
 
+.teaMenu .pW0 {
+  margin-left: -40px;
+}
+
 .teaMenu .pW8 {
   margin-left: -105px;
   margin-top: -33px;
@@ -388,7 +423,6 @@ button:hover {
   width: 30px;
   height: 30px;
   margin: 7px;
-  padding: 1px;
   font-family: veranda;
 }
 
@@ -582,6 +616,7 @@ button:hover {
   color: blue;
   width: 50px;
   order: 2;
+  margin: 0 -1px 0 -1px;
 }
 
 .counterbox .opt3 {
@@ -652,17 +687,19 @@ button:hover {
 }
 
 #screentint {
-  z-index: 7;
+  z-index: 8;
 }
 
 html {
   overflow-y: auto;
   background-color: transparent;
+  cursor: none;
 }
 
 ::-webkit-scrollbar {
   width: 10px;
   height: 10px;
+  cursor: none;
 }
 
 ::-webkit-scrollbar-button:start:decrement,
@@ -670,12 +707,14 @@ html {
   height: 30px;
   display: block;
   background-color: transparent;
+  cursor: none;
 }
 
 ::-webkit-scrollbar-track-piece {
   background-color: #3b3b3b;
   -webkit-border-radius: 6px;
   border-radius: 6px;
+  cursor: none;
 }
 
 ::-webkit-scrollbar-thumb:vertical {
@@ -684,6 +723,7 @@ html {
   border: 1px solid #eee;
   -webkit-border-radius: 6px;
   border-radius: 6px;
+  cursor: none;
 }
 
 @-moz-document url-prefix() {
@@ -755,4 +795,237 @@ html {
     border-left-color: white;
     border-right-color: white;
   }
+}
+
+#teaMenuScreen {
+  width: 72%;
+  height: 100vh;
+  z-index: 7;
+  background-color: #b2cab2;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  background-size: 169% 169% !important;
+  background-repeat: no-repeat !important;
+  background-position: -70px 0px !important;
+}
+
+#teaMenuScreen #thePlayers {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  height: 58vh;
+}
+
+.guildIco {
+  width: 120px;
+  height: 120px;
+  margin: 10px;
+  padding: 20px;
+  border-radius: 5%;
+}
+
+.guildInfo {
+  display: flex;
+  justify-content: center;
+  font-family: "IM Fell English";
+  color: #3c4131;
+  font-size: 20px;
+  flex-direction: column;
+  padding: 7px;
+  background-image: url("../icons/cursor/bg.jpg");
+  background-size: 100% 100%;
+  height: 100%;
+}
+
+.guildInfo .guildHeader {
+  margin-top: -30px;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 19px 0 7px;
+  border-bottom: 2px solid #3c4131;
+  height: 75px;
+}
+
+.guildInfo .guildHeader img {
+  width: 75px;
+  height: 75px;
+  justify-self: center;
+}
+
+.guildInfo .guildHeader .guildName {
+  text-transform: capitalize;
+}
+
+.guildInfo .guildInfoP {
+  margin-top: -11px;
+  font-size: 17px;
+}
+
+.guildInfo .guildFoot {
+  text-align: end;
+  font-weight: 800;
+}
+
+#FalconersIco {
+  background-position-y: 25px !important;
+}
+
+#FalconerslilPic {
+  width: 103px;
+}
+
+#NavigatorsIco {
+  background-position-x: 7px !important;
+}
+
+.rosterIco {
+  border-style: solid;
+  border-width: 6px;
+  border-radius: 50%;
+  background-repeat: no-repeat !important;
+}
+
+#rosterCinder {
+  margin-top: 85px !important;
+}
+
+#rostervCinder {
+  margin-top: 126px !important;
+}
+
+#rosterCutlass {
+  margin-top: 69px !important;
+}
+
+#rosterIron {
+  margin-top: 69px !important;
+}
+
+#rosterAlloy {
+  margin-top: 42px !important;
+}
+
+#rosterMataagi {
+  margin-left: -100px !important;
+  margin-right: -93px !important;
+}
+
+.guildRosterReverse, .guildRosterForward {
+  width: 82px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: darkred;
+  color: darkblue;
+  font-weight: 900;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  vertical-align: middle;
+  margin: -15px auto -10px auto;
+  position: absolute;
+  top: 4%;
+  left: 33%;
+}
+
+.guildRosterReverse:active, .guildRosterForward:active {
+  width: 82px;
+  height: 24px;
+}
+
+.guildRosterForward {
+  top: 4%;
+  left: 38%;
+  color: white;
+}
+
+.rosterChosen, .rosterChosen .captainRoster, .rosterChosen .mascotRoster, .rosterChosen .squaddiesRoster, .rosterChosen .mastersRoster, .rosterChosen .apprenticesRoster {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+}
+
+.rosterChosen {
+  height: 24vh;
+  width: 94%;
+  margin-top: 10vh;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.rosterChosen div {
+  border: 3px solid;
+  box-sizing: border-box;
+  text-align: center;
+  font-weight: 900;
+  font-size: 31px;
+  border-radius: 4px;
+  box-shadow: inset 0 0 7px black, inset 0 0 13px darkblue, 0 0 20px white, 0 0 20px rgba(255, 255, 255, 0.2);
+}
+
+.rosterChosen div p {
+  width: 0;
+  position: relative;
+  top: -64px;
+}
+
+.rosterChosen div .rosterIco {
+  border-radius: 500px;
+  margin-left: 10px;
+  margin-right: 10px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.rosterChosen .captainRoster {
+  width: 15%;
+  height: 100%;
+}
+
+.rosterChosen .mascotRoster {
+  width: 15%;
+  height: 100%;
+}
+
+.rosterChosen .squaddiesRoster {
+  width: 60%;
+  height: 100%;
+  padding-left: -30px;
+}
+
+.rosterChosen .squaddiesRoster #rosterMataagi {
+  margin-left: -100px !important;
+  margin-right: -93px !important;
+}
+
+.rosterChosen .mastersRoster {
+  width: 30%;
+  height: 100%;
+}
+
+.rosterChosen .apprenticesRoster {
+  width: 45%;
+  height: 100%;
+}
+
+.rosterChosen .apprenticesRoster #rosterCinder {
+  margin-top: 0px !important;
+}
+
+.rosterChosen .apprenticesRoster #rostervCinder {
+  margin-top: 0px !important;
+}
+
+.rosterChosen .apprenticesRoster #rosterCutlass {
+  margin-top: 0px !important;
+}
+
+.rosterChosen .apprenticesRoster #rosterIron {
+  margin-top: -20px !important;
+}
+
+.rosterChosen .apprenticesRoster #rosterAlloy {
+  margin-top: 0px !important;
 }
