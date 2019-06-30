@@ -40,6 +40,7 @@ body {
 #screentint{
     position: absolute;
     pointer-events: none;
+    cursor: none;
 }
 
 
@@ -65,6 +66,7 @@ canvas{
 #gameScreen{
     width: 100vw;
     max-width: 1550px;
+    display:flex;
 }
 
 @keyframes optionz {
@@ -129,9 +131,7 @@ button:hover{
 #app {
     position: fixed;
     background-color: rgb(119, 71, 8);
-    width: 420px;
     height: 100vh;
-    left:1095px;
     #appDisplay{
     display: flex;
     flex-flow: column;
@@ -468,7 +468,7 @@ button:hover{
     border-radius: 5px;
     width: 370px;
     position: relative;
-    margin: 513px auto 0 auto;
+    margin: 0 auto 0 auto;
     font-size: 24px;
     text-align: justify;
     padding: 12px;
@@ -636,7 +636,6 @@ cursor:none;
 
 
 #teaMenuScreen{
-    width:72%;
     height:100vh;
     z-index:7;
     background-color:rgb(178, 202, 178);
