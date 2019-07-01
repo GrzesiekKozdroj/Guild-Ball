@@ -65,80 +65,6 @@ let buildGuildsVar;
                         Gamer = rnd > 0.5 ? Gamer1 : Gamer2;
                         otherGamer = rnd > 0.5 ? Gamer2 : Gamer1;
                     bigBang();
-                
-           //build array of squaddies;
-           //stitch Gamer1 using it then Gmer2;
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        //    let tapper;
-        //    //
-        //    let quaff;
-        //    //
-        //    let friday;
-        //    let hooper;
-        //    let mash;
-        //    let pintpot;
-        //    //
-        //    let theron;
-        //    //
-        //    let fahad;
-        //    let jaecar;
-        //    let egret;
-        //    let seenah;
-        //    let hearne;
-           
-           
-        //    let Gamer1influenceTemplate;
-        //    let Gamer2influenceTemplate;
-           
-        //    midas = new Player(...Midas); naja = new Player(...Naja); smoke = new Player(...Smoke); katalyst = new Player(...Katalyst)
-           
-           
-        //    const fillGameWorld = (a, b) => {
-        //        let rnd = Math.random();//this randomises who is to start
-        //        Gamer1 = a || new Gajmer(
-        //            0, 0, 0,
-        //            [midas, naja],
-        //            5,//Gamer1influenceTemplate,
-        //            rnd > 0.5 ? true : false, Alchemists, [18 * inch, 6 * inch - 2.5 * cm],
-        //            [0, 10 * inch], 'top',
-        //        )
-           
-        //        Gamer2 = b || new Gajmer(
-        //            0, 0, 0,
-        //            [smoke, katalyst],
-        //            6,//Gamer2influenceTemplate,
-        //            rnd > 0.5 ? false : true, Alchemists, [18 * inch, 30 * inch + 2.5 * cm],
-        //            [26 * inch, canvas.height], 'bottom',
-        //        );
-           
-           
-        //        teamz = [...Gamer1.squaddies, ...Gamer2.squaddies];
-        //        Gamer = rnd > 0.5 ? Gamer1 : Gamer2;
-        //        otherGamer = rnd > 0.5 ? Gamer2 : Gamer1;
-        //    }
-
-// tapper                   = new Player(...Tapper);
-// quaff                    = new Player(...Quaff);
-// friday                   = new Player(...Friday);
-// hooper                   = new Player(...Hooper);
-// mash                     = new Player(...Mash);
-// pintpot                  = new Player(...Pintpot);
-// theron                   = new Player(...Theron);
-// fahad                    = new Player(...Fahad);
-// jaecar                   = new Player(...Jaecar);
-// egret                    = new Player(...Egret);
-// seenah                   = new Player(...Seenah);
-// hearne                   = new Player(...Hearne);   
-//  Gamer1influenceTemplate = jaecar.infGen+seenah.infGen+egret.infGen+theron.infGen+hearne.infGen+fahad.infGen;
-//  Gamer2influenceTemplate = tapper.infGen+quaff.infGen+friday.infGen+hooper.infGen+mash.infGen+pintpot.infGen;
-
- //   fillGameWorld();
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
        }
     }
 
@@ -147,7 +73,7 @@ let buildGuildsVar;
 
     allTheGuildsForMenu.forEach((el, i) => {
         let guildButton = `<div class="guildIco" id="${el[1]}Ico" data-title="${el[1]}" data-img=${el[2]} data-desc="${el[5]}" 
-        data-footer="${el[6]}" style="background:url(${el[2]});    background-size:contain;    background-repeat:no-repeat;"/>`;
+        data-footer="${el[6]}" data-mercenaries=${el[7]} style="background:url(${el[2]});    background-size:contain;    background-repeat:no-repeat;"/>`;
         $("#teaMenuScreen").append(guildButton);
     })}buildGuilds();
 
@@ -155,20 +81,21 @@ let buildGuildsVar;
     $(".guildIco").each(
         function () {
             const title = $(this).data("title");
+            const merc = $(this).data("mercenaries")
             $(this).on("mouseenter", () => {
                 $("#app").empty().append(
                     `<div class="guildInfo">
                     <h1 class="guildHeader">
                         <img id="${title}lilPic" src="${$(this).data("img")}"/>
-                        <p class="guildName">${title}'s Guild</p>
+                        <p class="guildName" style="font-size:${1.5*wlem}">${title}'s Guild</p>
                     </h1>
-                    <p class="guildInfoP">${$(this).data("desc")}</p>
+                    <p class="guildInfoP" style="font-size:${.9*wlem}">${$(this).data("desc")}</p>
                     <footer class="guildFoot">${$(this).data("footer")}</footer>
                     </div>`
                 )
             })
             $(this).on("click", () => {
-                squaddiesToDisplay = [...allPlayersAsArray.filter(el => el[19].name === title)]
+                squaddiesToDisplay = [...allPlayersAsArray.filter(el => el[19].name === title ), ...allPlayersAsArray.filter(el => merc.includes(el[16]) )]
                 $(this).parent().empty();
                 chooseTeam(squaddiesToDisplay,title);
             });
@@ -178,7 +105,6 @@ let buildGuildsVar;
     buildGuildsVar =()=>{ $("#teaMenuScreen").empty();buildGuilds();buildGuildsEvents();}
 //})//dom
 let squaddiesToDisplay = [];
-//bigBang();
 
 function chooseTeam(sTD,guild) {//builds and displays an array of players for each team
 
@@ -253,7 +179,6 @@ function chooseTeam(sTD,guild) {//builds and displays an array of players for ea
                                         style="background-color:${chosenSquaddie.theGuild.color};">=--></div>`)
                                     .on("click", ".guildRosterForward",()=>{
                                         buildGamerTeam($(".rosterChosen").find(".rosterIco"))
-                                        console.log(counter);
                                     })
                 }
             })//this on click

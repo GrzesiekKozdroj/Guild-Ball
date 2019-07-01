@@ -37,6 +37,9 @@ body {
 #screentint {
   position: absolute;
   pointer-events: none;
+  cursor: none;
+  top: 0;
+  left: 0;
 }
 
 #pitchfield, #terrains_layer, #gameItems, #players {
@@ -64,6 +67,7 @@ canvas {
 #gameScreen {
   width: 100vw;
   max-width: 1550px;
+  display: flex;
 }
 
 @keyframes optionz {
@@ -128,9 +132,7 @@ button:hover {
 #app {
   position: fixed;
   background-color: #774708;
-  width: 420px;
   height: 100vh;
-  left: 1095px;
   border-radius: 10px;
 }
 
@@ -224,7 +226,7 @@ button:hover {
 }
 
 #squaddieStats td {
-  font-size: 22px;
+  font-size: 1.3rem;
 }
 
 .plajbooks ul {
@@ -557,7 +559,7 @@ button:hover {
   width: 370px;
   position: relative;
   margin: 10px;
-  font-size: 24px;
+  font-size: 1.5rem;
   overflow-y: scroll;
   max-height: 50px;
 }
@@ -570,8 +572,8 @@ button:hover {
   border-radius: 5px;
   width: 370px;
   position: relative;
-  margin: 513px auto 0 auto;
-  font-size: 24px;
+  margin: 0 auto 0 auto;
+  font-size: 1.5rem;
   text-align: justify;
   padding: 12px;
 }
@@ -598,7 +600,7 @@ button:hover {
   border-radius: 48%;
   display: flex;
   justify-content: center;
-  font-size: 12px;
+  font-size: .75rem;
   font-weight: 900;
   width: 51px;
   padding-top: 7px;
@@ -653,7 +655,7 @@ button:hover {
 .snapBallButton {
   position: absolute;
   display: inline-block;
-  font-size: 13px;
+  font-size: .8rem;
   font-weight: 900;
   border-radius: 50%;
   color: #dfddcf;
@@ -798,9 +800,10 @@ html {
 }
 
 #teaMenuScreen {
-  width: 72%;
   height: 100vh;
+  width: 70vw;
   z-index: 7;
+  position: fixed;
   background-color: #b2cab2;
   display: flex;
   flex-wrap: wrap;
@@ -830,7 +833,7 @@ html {
   justify-content: center;
   font-family: "IM Fell English";
   color: #3c4131;
-  font-size: 20px;
+  font-size: 1.25rem;
   flex-direction: column;
   padding: 7px;
   background-image: url("../icons/cursor/bg.jpg");
@@ -844,22 +847,18 @@ html {
   justify-content: space-between;
   padding: 0 19px 0 7px;
   border-bottom: 2px solid #3c4131;
-  height: 75px;
+  height: 5vw;
 }
 
 .guildInfo .guildHeader img {
-  width: 75px;
-  height: 75px;
+  width: 5vw;
+  height: 5vw;
   justify-self: center;
-}
-
-.guildInfo .guildHeader .guildName {
-  text-transform: capitalize;
 }
 
 .guildInfo .guildInfoP {
   margin-top: -11px;
-  font-size: 17px;
+  font-size: 1.1rem;
 }
 
 .guildInfo .guildFoot {
@@ -918,7 +917,7 @@ html {
   background-color: darkred;
   color: darkblue;
   font-weight: 900;
-  font-size: 20px;
+  font-size: 1.25rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -960,7 +959,7 @@ html {
   box-sizing: border-box;
   text-align: center;
   font-weight: 900;
-  font-size: 31px;
+  font-size: 1.95rem;
   border-radius: 4px;
   box-shadow: inset 0 0 7px black, inset 0 0 13px darkblue, 0 0 20px white, 0 0 20px rgba(255, 255, 255, 0.2);
 }
