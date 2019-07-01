@@ -29,6 +29,7 @@ let buildGuildsVar;
            for(let sq = 0; sq<matter.length;sq++){
                 let bobsko = new Player(...allPlayersAsArray.filter(el=>el[16]===($(matter[sq]).data("name") ) ) [0] );
                 bookOfLife.push(bobsko)
+                if(bookOfLife[0].theGuild.name="Blacksmiths"){bookOfLife[0].infMax=5;bookOfLife[0].identity.status="Captain"}
            }
             counter++;
             Gamer1 = new Gajmer(
@@ -48,6 +49,7 @@ let buildGuildsVar;
                 for(let sq = 0; sq<matter.length;sq++){
                      let bobsko = new Player(...allPlayersAsArray.filter(el=>el[16]===($(matter[sq]).data("name") ) ) [0] );
                      bookOfLife.push(bobsko)
+                     if(bookOfLife[0].theGuild.name="Blacksmiths"){bookOfLife[0].infMax=5;bookOfLife[0].identity.status="Captain"}
                 }
                  counter++;
                  Gamer2 = new Gajmer(

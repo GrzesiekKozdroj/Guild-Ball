@@ -32,6 +32,10 @@ toolsFunctions.js
 animation.js 
 ball.js 
 terrains.js 
+guilds.js
+rostrerEvents.js
 playerTemplateFile.js 
 mouseEvents.js 
 pitchfield.js
+pitchfield.scss
+
