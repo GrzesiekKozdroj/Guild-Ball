@@ -595,8 +595,8 @@ button:hover {
 
 .counterbox button {
   top: -1px;
-  width: 50px;
-  height: 51px;
+  width: 48px;
+  height: 49.5px;
   border-radius: 48%;
   display: flex;
   justify-content: center;
@@ -609,14 +609,15 @@ button:hover {
 .counterbox .opt1 {
   background-color: red;
   color: yellow;
-  width: 50px;
+  width: 49px;
   order: 2;
+  margin: auto -2px auto -2px;
 }
 
 .counterbox .opt2 {
   background-color: yellow;
   color: blue;
-  width: 50px;
+  width: 51px;
   order: 2;
   margin: 0 -1px 0 -1px;
 }
@@ -624,7 +625,7 @@ button:hover {
 .counterbox .opt3 {
   background-color: blue;
   color: white;
-  width: 50px;
+  width: 49px;
   order: 2;
 }
 
@@ -650,6 +651,8 @@ button:hover {
   background-color: #270a27;
   color: orange;
   order: 3;
+  font-size: .71rem;
+  padding-top: 0;
 }
 
 .snapBallButton {
@@ -851,8 +854,7 @@ html {
 }
 
 .guildInfo .guildHeader img {
-  width: 5vw;
-  height: 5vw;
+  height: 100%;
   justify-self: center;
 }
 
@@ -1027,4 +1029,13 @@ html {
 
 .rosterChosen .apprenticesRoster #rosterAlloy {
   margin-top: 0px !important;
+}
+
+@media screen and (max-width: 1600px) {
+  .guildHeader {
+    margin-top: 76px !important;
+  }
+  .guildHeader p {
+    font-size: 1.5rem;
+  }
 }
