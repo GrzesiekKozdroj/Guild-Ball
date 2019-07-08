@@ -553,7 +553,7 @@ button:hover {
   justify-content: center;
   align-items: center;
   color: #d6cdcd;
-  min-height: 120px;
+  min-height: 219px;
   background-color: rgba(94, 93, 88, 0.31);
   border-radius: 20px;
   width: 370px;
@@ -873,7 +873,7 @@ html {
 }
 
 #FalconerslilPic {
-  width: 103px;
+  width: 6.73vw;
 }
 
 #NavigatorsIco {
@@ -1038,4 +1038,40 @@ html {
   .guildHeader p {
     font-size: 1.5rem;
   }
+}
+
+#squaddieFaceMidas {
+  margin-top: -18px !important;
+}
+
+#squaddieFaceFlask {
+  margin-top: -57px !important;
+}
+
+#squaddieFaceCompound {
+  margin-top: -70px !important;
+}
+
+#squaddieFaceCrucible {
+  margin-top: -77px !important;
+}
+
+#squaddieFaceVenin {
+  margin-top: -90px !important;
+}
+
+#squaddieFaceVirtol {
+  margin-top: -75px !important;
+}
+
+#squaddieFaceAnvil {
+  margin-top: -63px !important;
+}
+
+#squaddieFaceCulverin {
+  margin-top: -107px !important;
+}
+
+#squadieFaceFerrite {
+  margin-top: -66px !important;
 }

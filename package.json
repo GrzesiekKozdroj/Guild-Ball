@@ -1,0 +1,29 @@
+{
+  "name": "Gimball",
+  "version": "1.0.0",
+  "description": "Gimball",
+  "main": "./code/gimball.js",
+  "scripts": {
+    "start": "node ./code/gimball.js",
+    "server": "live-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GrzesiekKozdroj/gimball.git"
+  },
+  "keywords": [
+    "Gimball"
+  ],
+  "author": "Larhendiel",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GrzesiekKozdroj/gimball/issues"
+  },
+  "homepage": "https://github.com/GrzesiekKozdroj/gimball#readme",
+  "dependencies": {
+    "lodash": "^4.17.11"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.1"
+  }
+}
