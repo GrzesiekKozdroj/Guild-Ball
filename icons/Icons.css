@@ -1,0 +1,213 @@
+.calculus, .compound, .crucible, .flask, .katalyst, 
+.mercury, .midas, .naja, .smoke, .vcalculus, 
+.venin, .vetkatalyst, .virtol
+{ display: inline-block; background: url('png.png') no-repeat; overflow: hidden; text-indent: -9999px; text-align: left; }
+ 
+.calculus { background-position: -0px -0px; width: 200px; height: 200px; }
+.compound { background-position: -200px -0px; width: 200px; height: 200px; }
+.crucible { background-position: -400px -0px; width: 200px; height: 200px; }
+.flask { background-position: -0px -200px; width: 200px; height: 200px; }
+.katalyst { background-position: -200px -200px; width: 200px; height: 200px; }
+.mercury { background-position: -400px -200px; width: 200px; height: 200px; }
+.midas { background-position: -0px -400px; width: 200px; height: 200px; }
+.naja { background-position: -200px -400px; width: 200px; height: 200px; }
+.smoke { background-position: -400px -400px; width: 200px; height: 200px; }
+.vcalculus { background-position: -0px -600px; width: 200px; height: 200px; }
+.venin { background-position: -200px -600px; width: 200px; height: 200px; }
+.vetkatalyst { background-position: -400px -600px; width: 200px; height: 200px; }
+.virtol { background-position: -0px -800px; width: 200px; height: 200px; }
+
+.culverin { background-position: -0px -0px; width: 200px; height: 200px; }
+.cutlass { background-position: -200px -0px; width: 200px; height: 200px; }
+.alloy { background-position: -400px -0px; width: 200px; height: 200px; }
+.anvil { background-position: -0px -200px; width: 200px; height: 200px; }
+.bolt { background-position: -200px -200px; width: 200px; height: 200px; }
+.burnish { background-position: -400px -200px; width: 200px; height: 200px; }
+.cast { background-position: -0px -400px; width: 200px; height: 200px; }
+.cinder { background-position: -200px -400px; width: 200px; height: 200px; }
+.farris { background-position: -400px -400px; width: 200px; height: 200px; }
+.ferrite { background-position: -0px -600px; width: 200px; height: 200px; }
+.furnace { background-position: -200px -600px; width: 200px; height: 200px; }
+.hearth { background-position: -400px -600px; width: 200px; height: 200px; }
+.iron { background-position: -0px -800px; width: 200px; height: 200px; }
+.sledge { background-position: -200px -800px; width: 200px; height: 200px; }
+.vcinder { background-position: -400px -800px; width: 200px; height: 200px; }
+
+.corker { background-position: -0px -0px; width: 200px; height: 200px; }
+.esters { background-position: -200px -0px; width: 200px; height: 200px; }
+.friday { background-position: -400px -0px; width: 200px; height: 200px; }
+.hooper { background-position: -0px -200px; width: 200px; height: 200px; }
+.lucky { background-position: -200px -200px; width: 200px; height: 200px; }
+.mash { background-position: -400px -200px; width: 200px; height: 200px; }
+.pintpot { background-position: -0px -400px; width: 200px; height: 200px; }
+.quaff { background-position: -200px -400px; width: 200px; height: 200px; }
+.scum { background-position: -400px -400px; width: 200px; height: 200px; }
+.spigot { background-position: -0px -600px; width: 200px; height: 200px; }
+.stave { background-position: -200px -600px; width: 200px; height: 200px; }
+.stoker { background-position: -400px -600px; width: 200px; height: 200px; }
+.tapper { background-position: -0px -800px; width: 200px; height: 200px; }
+.vetdecimate { background-position: -200px -800px; width: 200px; height: 200px; }
+.vetspigot { background-position: -400px -800px; width: 200px; height: 200px; }
+
+.boar { background-position: -0px -0px; width: 200px; height: 200px; }
+.boiler { background-position: -200px -0px; width: 200px; height: 200px; }
+.brisket { background-position: -400px -0px; width: 200px; height: 200px; }
+.fillet { background-position: -0px -200px; width: 200px; height: 200px; }
+.meathook { background-position: -200px -200px; width: 200px; height: 200px; }
+.ox { background-position: -400px -200px; width: 200px; height: 200px; }
+.princess { background-position: -0px -400px; width: 200px; height: 200px; }
+.shank { background-position: -200px -400px; width: 200px; height: 200px; }
+.tenderiser { background-position: -400px -400px; width: 200px; height: 200px; }
+.truffles { background-position: -0px -600px; width: 200px; height: 200px; }
+.vetboar { background-position: -200px -600px; width: 200px; height: 200px; }
+.vetbrisket { background-position: -400px -600px; width: 200px; height: 200px; }
+.vetgutter { background-position: -0px -800px; width: 200px; height: 200px; }
+.vetox { background-position: -200px -800px; width: 200px; height: 200px; }
+
+.cinnamon { background-position: -0px -0px; width: 200px; height: 200px; }
+.pepper { background-position: -200px -0px; width: 200px; height: 200px; }
+.roast { background-position: -0px -200px; width: 200px; height: 200px; }
+.spice { background-position: -200px -200px; width: 200px; height: 200px; }
+.sugar { background-position: -0px -400px; width: 200px; height: 200px; }
+.wellington { background-position: -200px -400px; width: 200px; height: 200px; }
+
+.ballista { background-position: -0px -0px; width: 200px; height: 200px; }
+.colossus { background-position: -200px -0px; width: 200px; height: 200px; }
+.harriet { background-position: -400px -0px; width: 200px; height: 200px; }
+.hoist { background-position: -0px -200px; width: 200px; height: 200px; }
+.locus { background-position: -200px -200px; width: 200px; height: 200px; }
+.mainspring { background-position: -400px -200px; width: 200px; height: 200px; }
+.mother { background-position: -0px -400px; width: 200px; height: 200px; }
+.pinvice { background-position: -200px -400px; width: 200px; height: 200px; }
+.ratchet { background-position: -400px -400px; width: 200px; height: 200px; }
+.rivet { background-position: -0px -600px; width: 200px; height: 200px; }
+.salvo { background-position: -200px -600px; width: 200px; height: 200px; }
+.velocity { background-position: -400px -600px; width: 200px; height: 200px; }
+.vetvelocity { background-position: -0px -800px; width: 200px; height: 200px; }
+
+.devana { background-position: -0px -0px; width: 200px; height: 200px; }
+.frelsi { background-position: -200px -0px; width: 200px; height: 200px; }
+.ikaros { background-position: -0px -200px; width: 200px; height: 200px; }
+.mataagi { background-position: -200px -200px; width: 200px; height: 200px; }
+.minerva { background-position: -0px -400px; width: 200px; height: 200px; }
+.rundaas { background-position: -200px -400px; width: 200px; height: 200px; }
+
+.buckwheat { background-position: -0px -0px; width: 200px; height: 200px; }
+.bushel { background-position: -200px -0px; width: 200px; height: 200px; }
+.fallow { background-position: -400px -0px; width: 200px; height: 200px; }
+.grange { background-position: -0px -200px; width: 200px; height: 200px; }
+.harrow { background-position: -200px -200px; width: 200px; height: 200px; }
+.jackstraw { background-position: -400px -200px; width: 200px; height: 200px; }
+.millstone { background-position: -0px -400px; width: 200px; height: 200px; }
+.peck { background-position: -200px -400px; width: 200px; height: 200px; }
+.ploughman { background-position: -400px -400px; width: 200px; height: 200px; }
+.tater { background-position: -0px -600px; width: 200px; height: 200px; }
+.thersher { background-position: -200px -600px; width: 200px; height: 200px; }
+.vethonour { background-position: -400px -600px; width: 200px; height: 200px; }
+.windle { background-position: -0px -800px; width: 200px; height: 200px; }
+
+.angel { background-position: -0px -0px; width: 200px; height: 200px; }
+.corsair { background-position: -200px -0px; width: 200px; height: 200px; }
+.greyscales { background-position: -400px -0px; width: 200px; height: 200px; }
+.hag { background-position: -0px -200px; width: 200px; height: 200px; }
+.jac { background-position: -200px -200px; width: 200px; height: 200px; }
+.kraken { background-position: -400px -200px; width: 200px; height: 200px; }
+.sakana { background-position: -0px -400px; width: 200px; height: 200px; }
+.salt { background-position: -200px -400px; width: 200px; height: 200px; }
+.shark { background-position: -400px -400px; width: 200px; height: 200px; }
+.siren { background-position: -0px -600px; width: 200px; height: 200px; }
+.tentacles { background-position: -200px -600px; width: 200px; height: 200px; }
+.vetsakana { background-position: -400px -600px; width: 200px; height: 200px; }
+.vetsiren { background-position: -0px -800px; width: 200px; height: 200px; }
+.yukai { background-position: -200px -800px; width: 200px; height: 200px; }
+
+.chaska { background-position: -0px -0px; width: 200px; height: 200px; }
+.egret { background-position: -200px -0px; width: 200px; height: 200px; }
+.fahad { background-position: -400px -0px; width: 200px; height: 200px; }
+.hearne { background-position: -0px -200px; width: 200px; height: 200px; }
+.jaecar { background-position: -200px -200px; width: 200px; height: 200px; }
+.seenah { background-position: -400px -200px; width: 200px; height: 200px; }
+.skatha { background-position: -0px -400px; width: 200px; height: 200px; }
+.snow { background-position: -200px -400px; width: 200px; height: 200px; }
+.theron { background-position: -400px -400px; width: 200px; height: 200px; }
+.ulfr { background-position: -0px -600px; width: 200px; height: 200px; }
+.zarola { background-position: -200px -600px; width: 200px; height: 200px; }
+.steeljaw { background-position: -400px -600px; width: 200px; height: 200px; }
+.vethearne { background-position: -0px -800px; width: 200px; height: 200px; }
+.vetminx { background-position: -200px -800px; width: 200px; height: 200px; }
+
+.brick { background-position: -0px -0px; width: 200px; height: 200px; }
+.chisel { background-position: -200px -0px; width: 200px; height: 200px; }
+.corbelli { background-position: -400px -0px; width: 200px; height: 200px; }
+.flint { background-position: -0px -200px; width: 200px; height: 200px; }
+.granite { background-position: -200px -200px; width: 200px; height: 200px; }
+.hammer { background-position: -400px -200px; width: 200px; height: 200px; }
+.harmony { background-position: -0px -400px; width: 200px; height: 200px; }
+.honour { background-position: -200px -400px; width: 200px; height: 200px; }
+.mallet { background-position: -400px -400px; width: 200px; height: 200px; }
+.marbles { background-position: -0px -600px; width: 200px; height: 200px; }
+.tower { background-position: -200px -600px; width: 200px; height: 200px; }
+.vetchisel { background-position: -400px -600px; width: 200px; height: 200px; }
+.vetharmony { background-position: -0px -800px; width: 200px; height: 200px; }
+.wrecker { background-position: -200px -800px; width: 200px; height: 200px; }
+
+.digger { background-position: -0px -0px; width: 200px; height: 200px; }
+.fissure { background-position: -200px -0px; width: 200px; height: 200px; }
+.fuse { background-position: -0px -200px; width: 200px; height: 200px; }
+.mule { background-position: -200px -200px; width: 200px; height: 200px; }
+.shaft { background-position: -0px -400px; width: 200px; height: 200px; }
+.spade { background-position: -200px -400px; width: 200px; height: 200px; }
+
+.bonesaw { background-position: -0px -0px; width: 200px; height: 200px; }
+.brainpan { background-position: -200px -0px; width: 200px; height: 200px; }
+.casket { background-position: -400px -0px; width: 200px; height: 200px; }
+.cosset { background-position: -0px -200px; width: 200px; height: 200px; }
+.dirge { background-position: -200px -200px; width: 200px; height: 200px; }
+.ghast { background-position: -400px -200px; width: 200px; height: 200px; }
+.graves { background-position: -0px -400px; width: 200px; height: 200px; }
+.memory { background-position: -200px -400px; width: 200px; height: 200px; }
+.mourn { background-position: -400px -400px; width: 200px; height: 200px; }
+.obulus { background-position: -0px -600px; width: 200px; height: 200px; }
+.scalpel { background-position: -200px -600px; width: 200px; height: 200px; }
+.silence { background-position: -400px -600px; width: 200px; height: 200px; }
+.vetgraves { background-position: -0px -800px; width: 200px; height: 200px; }
+.vethemlocke { background-position: -200px -800px; width: 200px; height: 200px; }
+.vileswarm { background-position: -400px -800px; width: 200px; height: 200px; }
+
+.azimuth { background-position: -0px -0px; width: 200px; height: 200px; }
+.ebb { background-position: -200px -0px; width: 200px; height: 200px; }
+.fathom { background-position: -0px -200px; width: 200px; height: 200px; }
+.horizon { background-position: -200px -200px; width: 200px; height: 200px; }
+.wander { background-position: -0px -400px; width: 200px; height: 200px; }
+.windfinder { background-position: -200px -400px; width: 200px; height: 200px; }
+
+.benediction { background-position: -0px -0px; width: 200px; height: 200px; }
+.grace { background-position: -200px -0px; width: 200px; height: 200px; }
+.harry { background-position: -0px -200px; width: 200px; height: 200px; }
+.mist { background-position: -200px -200px; width: 200px; height: 200px; }
+.pride { background-position: -0px -400px; width: 200px; height: 200px; }
+.sbrisket { background-position: -200px -400px; width: 200px; height: 200px; }
+.sspigot { background-position: -0px -600px; width: 200px; height: 200px; }
+.vetangtooth { background-position: -200px -600px; width: 200px; height: 200px; }
+
+.miasma { background-position: -0px -0px; width: 200px; height: 200px; }
+.pelage { background-position: -200px -0px; width: 200px; height: 200px; }
+.piper { background-position: -0px -200px; width: 200px; height: 200px; }
+.scourge { background-position: -200px -200px; width: 200px; height: 200px; }
+.skulk { background-position: -0px -400px; width: 200px; height: 200px; }
+.squeak { background-position: -200px -400px; width: 200px; height: 200px; }
+
+.avarisse { background-position: -0px -0px; width: 200px; height: 200px; }
+.blackheart { background-position: -200px -0px; width: 200px; height: 200px; }
+.coin { background-position: -400px -0px; width: 200px; height: 200px; }
+.decimate { background-position: -0px -200px; width: 200px; height: 200px; }
+.fangtooth { background-position: -200px -200px; width: 200px; height: 200px; }
+.greede { background-position: -400px -200px; width: 200px; height: 200px; }
+.gutter { background-position: -0px -400px; width: 200px; height: 200px; }
+.hemlocke { background-position: -200px -400px; width: 200px; height: 200px; }
+.minx { background-position: -400px -400px; width: 200px; height: 200px; }
+.mist { background-position: -0px -600px; width: 200px; height: 200px; }
+.rage { background-position: -200px -600px; width: 200px; height: 200px; }
+.snakeskin { background-position: -400px -600px; width: 200px; height: 200px; }
+.strongbox { background-position: -0px -800px; width: 200px; height: 200px; }
+.vetrage { background-position: -200px -800px; width: 200px; height: 200px; }
