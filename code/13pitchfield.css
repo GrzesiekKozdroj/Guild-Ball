@@ -17,8 +17,6 @@ body {
 .guildIco:active, .rosterIco:active, .guildRosterReverse:active, .guildRosterForward:active {
   box-shadow: inset 0 0 7px black, inset 0 0 13px darkblue, 0 0 200px white, 0 0 20px rgba(255, 255, 255, 0.2);
   border: solid rgba(58, 55, 55, 0.712);
-  width: 116px;
-  height: 116px;
 }
 
 .plajBookCell:hover, .plajBookTopCell:hover {
