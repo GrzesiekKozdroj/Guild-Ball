@@ -8,339 +8,294 @@
         <meta http-equiv="X-UA-Compatible" content="IE=9">
         <title>txt</title>
         <style>
-          body {
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-            background-color: #F0F0F0;
-          }
-          canvas {
-  border: 1px solid black;
-}
+          body{ background-color: ivory; }
+#canvas{border:1px solid red;}
+#r1disp, #r2disp { font: inherit; border:0;  background-color: ivory; }
+#r1, #r2 {  font-size: 8px; width: 200px; }
         </style>
       </head>
 </head>
-
 <body>
-<canvas id="c" width="500" height="500"></canvas>
+ 
+  <p>Finds the intersection of two circles. Click and drag either of the points, enter the radii in the text boxes.</p>
+
+<table border="0">
+<tr>
+    <td> 
+       <label for="amount">r1:</label>
+    <input type="text" id="r1disp" size="5" value="100" readonly />
+    </td>
+    <td> <div id="r1"></div>
+    </td>
+</tr>
+  <tr>
+    <td> 
+      <label for="amount">r2:</label>
+      <input type="text" id="r2disp" size="5" value="50" readonly />
+    </td>
+    <td><div id="r2"></div></td>
+  </tr>
+</table>
+<canvas id="canvas" width=300 height=300></canvas>
+
 <script>
-window.addEventListener("DOMContentLoaded", function()
-{
-    var image  = document.getElementById("html5");
-    var canvas = document.createElement("canvas");
-    document.body.appendChild(canvas);
+// Find the points of intersection of two circles
 
-    canvas.width  = image.width;
-    canvas.height = image.height;
+// Global variables 
+var    x1 = 100; // center of first circle
+var    y1 = 150;
+var    d1 = 100; // radius
 
-    var context = canvas.getContext("2d");
+var    x2 = 230; // center of second circle
+var    y2 = 150;
+var    d2 = 50;  // radius
 
-    context.drawImage(image, 0, 0);
+// calculate the intersections 
+function calc() {
+    if(d1 < 0 || d2 < 0) return;
+    var a = d2;
+    var b = d1;
+    var c = Math.sqrt((x1-x2)*(x1-x2)+(y1-y2)*(y1-y2));
+    var d = (b*b+c*c-a*a)/(2*c);
+    var h = Math.sqrt(b*b-d*d);
+    console.log(a,b,c,d,h);
+    x3 = (x2-x1)*d/c + (y2-y1)*h/c +  x1;
+    y3 = (y2-y1)*d/c - (x2-x1)*h/c +  y1;
+    x4 = (x2-x1)*d/c - (y2-y1)*h/c +  x1;
+    y4 = (y2-y1)*d/c + (x2-x1)*h/c +  y1;
+}
+
+// first method using trig
+function calctrig() {
+    if(d1 < 0 || d2 < 0) return;
+    var a = d2;
+    var b = d1;
+    var c = Math.sqrt((x1-x2)*(x1-x2)+(y1-y2)*(y1-y2));
+    var A = Math.acos((b*b+c*c-a*a)/(2*b*c));
+    var theta = Math.atan2(y2-y1,x2-x1);
+    console.log(a,b,c,A,theta);
+    var phi1 = theta+A;
+    var phi2 = theta-A;
+    x3 = d1 * Math.cos(phi1) + x1;
+    y3 = d1 * Math.sin(phi1) + y1;
+
+    x4 = d1 * Math.cos(phi2) + x1;
+    y4 = d1 * Math.sin(phi2) + y1; 
+}
+
+// canvas and mousedown related variables
+var canvas = document.getElementById("canvas");
+var ctx = canvas.getContext("2d");
+var $canvas = $("#canvas");
+var canvasOffset = $canvas.offset();
+var offsetX = canvasOffset.left;
+var offsetY = canvasOffset.top;
+var scrollX = $canvas.scrollLeft();
+var scrollY = $canvas.scrollTop();
+
+
+// save canvas size to vars b/ they're used often
+var canvasWidth = canvas.width;
+var canvasHeight = canvas.height;
+
+// list of lines created
+var lines = new Array();
+
+// list of all solutions 
+var allSolutions = new Array();
+// solutions round bounding rect
+var refinedSols = new Array();
+// ordered solutions for polygon
+var polySols = new Array();
+
+/////////// The line type
+
+// A line defined by  a x + b y + c = 0
+function Line(a,b,c) {
+    this.a = a;
+    this.b = b;
+    this.c = c;
+}
+
+// given two points create the line
+function makeLine(x0,y0,x1,y1) {
+    // Line is defined by 
+    // (x - x0) * ( y1 - y0) = ( y - y0) * ( x1 - x0)
+    // (y1-y0)*x - (x1-x0)* y + x0*(y1-y0)+y0*(x1-x0) = 0
+    return new Line( (y1-y0), (x0-x1), -x0*(y1-y0)+y0*(x1-x0));
+};
+
+Line.prototype.toString = function () {
+    var s = "" + this.a + " x ";
+    s += (this.b >= 0 ? "+ "+this.b : "- "+ (-this.b) );
+    s += " y ";
+    s += (this.c >= 0 ? "+ "+this.c : "- "+ (-this.c) );
+    return s + " = 0";
+};
+
+Line.prototype.draw = function() {
+  var points = new Array();
+  // find the intersecetions with the boinding box
+    // lhs :  a * 0 + b * y + c = 0  
+    if( this.b != 0 ) {
+        var y = -this.c / this.b;
+        if( y >= 0 && y <= canvasHeight ) 
+            points.push([0,y]);
+    }
+    // rhs :  a * canvasWidth + b * y + c = 0  
+    if( this.b != 0 ) {
+        var y = ( - this.a * canvasWidth - this.c )/ this.b;
+        if( y >= 0 && y <= canvasHeight ) 
+            points.push([canvasWidth,y]);
+    }
+    // top : a * x + b * 0 + c = 0  
+    if( this.a != 0 ) {
+        var x = -this.c / this.a;
+        if( x > 0 && x < canvasWidth ) 
+            points.push([x,0]);
+    }
+    // bottom : a * x + b * canvasHeight + c = 0  
+    if( this.a != 0 ) {
+        var x = ( - this.b * canvasHeight - this.c )/ this.a;
+        if( x > 0 && x < canvasWidth ) 
+            points.push([x,canvasHeight]);
+    }
+    if(points.length == 2) {
+      ctx.moveTo(points[0][0], points[0][1]);
+      ctx.lineTo(points[1][0], points[1][1]);
+    }
+    else
+      console.log(points.toString());
+}
+
+
+// draw 
+function draw() {
+    console.log("drawlines");
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
+
+
+    ctx.lineWidth = 5;
+    ctx.beginPath();
+    lines.forEach(function(line, index, array) {console.log(line.toString()); line.draw();});
+       
+    ctx.beginPath();
+    ctx.fillStyle = "Red";
+    ctx.fillRect(x1-5,y1-5,10,10);
+    ctx.fillRect(x2-5,y2-5,10,10);
+
+    ctx.stroke();
+
+    
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.fillStyle = "black";
+    if(d1>0) 
+        ctx.arc(x1, y1, d1, 0, Math.PI*2, true); 
+    ctx.stroke();
+    ctx.beginPath();
+    if(d2>0) 
+        ctx.arc(x2, y2, d2, 0, Math.PI*2, true); 
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.fillStyle = "Blue";
+    ctx.fillRect(x3-5,y3-5,10,10);
+    ctx.fillRect(x4-5,y4-5,10,10);
+
+    ctx.stroke();
+
+}
+
+
+function reset() {
+    x1 = -10;
+    y1 = -10;
+    x2 = -10;
+    y2 = -10;
+    lines.splice(0);
+}
+
+var pointId = -1;
+
+// Handle mouse clicks
+
+function handleMouseUp(e) {
+    pointId = -1;
+}
+
+function handleMouseDown(e) {
+    e.preventDefault();
+
+    // get the mouse position
+    var x = parseInt(e.pageX - offsetX);
+    var y = parseInt(e.pageY - offsetY);
+    
+    if((x-x1)*(x-x1)+(y-y1)*(y-y1) < 50) {
+      $('#canvas').css('cursor', 'pointer');
+      pointId = 1;     
+    } else if((x-x2)*(x-x2)+(y-y2)*(y-y2) < 50) {
+      $('#canvas').css('cursor', 'pointer');
+      pointId = 2;     
+    } else {
+      $('#canvas').css('cursor', 'default');
+      pointId = -1;     
+    }
+}
+    
+function handleMouseMove(e) {
+    var x = parseInt(e.pageX - offsetX);
+    var y = parseInt(e.pageY - offsetY);
+    
+    if(pointId == 1) {
+        x1 = x;
+        y1 = y;
+        calc();
+        draw();
+
+    } else if(pointId == 2) {
+        x2 = x;
+        y2 = y;
+        calc();
+        draw();
+
+    } else if((x-x1)*(x-x1)+(y-y1)*(y-y1) < 50) {
+      $('#canvas').css('cursor', 'pointer');
+    } else if((x-x2)*(x-x2)+(y-y2)*(y-y2) < 50) {
+      $('#canvas').css('cursor', 'pointer');
+    } else {
+      $('#canvas').css('cursor', 'default');
+    }
+}
+
+$("#canvas").mousemove(function (e) {
+    handleMouseMove(e);
 });
 
-function init_canvas(){
-    var img = new Image();
-    img.src = './icons/Hunters/Skatha.jpg';
-    img.width = 600;
-    img.height = 800;
-    canvas.beginPath();
-    canvas.drawImage(img, 0, 0,600,800);
-    canvas.fillStyle = 'rgba(120, 120, 50, .5)';
-    canvas.fillRect(0,0,1200,900);
-    canvas.beginPath();
-    canvas.fillStyle = 'rgba(120, 120, 50, .8)';
-    canvas.fillRect(420,420,720,720);
+$("#canvas").mousedown(function (e) {
+    handleMouseDown(e);
+});
 
-    $(document).mousemove(function(e){
-        if(e.offsetX){
-            mouse_position.x = e.offsetX;
-            mouse_position.y = e.offsetY;
-        }else if(e.layerY){
-            mouse_position.x = e.layerX;
-            mouse_position.y = e.layerY;
-        }
-        show_color();
+$("#canvas").mouseup(function (e) {
+    handleMouseUp(e);
+});
 
-    });
-}
+$("#d1").change(function() {
+  d1 = parseInt($("#d1").val());
+    calc();
+    draw();
+});
 
+$("#d2").change(function() {
+  d2 = parseInt($("#d2").val());
+    calc();
+    draw();
+});
 
-function show_color(){
-    color  = canvas.getImageData(mouse_position.x,mouse_position.y,1,1).data;
-    console.info("red: " + color[0] + " green: " + color[1] + " blue: " + color[2] + " alpha: " +color[3]);
+calc();
+draw();
 
-}
 </script>
-   <section id="animation-project">
-      <label>X: </label><input type="number" id="x_in">
-      <label>Y: </label><input type="number" id="y_in">
-      <input type="button" id="move" value="MOVE">
-      <canvas id="canvasanimation" width=600 height=400></canvas>
-      <script>
-        var x = 100;
-var y = 50;
-var r = 10;
-var duration = 1000; // in ms
-var nextX, nextY;
-var startTime;
 
-function anim(time) {
-  if (!startTime) // it's the first frame
-    startTime = time;
-
-  // deltaTime should be in the range [0 ~ 1]
-  var deltaTime = (time - startTime) / duration;
-  // currentPos = previous position + (difference * deltaTime)
-  var currentX = x + ((nextX - x) * deltaTime);
-  var currentY = y + ((nextY - y) * deltaTime);
-
-  if (deltaTime >= 1) { // this means we ended our animation
-    x = nextX; // reset x variable
-    y = nextY; // reset y variable
-    startTime = null; // reset startTime
-    draw(x, y); // draw the last frame, at required position
-  } else {
-    draw(currentX, currentY);
-    requestAnimationFrame(anim); // do it again
-  }
-}
-
-
-move.onclick = e => {
-  nextX = +x_in.value || 0;
-  nextY = +y_in.value || 0;
-  anim();
-}
-// OP's code
-
-var WIDTH = 600;
-var HEIGHT = 400;
-
-var canvas = document.getElementById("canvasanimation");
-var ctx = canvas.getContext("2d");
-
-function circle(x, y, r) {
-  ctx.beginPath();
-  ctx.arc(x, y, r, 0, Math.PI * 2, true);
-  ctx.fill();
-}
-
-function clear() {
-  ctx.clearRect(0, 0, WIDTH, HEIGHT);
-}
-
-function draw(x, y) {
-  clear(WIDTH, HEIGHT);
-  ctx.fillStyle = "purple";
-  circle(x, y, r);
-}
-
-draw(x, y);
-      </script>
-  </section>
-<section>
-
-        <div>
-            <canvas id="canvas" width="400" height="300">
-                This text is displayed if your browser does not support HTML5 Canvas.
-            </canvas>
-            <canvas id="canvas2" width="400" height="300"></canvas>
-        </div>
-
-        <script type="text/javascript">
-            var canvas = document.getElementById("canvas");
-            var ctx = canvas.getContext("2d");
-            var x = 75;
-            var y = 50;
-            var WIDTH = 400;
-            var HEIGHT = 300;
-            var dragok = false;
-            //rysuje kwadrat
-            function rect(x, y, w, h) {
-                ctx.beginPath();
-                ctx.rect(x, y, w, h);
-                ctx.closePath();
-                ctx.fill();
-            }
-            //czysci canve
-            function clear() {
-                //ctx.clearRect(0, 0, WIDTH, HEIGHT);
-            }
-
-            function init() {
-                return setInterval(draw, 10);
-            }
-
-            function draw() {
-                clear();
-                ctx.fillStyle = "#FAF7F8";
-                rect(0, 0, WIDTH, HEIGHT);
-                ctx.fillStyle = "#444444";
-                rect(x - 15, y - 15, 30, 30);
-                draSmiley();
-                draSmiley2();
-            }
-
-            function myMove(e) {
-                if (dragok) {
-                    x = e.pageX - canvas.offsetLeft;
-                    y = e.pageY - canvas.offsetTop;
-                }
-            }
-
-            function myDown(e) {
-                if (e.pageX < x + 15 + canvas.offsetLeft && e.pageX > x - 15 +
-                    canvas.offsetLeft && e.pageY < y + 15 + canvas.offsetTop &&
-                    e.pageY > y - 15 + canvas.offsetTop) {
-                    x = e.pageX - canvas.offsetLeft;
-                    y = e.pageY - canvas.offsetTop;
-                    dragok = true;
-                    canvas.onmousemove = myMove;
-                }
-            }
-
-            function myUp() {
-                dragok = false;
-                canvas.onmousemove = null;
-            }
-
-            init();
-            canvas.onmousedown = myDown;
-            canvas.onmouseup = myUp;
-            ///////////////////////////////////0uch my eye//////////////////////;
-            const canvas2 = document.getElementById('canvas2');
-            const ctx2 = canvas2.getContext('2d');
-
-            canvas.addEventListener('mousemove', function (event) {
-                if (event.region) {
-                    console.log(event.region);
-                }
-            });
-
-            function draSmiley() {
-
-                ctx.beginPath();
-                ctx.arc(100, 100, 75, 0, 2 * Math.PI);
-                ctx.lineWidth = 5;
-                ctx.stroke();
-
-                // Eyes
-                ctx.beginPath();
-                ctx.arc(70, 80, 10, 0, 2 * Math.PI);
-                ctx.arc(130, 80, 10, 0, 2 * Math.PI);
-                ctx.fill();
-               // ctx.addHitRegion({
-               //     id: "eyes"
-               // });
-
-                // Mouth
-                ctx.beginPath();
-                ctx.arc(100, 110, 50, 0, Math.PI);
-                ctx.stroke();
-            }
-
-            function draSmiley2() {
-
-                ctx.beginPath();
-                ctx.arc(200, 100, 75, 0, 2 * Math.PI);
-                ctx.lineWidth = 5;
-                ctx.stroke();
-
-                // Eyes
-                ctx.beginPath();
-                ctx.arc(230, 80, 10, 0, 2 * Math.PI);
-                ctx.arc(170, 80, 10, 0, 2 * Math.PI);
-                ctx.fill();
-                ctx.addHitRegion({
-                    id: "eyes2"
-                });
-
-                // Mouth
-                ctx.beginPath();
-                ctx.arc(200, 110, 50, 0, Math.PI);
-                ctx.stroke();
-            }
-
-            const members = [];
-
-function createMember(e) {
-  const div = document.createElement('div');
-  div.style.width = "40px";
-  div.style.height = "40px";
-  div.style.position = "absolute";
-  div.style.background = "#eee"
-  div.style.left = e.pageX + "px"
-  div.style.top = e.pageY + "px"
-  document.body.appendChild(div);
-  members.push(div);
-  checkMembers();
-}
-
-function checkMembers() {
-  if (members.length > 1)
-    for (let i=0; i<members.length; i++) {
-      const m1 = members[i];
-      m1.style.background = "#eee";
-    }
-  for (let i=0; i<members.length; i++) {
-    const m1 = members[i];
-    for (let j=i+1; j<members.length; j++) {
-      const m2 = members[j];
-      const minH = Math.min(m1.offsetLeft, m2.offsetLeft);
-      const maxH = Math.max(m1.offsetLeft, m2.offsetLeft);
-      const minW = Math.min(m1.offsetTop, m2.offsetTop);
-      const maxW = Math.max(m1.offsetTop, m2.offsetTop);
-      if (maxH - minH < 40 && maxW - minW < 40) {
-        m2.style.background = 'red';
-        m1.style.background = 'red'
-      }
-
-    }
-  }
-}
-
-document.addEventListener('click', createMember)
-        </script>
-
-    </section>
-
-<section>
-    <div id="container"></div>
-    <script>
-      var width = window.innerWidth;
-      var height = window.innerHeight;
-
-      var stage = new Konva.Stage({
-        container: 'container',
-        width: width,
-        height: height
-      });
-      var layer = new Konva.Layer();
-      stage.add(layer);
-
-      var n = 100, shape;
-      for (var i = 0; i < n; i++) {
-        shape = new Konva.Circle({
-          x: stage.width() * Math.random(),
-          y: stage.height() * Math.random(),
-          radius: 10 + 10 * Math.random(),
-          fill: Konva.Util.getRandomColor(),
-          stroke: 'black',
-          shadowEnabled: false,
-          draggable: true,
-        });
-        shape.strokeHitEnabled(false);
-        shape.shadowForStrokeEnabled(false);
-
-        layer.add(shape);
-      }
-
-      layer.draw();
-    </script>
-</section> 
-
-  </body>
-
-
-
+</body>
 </html>
