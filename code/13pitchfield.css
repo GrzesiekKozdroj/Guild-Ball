@@ -394,10 +394,14 @@ button:hover {
   line-height: 0.9rem;
   border: 2px solid black;
   background-color: #c8c174;
+  background: repeating-linear-gradient(247deg, transparent 0%, transparent 25%, #f6fbff 25%, rgba(241, 226, 155, 0.932) 37.5%, #f6fbff 25%, rgba(241, 226, 155, 0.932) 37.5%, #f6fbff 25%, rgba(241, 226, 155, 0.932) 37.5%, #f6fbff 25%, #e2e6e9 37.5%), linear-gradient(223deg, #d3d7da 25%, #dde0e2, rgba(241, 226, 155, 0.932) 85%, #d1d3d4, rgba(241, 226, 155, 0.932) 95%, #d3d7da), linear-gradient(22deg, transparent 0%, transparent 50%, #ccd1d4 50%, rgba(241, 226, 155, 0.932) 100%, #ccd1d4 50%, rgba(241, 226, 155, 0.932) 100%, #ccd1d4 50%, #d6d7d8 100%, #ccd1d4 50%, #d6d7d8 100%);
+  background-blend-mode: multiply;
 }
 
 .busted:hover {
   animation: hoovver .3s forwards;
+  background: repeating-linear-gradient(247deg, transparent 0%, transparent 25%, #f6fbff 25%, rgba(36, 116, 60, 0.932) 37.5%, #f6fbff 25%, rgba(36, 116, 60, 0.932) 37.5%, #f6fbff 25%, rgba(36, 116, 60, 0.932) 37.5%, #f6fbff 25%, #e2e6e9 37.5%), linear-gradient(223deg, #d3d7da 25%, #dde0e2, rgba(36, 116, 60, 0.932) 85%, #d1d3d4, rgba(36, 116, 60, 0.932) 95%, #d3d7da), linear-gradient(22deg, transparent 0%, transparent 50%, #ccd1d4 50%, rgba(36, 116, 60, 0.932) 100%, #ccd1d4 50%, rgba(36, 116, 60, 0.932) 100%, #ccd1d4 50%, #d6d7d8 100%, #ccd1d4 50%, #d6d7d8 100%);
+  background-blend-mode: multiply;
 }
 
 .hpli {
