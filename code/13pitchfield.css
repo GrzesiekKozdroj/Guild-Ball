@@ -3090,7 +3090,7 @@ button:hover {
   height: 190px;
   background-color: rgba(31, 31, 31, 0.31);
   border-radius: 5px;
-  width: 370px;
+  width: 100%;
   position: relative;
   margin: 0 auto 0 auto;
   font-size: 1.5vw;
@@ -3524,5 +3524,535 @@ html {
   }
   .guildHeader p {
     font-size: 2vw;
+  }
+}
+
+[id^="cancel"]:hover:after, [id^="dropBall"]:hover:after, [id^="kick"]:hover:after, [id^="charge"]:hover:after, [id^="bonusTime"]:hover:after, [id^="healSelf"]:hover:after, [id^="forfeitMove"]:hover:after, [id^="removeConditions"]:hover:after, [id^="healAFriend"]:hover:after, [id^="takeAbreather"]:hover:after, [class^="glide"]:hover:after {
+  border-radius: 2px;
+  pointer-events: none;
+  position: absolute;
+  opacity: .95;
+  color: white;
+  width: 12vw;
+  padding: 1vw;
+  -webkit-text-stroke: 1px rgba(99, 93, 93, 0.699);
+  font-weight: 900;
+  font-size: 1.1vw;
+}
+
+[id^="cancel"]:hover:after {
+  background: repeating-linear-gradient(27deg, transparent 0%, transparent 25%, #f6fbff 25%, rgba(141, 8, 8, 0.932) 37.5%, #f6fbff 25%, rgba(141, 8, 8, 0.932) 37.5%, #f6fbff 25%, rgba(141, 8, 8, 0.932) 37.5%, #f6fbff 25%, #e2e6e9 37.5%), linear-gradient(23deg, #d3d7da 25%, #dde0e2, rgba(141, 8, 8, 0.932) 85%, #d1d3d4, rgba(141, 8, 8, 0.932) 95%, #d3d7da), linear-gradient(52deg, transparent 0%, transparent 50%, #ccd1d4 50%, rgba(141, 8, 8, 0.932) 100%, #ccd1d4 50%, rgba(141, 8, 8, 0.932) 100%, #ccd1d4 50%, #d6d7d8 100%, #ccd1d4 50%, #d6d7d8 100%);
+  background-blend-mode: multiply;
+  background-size: 150% 150%;
+  -webkit-animation: Gradient 30s ease infinite;
+  -moz-animation: Gradient 30s ease infinite;
+  animation: Gradient 30s ease infinite;
+  content: 'cancel current action and auras. For example if you were about to charge but changed your mind its time to click here or press esc button.';
+}
+
+@-webkit-keyframes Gradient {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 50%;
+    transform: rotate(-30deg);
+  }
+  100% {
+    background-position: 0% 100%;
+  }
+}
+
+@-moz-keyframes Gradient {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 100%;
+  }
+}
+
+@keyframes Gradient {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 100%;
+  }
+}
+
+[id^="dropBall"]:hover:after {
+  background: repeating-linear-gradient(7deg, transparent 0%, transparent 25%, #f6fbff 25%, rgba(90, 141, 8, 0.932) 37.5%, #f6fbff 25%, rgba(90, 141, 8, 0.932) 37.5%, #f6fbff 25%, rgba(90, 141, 8, 0.932) 37.5%, #f6fbff 25%, #e2e6e9 37.5%), linear-gradient(143deg, #d3d7da 25%, #dde0e2, rgba(90, 141, 8, 0.932) 85%, #d1d3d4, rgba(90, 141, 8, 0.932) 95%, #d3d7da), linear-gradient(200deg, transparent 0%, transparent 50%, #ccd1d4 50%, rgba(90, 141, 8, 0.932) 100%, #ccd1d4 50%, rgba(90, 141, 8, 0.932) 100%, #ccd1d4 50%, #d6d7d8 100%, #ccd1d4 50%, #d6d7d8 100%);
+  background-blend-mode: multiply;
+  background-size: 150% 150%;
+  -webkit-animation: Gradient 30s ease infinite;
+  -moz-animation: Gradient 30s ease infinite;
+  animation: Gradient 30s ease infinite;
+  content: 'Squaddie can drop ball in its posession, as far as 1" between them.';
+}
+
+@-webkit-keyframes Gradient {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 50%;
+    transform: rotate(-30deg);
+  }
+  100% {
+    background-position: 0% 100%;
+  }
+}
+
+@-moz-keyframes Gradient {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 100%;
+  }
+}
+
+@keyframes Gradient {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 100%;
+  }
+}
+
+[id^="kick"]:hover:after {
+  background: repeating-linear-gradient(7deg, transparent 0%, transparent 25%, #f6fbff 25%, rgba(51, 78, 7, 0.932) 37.5%, #f6fbff 25%, rgba(51, 78, 7, 0.932) 37.5%, #f6fbff 25%, rgba(51, 78, 7, 0.932) 37.5%, #f6fbff 25%, #e2e6e9 37.5%), linear-gradient(143deg, #d3d7da 25%, #dde0e2, rgba(51, 78, 7, 0.932) 85%, #d1d3d4, rgba(51, 78, 7, 0.932) 95%, #d3d7da), linear-gradient(200deg, transparent 0%, transparent 50%, #ccd1d4 50%, rgba(51, 78, 7, 0.932) 100%, #ccd1d4 50%, rgba(51, 78, 7, 0.932) 100%, #ccd1d4 50%, #d6d7d8 100%, #ccd1d4 50%, #d6d7d8 100%);
+  background-blend-mode: multiply;
+  background-size: 150% 150%;
+  -webkit-animation: Gradient 30s ease infinite;
+  -moz-animation: Gradient 30s ease infinite;
+  animation: Gradient 30s ease infinite;
+  content: 'Squaddie can kick ball in its posession click where you want it to be..';
+}
+
+@-webkit-keyframes Gradient {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 50%;
+    transform: rotate(-30deg);
+  }
+  100% {
+    background-position: 0% 100%;
+  }
+}
+
+@-moz-keyframes Gradient {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 100%;
+  }
+}
+
+@keyframes Gradient {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 100%;
+  }
+}
+
+[id^="charge"]:hover:after {
+  background: repeating-linear-gradient(7deg, transparent 0%, transparent 25%, #f6fbff 25%, rgba(78, 7, 19, 0.932) 37.5%, #f6fbff 25%, rgba(78, 7, 19, 0.932) 37.5%, #f6fbff 25%, rgba(78, 7, 19, 0.932) 37.5%, #f6fbff 25%, #e2e6e9 37.5%), linear-gradient(13deg, #d3d7da 25%, #dde0e2, rgba(78, 7, 19, 0.932) 85%, #d1d3d4, rgba(78, 7, 19, 0.932) 95%, #d3d7da), linear-gradient(20deg, transparent 0%, transparent 50%, #ccd1d4 50%, rgba(78, 7, 19, 0.932) 100%, #ccd1d4 50%, rgba(78, 7, 19, 0.932) 100%, #ccd1d4 50%, #d6d7d8 100%, #ccd1d4 50%, #d6d7d8 100%);
+  background-blend-mode: multiply;
+  background-size: 150% 150%;
+  -webkit-animation: Gradient 30s ease infinite;
+  -moz-animation: Gradient 30s ease infinite;
+  animation: Gradient 30s ease infinite;
+  content: 'Squaddie can charge opposing squaddie. Click here, then on the victim within maximum threat range, then plot charge path so that Squaddie has its victim in melee range.';
+}
+
+@-webkit-keyframes Gradient {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 50%;
+    transform: rotate(-30deg);
+  }
+  100% {
+    background-position: 0% 100%;
+  }
+}
+
+@-moz-keyframes Gradient {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 100%;
+  }
+}
+
+@keyframes Gradient {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 100%;
+  }
+}
+
+[id^="bonusTime"]:hover:after {
+  background: repeating-linear-gradient(7deg, transparent 0%, transparent 25%, #f6fbff 25%, rgba(28, 7, 78, 0.932) 37.5%, #f6fbff 25%, rgba(28, 7, 78, 0.932) 37.5%, #f6fbff 25%, rgba(28, 7, 78, 0.932) 37.5%, #f6fbff 25%, #e2e6e9 37.5%), linear-gradient(13deg, #d3d7da 25%, #dde0e2, rgba(28, 7, 78, 0.932) 85%, #d1d3d4, rgba(28, 7, 78, 0.932) 95%, #d3d7da), linear-gradient(20deg, transparent 0%, transparent 50%, #ccd1d4 50%, rgba(28, 7, 78, 0.932) 100%, #ccd1d4 50%, rgba(28, 7, 78, 0.932) 100%, #ccd1d4 50%, #d6d7d8 100%, #ccd1d4 50%, #d6d7d8 100%);
+  background-blend-mode: multiply;
+  background-size: 150% 150%;
+  -webkit-animation: Gradient 30s ease infinite;
+  -moz-animation: Gradient 30s ease infinite;
+  animation: Gradient 30s ease infinite;
+  content: 'For the price of one momentum adds additional die to the next action requiring to roll dies.';
+}
+
+@-webkit-keyframes Gradient {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 50%;
+    transform: rotate(-30deg);
+  }
+  100% {
+    background-position: 0% 100%;
+  }
+}
+
+@-moz-keyframes Gradient {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 100%;
+  }
+}
+
+@keyframes Gradient {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 100%;
+  }
+}
+
+[id^="healSelf"]:hover:after {
+  background: repeating-linear-gradient(7deg, transparent 0%, transparent 25%, #f6fbff 25%, rgba(78, 23, 54, 0.932) 37.5%, #f6fbff 25%, rgba(78, 23, 54, 0.932) 37.5%, #f6fbff 25%, rgba(78, 23, 54, 0.932) 37.5%, #f6fbff 25%, #e2e6e9 37.5%), linear-gradient(13deg, #d3d7da 25%, #dde0e2, rgba(78, 23, 54, 0.932) 85%, #d1d3d4, rgba(78, 23, 54, 0.932) 95%, #d3d7da), linear-gradient(20deg, transparent 0%, transparent 50%, #ccd1d4 50%, rgba(78, 23, 54, 0.932) 100%, #ccd1d4 50%, rgba(78, 23, 54, 0.932) 100%, #ccd1d4 50%, #d6d7d8 100%, #ccd1d4 50%, #d6d7d8 100%);
+  background-blend-mode: multiply;
+  background-size: 150% 150%;
+  -webkit-animation: Gradient 30s ease infinite;
+  -moz-animation: Gradient 30s ease infinite;
+  animation: Gradient 30s ease infinite;
+  content: 'Squaddie can once a turn heal 4 wounds for momentum.';
+}
+
+@-webkit-keyframes Gradient {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 50%;
+    transform: rotate(-30deg);
+  }
+  100% {
+    background-position: 0% 100%;
+  }
+}
+
+@-moz-keyframes Gradient {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 100%;
+  }
+}
+
+@keyframes Gradient {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 100%;
+  }
+}
+
+[id^="forfeitMove"]:hover:after {
+  background: repeating-linear-gradient(7deg, transparent 0%, transparent 25%, #f6fbff 25%, rgba(54, 50, 53, 0.932) 37.5%, #f6fbff 25%, rgba(54, 50, 53, 0.932) 37.5%, #f6fbff 25%, rgba(54, 50, 53, 0.932) 37.5%, #f6fbff 25%, #e2e6e9 37.5%), linear-gradient(13deg, #d3d7da 25%, #dde0e2, rgba(54, 50, 53, 0.932) 85%, #d1d3d4, rgba(54, 50, 53, 0.932) 95%, #d3d7da), linear-gradient(20deg, transparent 0%, transparent 50%, #ccd1d4 50%, rgba(54, 50, 53, 0.932) 100%, #ccd1d4 50%, rgba(54, 50, 53, 0.932) 100%, #ccd1d4 50%, #d6d7d8 100%, #ccd1d4 50%, #d6d7d8 100%);
+  background-blend-mode: multiply;
+  background-size: 150% 150%;
+  -webkit-animation: Gradient 30s ease infinite;
+  -moz-animation: Gradient 30s ease infinite;
+  animation: Gradient 30s ease infinite;
+  content: 'Squaddie can forfeit movement to stand up.';
+}
+
+@-webkit-keyframes Gradient {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 50%;
+    transform: rotate(-30deg);
+  }
+  100% {
+    background-position: 0% 100%;
+  }
+}
+
+@-moz-keyframes Gradient {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 100%;
+  }
+}
+
+@keyframes Gradient {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 100%;
+  }
+}
+
+[id^="removeConditions"]:hover:after {
+  background: repeating-linear-gradient(7deg, transparent 0%, transparent 25%, #f6fbff 25%, rgba(7, 12, 56, 0.932) 37.5%, #f6fbff 25%, rgba(7, 12, 56, 0.932) 37.5%, #f6fbff 25%, rgba(7, 12, 56, 0.932) 37.5%, #f6fbff 25%, #e2e6e9 37.5%), linear-gradient(13deg, #d3d7da 25%, #dde0e2, rgba(7, 12, 56, 0.932) 85%, #d1d3d4, rgba(7, 12, 56, 0.932) 95%, #d3d7da), linear-gradient(20deg, transparent 0%, transparent 50%, #ccd1d4 50%, rgba(7, 12, 56, 0.932) 100%, #ccd1d4 50%, rgba(7, 12, 56, 0.932) 100%, #ccd1d4 50%, #d6d7d8 100%, #ccd1d4 50%, #d6d7d8 100%);
+  background-blend-mode: multiply;
+  background-size: 150% 150%;
+  -webkit-animation: Gradient 30s ease infinite;
+  -moz-animation: Gradient 30s ease infinite;
+  animation: Gradient 30s ease infinite;
+  content: 'Squaddie can remove all conditions it currently suffers for momentum.';
+}
+
+@-webkit-keyframes Gradient {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 50%;
+    transform: rotate(-30deg);
+  }
+  100% {
+    background-position: 0% 100%;
+  }
+}
+
+@-moz-keyframes Gradient {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 100%;
+  }
+}
+
+@keyframes Gradient {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 100%;
+  }
+}
+
+[id^="healAFriend"]:hover:after {
+  background: repeating-linear-gradient(7deg, transparent 0%, transparent 25%, #f6fbff 25%, rgba(53, 2, 2, 0.932) 37.5%, #f6fbff 25%, rgba(53, 2, 2, 0.932) 37.5%, #f6fbff 25%, rgba(53, 2, 2, 0.932) 37.5%, #f6fbff 25%, #e2e6e9 37.5%), linear-gradient(13deg, #d3d7da 25%, #dde0e2, rgba(53, 2, 2, 0.932) 85%, #d1d3d4, rgba(53, 2, 2, 0.932) 95%, #d3d7da), linear-gradient(20deg, transparent 0%, transparent 50%, #ccd1d4 50%, rgba(53, 2, 2, 0.932) 100%, #ccd1d4 50%, rgba(53, 2, 2, 0.932) 100%, #ccd1d4 50%, #d6d7d8 100%, #ccd1d4 50%, #d6d7d8 100%);
+  background-blend-mode: multiply;
+  background-size: 150% 150%;
+  -webkit-animation: Gradient 30s ease infinite;
+  -moz-animation: Gradient 30s ease infinite;
+  animation: Gradient 30s ease infinite;
+  content: 'Squaddie can heal 4 wounds from a friend within 8".';
+}
+
+@-webkit-keyframes Gradient {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 50%;
+    transform: rotate(-30deg);
+  }
+  100% {
+    background-position: 0% 100%;
+  }
+}
+
+@-moz-keyframes Gradient {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 100%;
+  }
+}
+
+@keyframes Gradient {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 100%;
+  }
+}
+
+[id^="takeAbreather"]:hover:after {
+  background: repeating-linear-gradient(7deg, transparent 0%, transparent 25%, #f6fbff 25%, rgba(5, 38, 53, 0.932) 37.5%, #f6fbff 25%, rgba(5, 38, 53, 0.932) 37.5%, #f6fbff 25%, rgba(5, 38, 53, 0.932) 37.5%, #f6fbff 25%, #e2e6e9 37.5%), linear-gradient(13deg, #d3d7da 25%, #dde0e2, rgba(5, 38, 53, 0.932) 85%, #d1d3d4, rgba(5, 38, 53, 0.932) 95%, #d3d7da), linear-gradient(20deg, transparent 0%, transparent 50%, #ccd1d4 50%, rgba(5, 38, 53, 0.932) 100%, #ccd1d4 50%, rgba(5, 38, 53, 0.932) 100%, #ccd1d4 50%, #d6d7d8 100%, #ccd1d4 50%, #d6d7d8 100%);
+  background-blend-mode: multiply;
+  background-size: 150% 150%;
+  -webkit-animation: Gradient 30s ease infinite;
+  -moz-animation: Gradient 30s ease infinite;
+  animation: Gradient 30s ease infinite;
+  content: 'Squaddie can remove all conditions from a friend within 8".';
+}
+
+@-webkit-keyframes Gradient {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 50%;
+    transform: rotate(-30deg);
+  }
+  100% {
+    background-position: 0% 100%;
+  }
+}
+
+@-moz-keyframes Gradient {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 100%;
+  }
+}
+
+@keyframes Gradient {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 100%;
+  }
+}
+
+[class^="glide"]:hover:after {
+  background: repeating-linear-gradient(7deg, transparent 0%, transparent 25%, #f6fbff 25%, rgba(83, 41, 7, 0.932) 37.5%, #f6fbff 25%, rgba(83, 41, 7, 0.932) 37.5%, #f6fbff 25%, rgba(83, 41, 7, 0.932) 37.5%, #f6fbff 25%, #e2e6e9 37.5%), linear-gradient(13deg, #d3d7da 25%, #dde0e2, rgba(83, 41, 7, 0.932) 85%, #d1d3d4, rgba(83, 41, 7, 0.932) 95%, #d3d7da), linear-gradient(20deg, transparent 0%, transparent 50%, #ccd1d4 50%, rgba(83, 41, 7, 0.932) 100%, #ccd1d4 50%, rgba(83, 41, 7, 0.932) 100%, #ccd1d4 50%, #d6d7d8 100%, #ccd1d4 50%, #d6d7d8 100%);
+  background-blend-mode: multiply;
+  background-size: 150% 150%;
+  -webkit-animation: Gradient 30s ease infinite;
+  -moz-animation: Gradient 30s ease infinite;
+  animation: Gradient 30s ease infinite;
+  content: 'Squaddie can pay momentum to negate movement penalty from rough ground.';
+}
+
+@-webkit-keyframes Gradient {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 50%;
+    transform: rotate(-30deg);
+  }
+  100% {
+    background-position: 0% 100%;
+  }
+}
+
+@-moz-keyframes Gradient {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 100%;
+  }
+}
+
+@keyframes Gradient {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 100%;
   }
 }
