@@ -10,6 +10,10 @@ body {
   box-sizing: border-box;
 }
 
+.tesdsfhkjlkjhgfdster {
+  color: rgba(209, 59, 49, 0.932);
+}
+
 .background-Alchemist {
   background: repeating-linear-gradient(147deg, transparent 0%, transparent 25%, #f6fbff 25%, rgba(89, 142, 56, 0.562) 37.5%, #f6fbff 25%, rgba(89, 142, 56, 0.562) 37.5%, #f6fbff 25%, rgba(89, 142, 56, 0.562) 37.5%, #f6fbff 25%, #e2e6e9 37.5%), linear-gradient(43deg, #d3d7da 25%, #dde0e2, rgba(89, 142, 56, 0.562) 85%, #d1d3d4, rgba(89, 142, 56, 0.562) 95%, #d3d7da), linear-gradient(122deg, transparent 0%, transparent 50%, #ccd1d4 50%, rgba(89, 142, 56, 0.562) 100%, #ccd1d4 50%, rgba(89, 142, 56, 0.562) 100%, #ccd1d4 50%, #d6d7d8 100%, #ccd1d4 50%, #d6d7d8 100%);
   background-blend-mode: multiply;
@@ -57,7 +61,7 @@ body {
 }
 
 .background-Blacksmith {
-  background: repeating-linear-gradient(147deg, transparent 0%, transparent 25%, #f6fbff 25%, #8F9FA8 37.5%, #f6fbff 25%, #8F9FA8 37.5%, #f6fbff 25%, #8F9FA8 37.5%, #f6fbff 25%, #e2e6e9 37.5%), linear-gradient(43deg, #d3d7da 25%, #dde0e2, #8F9FA8 85%, #d1d3d4, #8F9FA8 95%, #d3d7da), linear-gradient(122deg, transparent 0%, transparent 50%, #ccd1d4 50%, #8F9FA8 100%, #ccd1d4 50%, #8F9FA8 100%, #ccd1d4 50%, #d6d7d8 100%, #ccd1d4 50%, #d6d7d8 100%);
+  background: repeating-linear-gradient(147deg, transparent 0%, transparent 25%, #f6fbff 25%, #8f9fa8 37.5%, #f6fbff 25%, #8f9fa8 37.5%, #f6fbff 25%, #8f9fa8 37.5%, #f6fbff 25%, #e2e6e9 37.5%), linear-gradient(43deg, #d3d7da 25%, #dde0e2, #8f9fa8 85%, #d1d3d4, #8f9fa8 95%, #d3d7da), linear-gradient(122deg, transparent 0%, transparent 50%, #ccd1d4 50%, #8f9fa8 100%, #ccd1d4 50%, #8f9fa8 100%, #ccd1d4 50%, #d6d7d8 100%, #ccd1d4 50%, #d6d7d8 100%);
   background-blend-mode: multiply;
   background-size: 150% 150%;
   -webkit-animation: Gradient 85s ease infinite;
@@ -839,7 +843,7 @@ body {
 }
 
 .stat-background-Blacksmith {
-  background: repeating-linear-gradient(47deg, transparent 0%, transparent 25%, #f6fbff 25%, #8F9FA8 37.5%, #f6fbff 25%, #8F9FA8 37.5%, #f6fbff 25%, #8F9FA8 37.5%, #f6fbff 25%, #e2e6e9 37.5%), linear-gradient(243deg, #d3d7da 25%, #dde0e2, #8F9FA8 85%, #d1d3d4, #8F9FA8 95%, #d3d7da), linear-gradient(22deg, transparent 0%, transparent 50%, #ccd1d4 50%, #8F9FA8 100%, #ccd1d4 50%, #8F9FA8 100%, #ccd1d4 50%, #d6d7d8 100%, #ccd1d4 50%, #d6d7d8 100%);
+  background: repeating-linear-gradient(47deg, transparent 0%, transparent 25%, #f6fbff 25%, #8f9fa8 37.5%, #f6fbff 25%, #8f9fa8 37.5%, #f6fbff 25%, #8f9fa8 37.5%, #f6fbff 25%, #e2e6e9 37.5%), linear-gradient(243deg, #d3d7da 25%, #dde0e2, #8f9fa8 85%, #d1d3d4, #8f9fa8 95%, #d3d7da), linear-gradient(22deg, transparent 0%, transparent 50%, #ccd1d4 50%, #8f9fa8 100%, #ccd1d4 50%, #8f9fa8 100%, #ccd1d4 50%, #d6d7d8 100%, #ccd1d4 50%, #d6d7d8 100%);
   background-blend-mode: multiply;
   background-size: 150% 150%;
   -webkit-animation: Gradient 60s ease infinite;
@@ -1621,7 +1625,7 @@ body {
 }
 
 .a-background-Blacksmith {
-  background: repeating-linear-gradient(67deg, transparent 0%, transparent 25%, #f6fbff 25%, #8F9FA8 37.5%, #f6fbff 25%, #8F9FA8 37.5%, #f6fbff 25%, #8F9FA8 37.5%, #f6fbff 25%, #e2e6e9 37.5%), linear-gradient(83deg, #d3d7da 25%, #dde0e2, #8F9FA8 85%, #d1d3d4, #8F9FA8 95%, #d3d7da), linear-gradient(122deg, transparent 0%, transparent 50%, #ccd1d4 50%, #8F9FA8 100%, #ccd1d4 50%, #8F9FA8 100%, #ccd1d4 50%, #d6d7d8 100%, #ccd1d4 50%, #d6d7d8 100%);
+  background: repeating-linear-gradient(67deg, transparent 0%, transparent 25%, #f6fbff 25%, #8f9fa8 37.5%, #f6fbff 25%, #8f9fa8 37.5%, #f6fbff 25%, #8f9fa8 37.5%, #f6fbff 25%, #e2e6e9 37.5%), linear-gradient(83deg, #d3d7da 25%, #dde0e2, #8f9fa8 85%, #d1d3d4, #8f9fa8 95%, #d3d7da), linear-gradient(122deg, transparent 0%, transparent 50%, #ccd1d4 50%, #8f9fa8 100%, #ccd1d4 50%, #8f9fa8 100%, #ccd1d4 50%, #d6d7d8 100%, #ccd1d4 50%, #d6d7d8 100%);
   background-blend-mode: multiply;
   background-size: 150% 150%;
   -webkit-animation: Gradient 20s ease infinite;
@@ -2633,14 +2637,14 @@ button:hover {
   align-items: center;
   text-align: center;
   border-radius: 50%;
-  width: 0px;
+  width: 2.66vw;
   height: 0px;
   font-size: 0.8rem;
   font-weight: 800;
   line-height: 0.9rem;
   border: 2px solid transparent;
   opacity: 0;
-  margin-left: -6px;
+  margin-left: -4px;
 }
 
 .busted {
@@ -2799,7 +2803,7 @@ button:hover {
   width: 42%;
 }
 
-.domesticButtons #actionButtons {
+.domesticButtons #actionButtons, .domesticButtons #traitPlaysButtons {
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
@@ -2808,7 +2812,7 @@ button:hover {
   width: 57%;
 }
 
-.domesticButtons #actionButtons div {
+.domesticButtons #actionButtons div, .domesticButtons #traitPlaysButtons div {
   width: 10vw;
   height: 3.5vw;
   font-size: 1vw;
@@ -2826,8 +2830,20 @@ button:hover {
   width: 33%;
 }
 
-.domesticButtons #actionButtons div:hover {
+.domesticButtons #actionButtons div:hover, .domesticButtons #traitPlaysButtons div:hover {
   animation: optionz .5s forwards;
+}
+
+.domesticButtons #traitPlaysButtons {
+  width: 43%;
+}
+
+.domesticButtons #traitPlaysButtons div {
+  width: 99%;
+}
+
+.domesticButtons #traitPlaysButtons div:active {
+  transform: scale(0.95);
 }
 
 .teamPlays {
