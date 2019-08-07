@@ -26,17 +26,5 @@ node_modules/
 
 jquery-3.3.1.js 
 tester.html
-01globalVariables.js 
-02classess.js 
-03diceRoll.js 
-04toolsFunctions.js 
-05animation.js 
-06ball.js 
-07terrains.js 
-08guilds.js
-09rostrerEvents.js
-10playerTemplateFile.js 
-11mouseEvents.js 
-12pitchfield.js
-13pitchfield.scss
+
 

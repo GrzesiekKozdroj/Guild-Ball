@@ -1,0 +1,1137 @@
+
+$borderColor: black;
+
+@import url('https://fonts.googleapis.com/css?family=Germania+One|IM+Fell+English');
+body {
+    background-color: rgb(2, 17, 2);
+    cursor: none;
+};
+*{
+    font-family:'IM Fell English';
+    cursor: none;
+    box-sizing:border-box;
+}
+.tesdsfhkjlkjhgfdster{
+    color:rgba(209, 59, 49, 0.932);
+}
+
+$guilds:(
+Alchemist: rgba(89, 142, 56, 0.562),
+Blacksmith:rgb(143, 159, 168),
+Brewer:rgba(209, 180, 50, 0.514),
+Butcher: #cb151894,
+Cook: #e41e1a81,
+Engineer: rgba(127, 21, 19, 0.769),
+Falconer: hsla(115, 27%, 33%, 0.725),
+Farmer: hsla(31, 82%, 55%, 0.76),
+Fishermen: hsla(188, 52%, 47%, 0.788),
+Hunter: hsla(113, 39%, 25%, 0.726),
+Mason: hsla(216, 51%, 46%, 0.637),
+Miner: hsla(1, 72%, 29%, 0.747),
+Mortician: hsla(240, 3%, 17%, 0.74),
+Navigator: hsla(190, 59%, 50%, 0.671),
+Solthecian: hsla(60, 78%, 56%, 0.747),
+Ratcatcher: hsla(210, 5%, 15%, 0.678),
+Union:hsla(286, 54%, 30%, 0.773)
+);
+//.Butcher{background-color:   $Butcher           ;}
+//.Cook{background-color:      $Cook      ;}
+//.Engineer{background-color:  $Engineer             ;}
+//.Falconer {background-color: $Falconer                 ;}
+//.Farmer{background-color:    $Farmer            ;}
+//.Fishermen{background-color: $Fishermen           ;}
+//.Hunter{background-color:    $Hunter           ;}
+//.Mason{background-color:     $Mason            ;}
+//.Miner{background-color:     $Miner            ;}
+//.Mortician{background-color: $Mortician         ;}
+//.Navigator{background-color: $Navigator          ;}
+//.Soltecian{background-color: $Soltecian            ;}
+//.Ratcatcher{background-color:$Ratcatcher                ;}
+//.Union{background-color:     $Union            ;}
+@mixin bajckground($angle1,$angle2,$angle3,$color,$time){
+    background:
+    repeating-linear-gradient($angle1,transparent 0%,transparent 25%,#f6fbff 25%,$color  37.5%,#f6fbff 25%,$color  37.5%,#f6fbff 25%,$color  37.5%,#f6fbff 25%,#e2e6e9  37.5%),
+    linear-gradient($angle2,#d3d7da 25%,#dde0e2,$color 85%,#d1d3d4,$color 95%,#d3d7da),
+    linear-gradient($angle3,transparent 0%,transparent 50%,#ccd1d4 50%,$color 100%,#ccd1d4 50%,$color 100%,#ccd1d4 50%,#d6d7d8 100%,#ccd1d4 50%,#d6d7d8 100%);
+    background-blend-mode: multiply;
+    
+	background-size: 150% 150%;
+        -webkit-animation: Gradient $time ease infinite;
+        -moz-animation: Gradient $time ease infinite;
+        animation: Gradient $time ease infinite;
+
+    
+    @-webkit-keyframes Gradient {
+        0% {
+            background-position: 0% 0%
+        }
+        50% {
+            background-position: 100% 50%;
+            transform: rotate(-30deg);
+        }
+        100% {
+            background-position: 0% 100%
+        }
+    }
+    
+    @-moz-keyframes Gradient {
+        0% {
+            background-position: 0% 0%
+        }
+        50% {
+            background-position: 100% 50%;
+        }
+        100% {
+            background-position: 0% 100%
+        }
+    }
+    
+    @keyframes Gradient {
+        0% {
+            background-position: 0% 0%
+        }
+        50% {
+            background-position: 100% 50%;
+        }
+        100% {
+            background-position: 0% 100%
+        }
+    }
+}
+
+
+@mixin color-modifiers {
+    @each $name, $kolor in $guilds {
+      &-#{$name} {
+        @include bajckground(147deg,43deg,122deg,$kolor,85s);
+      }
+    }
+  }
+
+  @mixin color-modifiers1 {
+    @each $name, $kolor in $guilds {
+      &-#{$name} {
+        @include bajckground(47deg,243deg,22deg,$kolor,60s);
+      }
+    }
+  }
+
+
+  @mixin color-modifiers2 {
+    @each $name, $kolor in $guilds {
+      &-#{$name} {
+        @include bajckground(67deg,83deg,122deg,$kolor,20s);
+      }
+    }
+  }
+
+  .background{
+      @include color-modifiers;
+  }
+
+  .stat-background{
+      @include color-modifiers1;
+  }
+
+  .a-background{
+      @include color-modifiers2;
+  }
+%buttonAnimation{
+    &:hover{
+        box-shadow: inset 0px 0px 25px white, 0 0 15px black, 0 0 20px darkblue, 0 0 200px rgba(60, 60, 82, 0.932);
+    }
+    &:active{
+        box-shadow: inset 0 0 7px black, inset 0 0 13px darkblue, 0 0 200px white, 0 0 20px rgba(255,255,255,.2); 
+        border: solid rgba(58, 55, 55, 0.712);
+    }
+}
+%plajBookAnimation{
+    &:hover{
+        box-shadow: inset 0px 0px 25px white, 0 0 15px black, 0 0 20px darkblue, 0 0 200px rgba(60, 60, 82, 0.932);
+    }
+    &:active{
+        box-shadow: inset 0 0 7px black, inset 0 0 13px darkblue, 0 0 200px white, 0 0 20px rgba(255,255,255,.2); 
+        border: solid rgba(58, 55, 55, 0.712);
+    }
+}
+
+
+
+
+.testing{color:rgba(141, 6, 6, 0.692);}
+#screentint{
+    position: absolute;
+    pointer-events: none;
+    cursor: none;
+    top: 0;
+    left: 0;
+}
+
+
+#pitchfield, #terrains_layer, #gameItems, #players {
+    background: transparent;
+    background-size: cover;
+    /*height: 32in;
+    width: 32in;*/
+    position: absolute;
+    justify-self: space-between;
+    background-color: rgba(0, 0, 0, 0);
+};
+canvas{
+    top:1;left:1;
+}
+
+@keyframes hoovver {
+    100% {
+        box-shadow: inset 0px 0px 25px black, 0 0 15px blue, 0 0 20px darkblue;
+        border-style: inset;
+    }
+}
+#gameScreen{
+    width: 100vw;
+    max-width: 1550px;
+    display:flex;
+}
+
+@keyframes optionz {
+    100% {
+        box-shadow: inset 0px 0px 25px black, 0 0 10px blue, 0 0 20px darkblue;
+        transform: scale(1.1, 1.1);
+        opacity: 1;
+    }
+}
+
+@keyframes helpfulBox {
+    100% {
+        opacity: 1;
+        background-color: hsla(55, 43%, 62%, .8);
+        min-width: 100px;
+        max-width: 300px;
+        min-height: 50px;
+        position: absolute;
+        display: inline-block;
+        border-radius: 30%;
+        border: 3px solid $borderColor;
+        border-left: 6px double $borderColor;
+        border-right: 6px double $borderColor;
+        font-size: 1rem;
+    }
+}
+button:hover{
+    animation: hoovver .3s forwards
+}
+
+@keyframes clicked {
+    100% {
+        box-shadow: 0px 0px 30px rgb(105, 105, 105);
+        transform: scale(0.9, 0.9);
+        border-style: inset;
+    }
+}
+
+#explainer {
+    opacity: 0;
+    background-color: hsla(55, 43%, 62%, .0);
+    min-width: 10px;
+    max-width: 30px;
+    min-height: 10px;
+    position: absolute;
+    display: inline-block;
+    border-radius: 0%;
+    border: 0px solid $borderColor;
+    border-left: 0px double $borderColor;
+    border-right: 0px double $borderColor;
+    display: flex;
+    font-size: 0.1rem;
+    justify-content: center;
+    align-items: center;
+
+    &:hover {
+        animation: helpfulBox 1s forwards
+    }
+}
+
+
+#app {
+    position: fixed;
+    height: 100vh;
+    #appDisplay{
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    height: 100%
+    }
+    border-radius:2px;
+    * {
+        opacity: 1;
+    }
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////
+//@include bajckground(45deg, 45deg, 135deg);
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////
+}
+
+.opacifier {
+    opacity: 1
+}
+
+#squaddieName {
+    display: flex;
+    border: 3px solid $borderColor;
+    //background-color: hsla(55, 43%, 62%, 0.173);
+    border-radius: 2px;
+    padding: 0px;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    height: 2vw;
+    margin: 5px;
+    font-size:2vw;
+}
+
+#images {
+    display: flex;
+    flex-direction: row;
+}
+
+#conditions {
+    list-style: none;
+    display:flex;
+    flex-wrap:wrap;
+}
+
+#conditions li {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 39px;
+    height: 39px;
+    background-color: hsl(55, 43%, 62%);
+    border-radius: 4%;
+    border: 2px dotted $borderColor;
+    list-style: none;
+    padding:5px;
+
+    &:hover {
+        animation: hoovver .3s forwards
+    }
+}
+#condition-list{
+    display: flex;
+    width: 150px;
+    height: 146px;
+    flex-wrap: wrap;
+}
+
+#squaddieFace {
+    display:flex;
+    justify-content: center;
+    align-content: center;
+    overflow: hidden;
+    width: 10vw;
+    height: 10vw;
+    border-radius: 49%;
+    border: 5px solid $borderColor;
+    background-size: 10px ;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+#statistics{
+    display:flex;
+    justify-content: space-between;
+}
+#squaddieStats {
+    width:60%;
+    margin-right:1.15vw;
+    text-align: center;
+}
+
+#squaddieStats tr th,
+#squaddieStats tr td {
+    border: 1.5px solid $borderColor;
+    height: .8vw;
+    //@include bajckground(-135deg,-138deg,-123deg);
+    border-radius: 1.5px;
+    padding: 0px;
+    font-size:1vw
+}
+#squaddieStats td{
+    font-size:1.1vw;
+}
+.plajbooks{
+    ul{
+
+    left:-20px;
+       ul{ display:flex; margin-top:14px;}
+    }
+}
+
+.hp {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: middle;
+    width: 98%;
+}
+.plajBookCell, .plajBookTopCell{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    list-style: none;
+    border-radius: 50%;
+    width: 2.66vw;
+    height: 2.66vw;
+    font-size: 1vw;
+    font-weight:800;
+    line-height: 0.9vw;
+    border: 2px solid $borderColor;
+    background-color: hsl(55, 43%, 62%);
+    @extend %plajBookAnimation;
+
+    &:hover {
+        animation: hoovver .3s forwards;
+    }
+}
+.plajBookTopCell{margin-bottom:-10px;margin-left:-4px}
+.plajBookCell{margin-top:-10px;margin-left:-3px}
+.playBookNull{
+    display:flex;
+    list-style:none;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border-radius: 50%;
+    width:2.66vw;
+    height:0px;
+    font-size: 0.8rem;
+    font-weight:800;
+    line-height: 0.9rem;
+    border: 2px solid transparent;
+    opacity:0;
+    margin-left:-4px;
+}
+.busted{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    list-style: none;
+    border-radius: 1.66vw;
+    width: 5.3vw;
+    height: 1.66vw;
+    font-size: 0.8vw;
+    font-weight:800;
+    line-height: 0.9vw;
+    border: .2px solid $borderColor;
+    background-color: hsl(55, 43%, 62%);
+
+    @include bajckground(247deg,223deg,22deg,rgba(241, 226, 155, 0.932),60s);
+    &:hover {
+        animation: hoovver .3s forwards;
+        @include bajckground(247deg,223deg,22deg,rgba(36, 116, 60, 0.932),60s);
+    }
+}
+.hpli {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    border-radius: 50%;
+    width: 1.36vw;
+    height: 1.2vw;
+    border: .4px solid $borderColor;
+    //@include bajckground(280deg,160deg,39deg);
+    font-size: 1vw;
+}
+.pool{
+    width: 41%;
+    display: flex;
+    flex-wrap: wrap;
+    margin-left:.9vw;
+    margin-top:0;
+    padding:0;
+    background-color: hsla(0, 0%, 23%, 0.651);
+    min-height:3vw
+}
+.hpliMin{
+    color: hsl(55, 43%, 62%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    border-radius: 50%;
+    width: 1.36vw;
+    height: 1.2vw;
+    border: .2px solid $borderColor;
+    background-color: rgb(124, 33, 33);
+    font-size: 1vw;
+}
+.domesticButtons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: middle;
+    width:100%;
+    margin: 1.7vw;
+    #traitPlaysButtons{
+        width:42%;
+    }
+    #actionButtons, #traitPlaysButtons{
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        justify-content: space-evenly;
+        align-items: middle;
+        width:57%;
+        div {
+            width:10vw;
+            height:3.5vw;
+            font-size:1vw;
+            display:flex;
+            flex-direction: row;
+            justify-content: center;
+            //@include bajckground(47deg,43deg,222deg);
+            border-radius: 2.5px;
+            align-items: center;
+            border: 3px solid $borderColor;
+            font-weight: 700;
+            margin: 2px auto;
+            text-align:center;
+            max-width: 145px;
+            max-height: 45px;
+            width:33%;
+            &:hover {
+                animation: optionz .5s forwards;
+            }
+        }
+    }
+    #traitPlaysButtons{
+        width:43%;
+        div{
+            width: 99%;
+            &:active{
+                transform:scale(.95)
+            }
+        }
+    }
+}
+.teamPlays{
+    margin-top: -.66vw;
+    margin-bottom:2vw;
+    width:6vw;
+    height: 2.3vw;
+    color:rgb(255, 244, 232);
+    @include bajckground(247deg,223deg,22deg,rgba(0, 0, 0, 0.932),100s);
+}
+.clicked{animation: clicked .3s forwards;}
+
+
+#resources tr {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+#momentumHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-right: 2px solid $borderColor;
+}
+
+#momentumCount {
+    border-right: 2px solid $borderColor;
+    min-width:35%;
+}
+
+#scoreHeader {
+    border-right: 2px solid $borderColor;
+}
+
+#scoreCount {
+    border-right: 2px solid $borderColor;
+    justify-self: flex-end;
+    min-width:31%;
+}
+.teaMenu{
+    max-height:9vw;
+    overflow-y:scroll;
+    background-color: rgba(94, 93, 88, 0.31);
+    border-radius:2.0px;
+    width:99%;
+    position:relative;
+    margin:10px;
+    display: flex;
+    flex-wrap:wrap;
+    justify-content: center;
+    .pW0{
+        margin-left:-40px;
+    }
+    .pW8{
+        margin-left: -105px;
+        margin-top: -33px;
+    }
+}
+
+.die{
+    background-color:white;
+    width:30px;
+    height:30px;
+    margin:.5vw 2.5vw .5vw -2vw;
+    font-family: veranda;
+    display:inline-block;
+    box-shadow: inset 0 0 7px rgba(0, 0, 0, 0.199), inset 0 0 13px rgba(0, 0, 139, 0.226), 0 0 200px rgba(255, 255, 255, 0.253), 0 0 20px rgba(255,255,255,.2);
+    box-shadow: inset 0px 0px 25px rgba(255, 255, 255, 0.377), 0 0 15px rgba(0, 0, 0, 0.363), 0 0 20px rgba(0, 0, 139, 0.377), 0 0 200px rgba(60, 60, 82, 0.932);
+    .die-eye{
+        border-radius:50%;
+        width:10px;
+        height:10px;
+        display:inline-block;
+        position:relative;
+        margin:1px;
+        padding:0;
+    }}
+    .dice-1{
+        .die-1{top:8px;left:9px;}
+    }
+    .dice-2{
+        .die-1{top:-2px;left:0px;}
+        .die-2{top:15px;left:2px;}
+    }
+    .dice-3{
+        .die-1{top:-2px;left:0px;}
+        .die-2{top:7px;left:-7px;}
+        .die-3{top:-2px;left:18px;}
+    }
+    .dice-4{
+        .die-1{top:-2px;left:0px;}
+        .die-2{top:-2px;left:2px;}
+        .die-3{top:-2px;left:0px;}
+        .die-4{top:-2px;left:2px;}
+    }
+    .dice-5{
+        .die-1{top:-2px;left:0px;}
+        .die-2{top:-2px;left:2px;}
+        .die-3{top:-2px;left:0px;}
+        .die-4{top:-2px;left:2px;}
+        .die-5{top:-29px;left:9px;}
+    }
+    .dice-6{
+        .die-1{top:-2px;left:0px;}
+        .die-2{top:-2px;left:2px;}
+        .die-3{top:-2px;left:0px;}
+        .die-4{top:-2px;left:2px;}
+        .die-5{top:-29px;left:0px;}
+        .die-6{top:-29px;left:2px;}
+    }
+    .dice{
+        width: 16vw;
+        max-height: 10vw; 
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        background-color:rgba(70, 69, 66, 0.31);
+    }
+
+    .message{
+        display:flex;
+        justify-content: center;
+        align-items: center;
+        color:rgb(252, 252, 252);
+    min-height:5vw;
+    background-color: rgba(70, 69, 66, 0.31);
+    border-radius:.03vw;
+    width:98%;
+    position:relative;
+    font-size:1.5vw;
+    overflow-y: scroll;
+    max-height:7vw;
+    }
+.the-first-info {
+    overflow-y: scroll;
+    color: #d6cdcd;
+    height: 190px;
+    background-color: rgba(31, 31, 31, 0.31);
+    border-radius: 5px;
+    width: 100%;
+    position: relative;
+    margin: 0 auto 0 auto;
+    font-size: 1.5vw;
+    text-align: justify;
+    padding: 12px;
+}
+.counterbox{
+    position:absolute;
+    width:150px;
+    border-radius:15px;
+    height:150px;
+    z-index:6;
+    color:white;
+    display:flex;
+    justify-content:space-evenly;
+    flex-wrap:wrap;
+    align-items:center;
+    border-radius:42%;
+    opacity:.55;
+    &:hover{
+        opacity:1;
+    }
+    button{
+        top:-1px;
+        width:48px;
+        height:49.5px;
+        border-radius:48%;
+        display:flex;
+        justify-content:center;
+        font-size:.75rem;
+        font-weight:900;
+        width:51px;
+        padding-top: 7px;
+    }
+    .opt1{
+        background-color:red;
+        color:yellow;
+        width:49px;
+        order:2;
+        margin: auto -2px auto -2px;
+    }
+    .opt2{
+        background-color:yellow;
+        color:blue;
+        width:51px;
+        order:2;
+        margin: 0 -1px 0 -1px;
+    }
+    .opt3{
+        background-color:blue;
+        color:white;
+        width:49px;
+        order:2;
+    }
+    .opt4{
+        background-color:rgb(158, 65, 37);
+        color:rgb(223, 223, 140);
+        order:1;
+    }
+    .opt5{
+        background-color: greenyellow;
+        color: darkgreen;
+        order:1;
+    }
+    .opt6{
+        background-color:purple;
+        color:goldenrod;
+        order:3;
+    }
+    .opt7{
+        background-color:rgb(39, 10, 39);
+        color:orange;
+        order:3;
+        font-size:.71rem;
+        padding-top: 0;
+    }
+}
+.snapBallButton{
+    position:absolute; 
+    display:inline-block; 
+    font-size:.8rem; 
+    font-weight:900; 
+    border-radius:50%; 
+    color:rgb(223, 221, 207); 
+    opacity: .59;
+    display:flex; 
+    justify-content:center; 
+    align-items:center; 
+    font-family:'IM Fell English'; 
+    z-index:6;
+    border-top:4px solid black;
+    border-bottom:4px solid black;
+    border-left: 4px solid white;
+    border-right: 4px solid white;
+    animation: hoovver .3s forwards;
+    &:hover{
+        opacity:1;
+    }
+}
+
+#terrains_layer{z-index:2}
+#gameItems{z-index:3}
+#players{z-index:5}
+//buttons index:6
+#screentint{z-index:8}
+//scrollbars test
+html {
+    overflow-y: auto;
+    background-color: transparent;
+    cursor:none;
+    }
+    ::-webkit-scrollbar {
+        width: 10px;
+        height: 10px;
+        cursor:none;
+        }
+        ::-webkit-scrollbar-button:start:decrement,
+::-webkit-scrollbar-button:end:increment  {
+height: 30px;
+display: block;
+background-color: transparent;
+cursor:none;
+}
+::-webkit-scrollbar-track-piece  {
+    background-color: #3b3b3b;
+    -webkit-border-radius: 6px;border-radius: 6px;
+    cursor:none;
+    }
+    ::-webkit-scrollbar-thumb:vertical {
+        height: 50px;
+        background-color: #666;
+        border: 1px solid #eee;
+        -webkit-border-radius: 6px;border-radius: 6px;
+        cursor:none;
+        }
+        @-moz-document url-prefix() {
+            .dice-1 .die-1{
+                top:6.5px;
+            }
+            .dice-4{
+                .die-1{top:-4px;left:-1px;}
+                .die-2{top:-4px;}
+                .die-3{top:-3px;left:-1px;}
+                .die-4{top:-3px;}
+            }
+            .dice-3{
+                .die-1{top:-4px;left:-1px;}
+                .die-2{top:6.5px;left:-7.5px;}
+                .die-3{top:-3px;left:19px;}
+            }
+            .dice-5{
+                .die-1{top:-4px; left:-1px;}
+                .die-2{top:-4px;}
+                .die-3{top:-3px;left:-1px;}
+                .die-5{top:-30px;}
+            }
+            .dice-6{ 
+                .die-1 {top: -4px; left: -1px;}
+                .die-2 {top: -4px; left: 2px;}
+                .die-3 {top: -3px; left: -1px;}
+                .die-5{top: -31px; left: -1px;}
+                .die-6{top: -30px;}
+            }
+            .snapBallButton:hover{
+                border-top-color: black;
+                border-bottom-color: black;
+                border-left-color: white;
+                border-right-color: white;
+            }
+        }
+
+
+
+
+#teaMenuScreen{
+    height:100vh;
+    width:70vw;
+    z-index:7;
+    position:fixed;
+    background-color:rgb(178, 202, 178);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    background-size:169% 169%!important;
+    background-repeat: no-repeat!important;
+    background-position:-70px 0px!important;
+    #thePlayers{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        height: 58vh;
+    }
+}
+
+.guildIco{
+    width:10vw;
+    height:10vw;
+    margin:10px;
+    padding:20px;
+    border-radius:5%;
+    @extend %buttonAnimation;
+}
+.guildInfo{
+    display: flex;
+    justify-content: center;
+    font-family: "IM Fell English";
+    color: rgb(60, 65, 49);
+    font-size: 1.25rem;
+    flex-direction: column;
+    padding:7px;
+    background-image: url("../icons/cursor/bg.jpg");
+    background-size: 100% 100%;
+    height: 100%;
+    .guildHeader{
+        margin-top:-30px;
+        display:flex;
+        justify-content: space-between;
+        padding:0 19px 0 7px;
+        border-bottom:2px solid rgb(60, 65, 49);
+        height: 5vw;
+        img{
+            height:100%;
+            justify-self: center;
+        }
+    }
+    .guildInfoP{
+        margin-top:-11px;
+        font-size:1vw;
+    }
+    .guildFoot{
+        text-align: end;
+        font-weight: 800;
+        font-size: 1.8vw;
+    }
+}
+#FalconersIco{
+    background-position-y: 25px!important;
+}
+#FalconerslilPic{
+    width:6.73vw;
+}
+#NavigatorsIco{
+    background-position-x: 7px!important; 
+}
+
+.rosterIco{
+    //transform-origin:left top;
+    border-style: solid;
+    border-width: .3vw;
+    @extend %buttonAnimation;
+    border-radius:50%;
+    background-repeat:no-repeat;
+    margin:2.5vw 1.5vw 1vw 1.5vw;
+    width:5.5vw;
+    height:5.5vw;
+}
+
+.guildRosterReverse, .guildRosterForward{
+    width:82px;
+    height:24px;
+    border-radius: 50%;
+    background-color: darkred;
+    color: darkblue;
+    font-weight:900;
+    font-size:1.25rem;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    vertical-align:middle;
+    margin:-15px auto -10px auto;
+    @extend %buttonAnimation;
+    position:absolute;
+    top:63%;
+    left:10%;
+    &:active{
+        width:82px;
+        height:24px;
+    }
+}
+.guildRosterForward{
+    top:63%;
+    left:calc(90% - 82px);
+    color:white;
+    box-shadow: 0 0 5px rgb(241, 232, 232), 0 0 20px darkblue, 0 0 80px rgba(139, 139, 240, 0.932);}
+%flexis{
+    display:flex;
+    justify-content: space-between;
+    flex-direction: row;
+}
+%innerFlex{
+    display:flex;
+    justify-content: center;
+}
+.rosterChosen{
+    height:24vh;
+    width:94%;
+    margin-top:10vh;
+    margin-left:auto;margin-right:auto;
+    @extend %flexis;
+    div{
+        border:3px solid;
+        box-sizing:border-box;
+        text-align: center;
+        font-weight:900;
+        font-size:1.95rem;
+        border-radius:4px;
+        box-shadow: inset 0 0 7px black, inset 0 0 13px darkblue, 0 0 20px white, 0 0 20px rgba(255,255,255,.2);
+        flex-wrap: wrap;
+        p{
+            width:100%;
+            position:relative;
+            top:-6.5vw;
+            font-size:3vw;
+            margin-bottom: -10vw;
+        }
+        .rosterIco{
+            border-radius:500px;
+            margin-left:10px;
+            margin-right:10px;
+            display:flex;
+            flex-wrap:wrap;
+        }
+    }
+    .captainRoster{
+        width:15%;
+        height:100%;
+        @extend %innerFlex;
+    }
+    .mascotRoster{
+        width:15%;
+        height:100%;
+        @extend %innerFlex;
+    }
+    .squaddiesRoster{
+        width:60%;
+        height:100%;
+        padding-left:-30px;
+        @extend %innerFlex;
+    }
+    .mastersRoster{
+        @extend %innerFlex;
+        width:30%;
+        height:100%;
+    }
+    .apprenticesRoster{
+        @extend %innerFlex;
+        width: 45%;
+        height:100%;
+    }
+}
+
+@media screen and (max-width: 1600px) {
+    .guildHeader{
+        margin-top:76px!important;
+        p{
+            font-size:2vw;
+        }
+    }
+}
+%hoverExpansion{
+            border-radius: 2px;
+            pointer-events: none;
+            position: absolute;
+            opacity:.95;
+            color:rgba(255, 255, 255, 255);
+            width:12vw;
+            padding:1vw;
+            -webkit-text-stroke:1px rgba(99, 93, 93, 0.699);
+            font-weight: 900;
+            font-size: 1.1vw;
+}
+[id^="cancel"]{
+    &:hover{
+        &:after{
+            @extend %hoverExpansion;
+            @include bajckground(27deg,23deg,52deg,rgba(141, 8, 8, 0.932),30s);
+            content:'cancel current action and auras. For example if you were about to charge but changed your mind its time to click here or press esc button.'
+        }
+    }
+}
+[id^="dropBall"]{
+    &:hover{
+        &:after{
+            @extend %hoverExpansion;
+            @include bajckground(7deg,143deg,200deg,rgba(90, 141, 8, 0.932),30s);
+            content:'Squaddie can drop ball in its posession, as far as 1" between them.'
+        }
+    }
+}
+
+[id^="kick"]{
+    &:hover{
+        &:after{
+            @extend %hoverExpansion;
+            @include bajckground(7deg,143deg,200deg,rgba(51, 78, 7, 0.932),30s);
+            content:'Squaddie can kick ball in its posession click where you want it to be..'
+        }
+    }
+}
+
+[id^="charge"]{
+    &:hover{
+        &:after{
+            @extend %hoverExpansion;
+            @include bajckground(7deg,13deg,20deg,rgba(78, 7, 19, 0.932),30s);
+            content:'Squaddie can charge opposing squaddie. Click here, then on the victim within maximum threat range, then plot charge path so that Squaddie has its victim in melee range.'
+        }
+    }
+}
+
+[id^="bonusTime"]{
+    &:hover{
+        &:after{
+            @extend %hoverExpansion;
+            @include bajckground(7deg,13deg,20deg,rgba(28, 7, 78, 0.932),30s);
+            content:'For the price of one momentum adds additional die to the next action requiring to roll dies.'
+        }
+    }
+}
+
+[id^="healSelf"]{
+    &:hover{
+        &:after{
+            @extend %hoverExpansion;
+            @include bajckground(7deg,13deg,20deg,rgba(78, 23, 54, 0.932),30s);
+            content:'Squaddie can once a turn heal 4 wounds for momentum.'
+        }
+    }
+}
+
+[id^="forfeitMove"]{
+    &:hover{
+        &:after{
+            @extend %hoverExpansion;
+            @include bajckground(7deg,13deg,20deg,rgba(54, 50, 53, 0.932),30s);
+            content:'Squaddie can forfeit movement to stand up.'
+        }
+    }
+}
+
+[id^="removeConditions"]{
+    &:hover{
+        &:after{
+            @extend %hoverExpansion;
+            @include bajckground(7deg,13deg,20deg,rgba(7, 12, 56, 0.932),30s);
+            content:'Squaddie can remove all conditions it currently suffers for momentum.'
+        }
+    }
+}
+
+[id^="healAFriend"]{
+    &:hover{
+        &:after{
+            @extend %hoverExpansion;
+            @include bajckground(7deg,13deg,20deg,rgba(53, 2, 2, 0.932),30s);
+            content:'Squaddie can heal 4 wounds from a friend within 8".'
+        }
+    }
+}
+
+[id^="takeAbreather"]{
+    &:hover{
+        &:after{
+            @extend %hoverExpansion;
+            @include bajckground(7deg,13deg,20deg,rgba(5, 38, 53, 0.932),30s);
+            content:'Squaddie can remove all conditions from a friend within 8".'
+        }
+    }
+}
+
+[class^="glide"]{
+    &:hover{
+        &:after{
+            @extend %hoverExpansion;
+            @include bajckground(7deg,13deg,20deg,rgba(83, 41, 7, 0.932),30s);
+            content:'Squaddie can pay momentum to negate movement penalty from rough ground.'
+        }
+    }
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////
