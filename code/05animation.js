@@ -16,7 +16,7 @@ function anime(m1, teams, otherGamer,options) {
     let x = m1.posX,
         y = m1.posY;
         const speedRatio = Math.abs(distance(x, y, mouX, mouY))*7;
-    let duration = 520>speedRatio?520:speedRatio;
+    let duration = 1000>speedRatio?1000:speedRatio;
     let startTime;
         if(options.mode==='charging' && m1.isKnockedDown){
             endX = m1.posX; endY = m1.posY;

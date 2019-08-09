@@ -480,7 +480,7 @@ Ballista = [5,8,8,6,4,6,3,1,4,0,6,1,18,1,engiFam,[0,0,200,200], "Ballista",
 
     Egret = [6, 8, 8, 4, 3, 8, 4, 1, 2, 0, 4, 1, 12, 1, huntFam, [-200,0,200,200], 'Egret',
         [[[1, 0, 0, 0, 0, 0], [0, 1, 1, 0, 0, 0]], [[0, 0, 2, 0, 0, 0], [0, 1, 0, 0, 1, 0]], [[], [1, 0, 0, 0, 1, 0]], [[2, 0, 0, 0, 0, 0], [0, 1, 1, 1, 0, 0]]], 6, Hunters,["Castellyain",["Human"],"Female","Striker","Squaddie"], "Egret"
-        , [50,0,largeScale] ],
+        , [50,0,largeScale], [ [],["Swift Strikes","Venomous Strike"],[],["Flurry","Snap Fire","Back to the Shadows"] ] ],
 
     Hearne = [4, 6, 6, 5, 3, 6, 3, 1, 1, 0, 3, 2, 20, 2, huntFam, [0,-200,200,200], 'Hearne',
         [[[1, 0, 0, 0, 0, 0], [0, 1, 0, 0, 0, 0]], [[0, 0, 0, 1, 0, 0], [2, 1, 0, 0, 0, 0]], [[0, 0, 0, 0, 0, 1], [0, 1, 0, 2, 0, 0]], [[0, 0, 0, 0, 1, 0], [3, 1, 0, 0, 0, 0]], [[], [0, 1, 0, 0, 0, 0]]], 10, Hunters,["unknown",["Human"],"Male","Centre Back","Squaddie"],"Hearne"

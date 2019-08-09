@@ -68,7 +68,9 @@ function diseaseSpread(m1, teamz) {
 
 function burning() { };
 
-function poisoned() { };
+function poisoned(victim) { 
+    victim.isPoisoned = true;
+};
 
 function snared() { };
 
@@ -96,7 +98,7 @@ function playbookStitcher(m1, i, wrap, mode) {
         let isMomentus = mom === 0 ? 'white' : m1.theGuild.color;
         let isTackle = tackle === 0 ? '' : 'T<br>';
         let isKD = KD === 0 ? '' : 'KD<br>';
-        let ability = m1.playBook[i][0].length>7?'o':'';
+        let ability = m1.playBook[i][0].length>7?'o<br>':'';
         let bookElement = `${ability}${isKD}${isTackle}${hasDamage}${hasDodges}${hasPushes}`;
         const shouldIbother = true//Boolean(dmg + mom + ddge + psh + tackle + KD > 0);
         let $plajbookEl = shouldIbother ? `<li class='plajBookTopCell ${wrap[2]} activeOptions' 
@@ -120,8 +122,8 @@ function playbookStitcher(m1, i, wrap, mode) {
     let isMomentus = mom === 0 ? 'white' : m1.theGuild.color;
     let isTackle = tackle === 0 ? '' : 'T<br>';
     let isKD = KD === 0 ? '' : 'KD<br>';
-    let ability = m1.playBook[i][1].length>7?'o':'';
-    let bookElement = `${isKD}${isTackle}${hasDamage}${hasDodges}${hasPushes}`;
+    let ability = m1.playBook[i][1].length>7?'o<br>':'';
+    let bookElement = `${ability}${isKD}${isTackle}${hasDamage}${hasDodges}${hasPushes}`;
     const shouldIbother = true//Boolean(dmg + mom + ddge + psh + tackle + KD > 0)
     let $plajbookEl = shouldIbother ? `<li class='plajBookCell ${wrap[3]} activeOptions' 
                                 data-dmg=${dmg} data-mom=${mom} data-ddge=${ddge} data-psh=${psh} data-tackle=${tackle} data-kd=${KD} 
@@ -150,19 +152,29 @@ function buttonStitching(wrap, m1, m2, ball, Gamer, mode, continueMovement) {
                     let circumstances = tackle > 0 ? `tackle if there is no ball` : kd > 0 ? `knock down lying person` : `do this`;
                     sendMessage(`${m1.nameDisplayed} can't ${circumstances}, choose different result.`)
                 } else {
-
-                    if (mode === 'attack' || mode === 'counterattack' || m2.willCounter && Boolean(ddge > 0 || psh > 0)) {
+                    if (mode === 'attack' || mode === 'counterattack' || m2.willCounter && Boolean(ddge > 0 || psh > 0 ||
+                    m1.abilities.passiveOwned.some(el=>el.includes("Swift Strikes") ) && m1.isActivating) ) {
                         //<<---== this needs to be passed to anime function through m1.dodgeSquaddie and m2.pushSquaddie
+                            wrath = m2; receiver = m1;
                         if (ddge > 0) {
                             m1.isDodging = true;
-                            wrath = m2; receiver = m1;
                             m1.dodgeSquaddie(ddge, teamz, m2);
                         };
                         if (psh > 0) {
                             m2.isPushed = true;
-                            wrath = m2; receiver = m1;
                             m2.pushSquaddie(psh, teamz, m2);
                         };
+                        if (dmg > 0) {
+                            if(ddge === 0 && m1.abilities.passiveOwned.some(el=>el.includes("Swift Strikes") ) && m1.isActivating) 
+                            {
+                                m1.isDodging = true; 
+                                m1.dodgeSquaddie(2, teamz, m2);
+                            }
+                        else if (ddge > 0 && m1.abilities.passiveOwned.some(el=>el.includes("Swift Strikes") ) && m1.isActivating)
+                            {
+                                m1.remainingDodge+=2*inch;
+                            };
+                        }
                     };
                     if (tackle > 0 && m2.hasBall) {
                         if (!ball.isOnGround) {
@@ -183,8 +195,14 @@ function buttonStitching(wrap, m1, m2, ball, Gamer, mode, continueMovement) {
                     {
                         m1.playBook[abil>9?abil-10:abil][abil>9?1:0][7](m1,m2);
                     }
-                    if(dmg>0&&m1.abilities.activeOwned.some(el=>el.includes("Back to the Shadows") )){
-                        m1.abilities.activeOwned.filter(el=>el.includes("Back to the Shadows")).forEach(el=>el[1]++);
+                    if(dmg>0)
+                    {
+                        if(m1.abilities.activeOwned.some(el=>el.includes("Back to the Shadows") ))
+                            m1.abilities.activeOwned.filter(el=>el.includes("Back to the Shadows")).forEach(el=>el[1]++);
+                        
+                        if(m1.abilities.passiveOwned.some(el=>el.includes("Venomous Strike") ) && m1.isActivating &&
+                            otherGamer.squaddies.some(el=>el.name===m2.name))
+                            {poisoned(m2)};
                     }
                     //knocked down guys can still counter and countering any pushes or dodges makes the attack expire immediately
                     m2.hasMoved = mode === 'parting blow' && Number($(this).data('kd')) > 0 ? true : m2.hasMoved;
@@ -194,7 +212,7 @@ function buttonStitching(wrap, m1, m2, ball, Gamer, mode, continueMovement) {
                     m1.bonusTime = false;
                     $(this).parent().parent().empty().off();
                     $('#app').find('#actionButtons').empty().append(actionButtons(m1, Gamer, Gamer.guild.color));
-                    if (m2.willCounter && ddge < 1 && psh < 1 && $('#app').find('.activeOptions').length < 1 && distance(m1.posX, m1.posY, m2.posX, m2.posY) <= (m2.meleeRadius + m1.baseRadius)) {
+                    if (m2.willCounter && ddge < 1 && psh < 1 &&  $('#app').find('.activeOptions').length < 1 && distance(m1.posX, m1.posY, m2.posX, m2.posY) <= (m2.meleeRadius + m1.baseRadius) && !m1.abilities.passiveOwned.some(el=>el.includes("Swift Strikes") ) && m1.isActivating) {
                         waaar(otherGamer, Gamer, m2, m1, 'counterattack');
                         m2.willCounter = false;
                     }
@@ -238,7 +256,7 @@ function waaar(Gamer, otherGamer, m1, victim, mode = 'attack', continueMovement)
         let successRolls = theRoll.filter(el => el >= neededToHit);
         let armourCount = m2.arm > 0 && m1.abilities.passiveOwned && m1.abilities.passiveOwned.some(el=>el.includes("Anatomical Precision")) ? m2.arm - 1 : m2.arm ;
         let successPlaybookLength = successRolls.length - armourCount;//////////  HERE ANATOMICAL PRECISION
-        diceRolledForDisplay = [];;
+        diceRolledForDisplay = [];
         diceRolled(theRoll, neededToHit, Gamer.guild.color, m2.arm);
         m2.defensiveStance = 0;
         message = `now you can see how succesful ${m1.nameDisplayed} attack was, and you can choose direct consequences. Press escape to cancel pushes or doges if waiting for counterattack.`;
@@ -797,7 +815,8 @@ function escapist(m1, otherGamer, m2 = m1) {
                     el.canSnap = false;
                     $('body').find('.snapBallButton').remove();
                 }
-            })
+            });
+            m1.drawAbilityTargetAura = 0;
             m1.declaringAcharge = false;
             m1.chargeTarget = false;
             $('#players').off('click.sprintCharge');

@@ -236,7 +236,8 @@ switcher = (event) => {
                 //<<------== counteratttacks:
                 //<<---=== here counter attack buttons
                 //counteratttacks <<-------==
-                if (m1.isActivating && (distance(m1.posX, m1.posY, m2.posX, m2.posY) <= (m1.meleeRadius + m2.baseRadius) &&
+                if (m1.drawAbilityAura === 0 && m1.isActivating && 
+                    (distance(m1.posX, m1.posY, m2.posX, m2.posY) <= (m1.meleeRadius + m2.baseRadius) &&
                     distance(mouX, mouY, m2.posX, m2.posY) < m2.baseRadius
                 )) {let inMelee = (distance(m1.posX, m1.posY, m2.posX, m2.posY) <= m2.meleeRadius + m1.baseRadius) ? true : false;
                     if ( (inMelee && !m2.counterForAttack.includes(m1.name) && !m2.knockedDown && otherGamer.momentum>0)
@@ -484,9 +485,9 @@ switcher = (event) => {
         })
 
 
-        // $("#app").on(`click`, '#cancel'+teaMate.name,() => {
-        //     escapist(m1, otherGamer);
-        // })
+        $("#app").on(`click`, '#cancel'+teaMate.name,() => {
+            escapist(m1, otherGamer);
+        })
 
         $('#app').on('click', `.glide` + m1.name, () => {
             if (Gamer.momentum > 0 && !m1.isGliding) {
@@ -903,9 +904,10 @@ if (m1.isKicking && ball.beingKicked) {
         $("body").on(`keydown`, (e) => {
             defaultPreventer(e);
             if (e.key === 'Escape') {
-                escapist(m1, otherGamer);
                 if(m1.abilities.activeOwned.some(el=>el[0]==="Back to the Shadows" && el[1] === true)){
                     endSquaddieActivation(m1, Gamer1, Gamer2, Gamer, switcher, teamz, turnTransition);
+                }else{
+                    escapist(m1, otherGamer);
                 }
             }
         })

@@ -93,6 +93,7 @@ class Player {
         this.isDodging = false;
         this.dopplerColor;
         this.drawAbilityAura = 0;//used for drawing auras for abilities range
+        this.drawAbilityTargetAura = 0;
 
         this.isBleeding = false;
         this.isBurning = false;
@@ -148,8 +149,13 @@ class Player {
         if(!this.img.src) this.img.src = this.pictureSource;
         pcl.lineWidth = 1;
         ctx.lineWidth = 1;
-        if(this.drawAbilityAura>0){
-            aurora(x,y,0,x,y,this.drawAbilityAura,abilityColor,yellowColor)
+        if(this.drawAbilityAura>0 || this.drawAbilityTargetAura > 0){
+            aurora(x,y,0,x,y,this.drawAbilityAura,abilityColor,yellowColor);
+            for(let th = 0; th<teamz.length; th++){
+                let m2 = teamz[th];
+                if(this.drawAbilityTargetAura > 0 && distance(mouX,mouY,m2.posX,m2.posY)<=m2.baseRadius)
+                    aurora(m2.posX,m2.posY,0,m2.posX,m2.posY,this.drawAbilityTargetAura * inch+m2.baseRadius, abilityColor,redColor);
+            }
         }
         ctx.beginPath() //shows melee radius
         ctx.globalAlpha = opacity;

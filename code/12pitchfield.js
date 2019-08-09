@@ -69,7 +69,7 @@ let bigBang = (e)=>{//document.addEventListener('DOMContentLoaded', function (e)
                 }
             }
 
-            if(m1.posX === undefined && !m1.isTakenOut){m1.posX = oldX, m1.posY = oldY};
+            if(m1.posX === undefined && !m1.isTakenOut){m1.posX = m1.oldX, m1.posY = m1.oldY};
 
             for (let p = 0; p < Gamer2.squaddies.length; p++) {
                 let m2 = Gamer2.squaddies[p]
@@ -398,7 +398,7 @@ function moseDraw () {
 moseDraw();
 const cheetah = (n) => {
     if (n) {
-        let bookOfLife1 = [];[Jaecar,vetMinx,Seenah].forEach(el=>bookOfLife1.push(new Player(...el) ));
+        let bookOfLife1 = [];[Jaecar,vetMinx,Seenah,Egret].forEach(el=>bookOfLife1.push(new Player(...el) ));
         let bookOfLife2 = [];[PinVice,Mainspring,Mother].forEach(el=>bookOfLife2.push(new Player(...el) ));
         Gamer1 = new Gajmer(
             0,0,0,

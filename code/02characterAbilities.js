@@ -64,7 +64,8 @@ class Token {
 
 function GutAndString (m1,m2){
     if(m1.abilities.activeOwned.some(el=>el.includes("Gut and String") && el[1] === 0 ) 
-    && !m2.abilities.activeGiven.some(el=>el==="Gut and String")){
+    && !m2.abilities.activeGiven.some(el=>el==="Gut and String"))
+    {
         m2.abilities.activeGiven.push("Gut and String");
         m2.remainingSprint-=2*inch;
         m2.remainingRun-=2*inch;
