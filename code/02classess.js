@@ -366,9 +366,23 @@ class Player {
     }
 
     doppler(mx, my, opacity, sx = this.posX, sy = this.posY) { //draw a proxy model for positioning
-        if ( (this.isCharging && !this.wasCharging) || (this.moveAura && !this.wasCharging) || this.isDodging || this.isPushed || (ruler && this.isActivating) ) {
+        if ( 
+            (
+              (  (this.isCharging && !this.wasCharging) || 
+                (this.moveAura && !this.wasCharging) || 
+                this.isDodging || this.isPushed 
+             ) && 
+            distance(mouX,mouY,this.posX,this.posY)<=
+                (
+                    this.moveAura||this.isCharging?this.remainingRun:
+                    this.isDodging?this.remainingDodge:
+                    this.isPushed?this.remainingPush:
+                    0
+                )
+            )|| 
+                (ruler && this.isActivating)
+            ){
             this.drawPlayerIcon(mx, my, opacity, this.dopplerColor);
-
             if( teamz.filter(el=>el.name!==this.name).every( el => 
                 !lineCircleCollide( [this.posX, this.posY], [mouX, mouY], [el.posX, el.posY], this.baseRadius + el.baseRadius )) ){
             ctx.beginPath();
@@ -379,19 +393,22 @@ class Player {
             ctx.closePath();
             }
 
-if(distance(mx,my,sx,sy)/inch>3){
-            ctx.save();
-            ctx.translate(mx, my);
-            ctx.rotate(angle(mx,my,sx,sy));
-      ctx.font = `900 ${1.66*wlem}px IM Fell English `;
-      ctx.fillStyle = "rgba(255,255,255,.6)";
-      ctx.strokeStyle = "rgba(80,80,80,.6)";
-      ctx.textAlign = "center";
-      ctx.lineWidth = 1*wlem
-      let howFar = distance(mx,my,sx,sy)/inch;
-      ctx.strokeText( `<-- `+parseFloat(howFar).toFixed(1)+`" -->` , howFar/2*inch, 0);
-      ctx.fillText  ( `<-- `+parseFloat(howFar).toFixed(1)+`" -->` , howFar/2*inch, 0);
-      ctx.closePath();ctx.restore();}
+            if(distance(mx,my,sx,sy)/inch>3)
+            {
+                ctx.save();
+                ctx.translate(mx, my);
+                ctx.rotate(angle(mx,my,sx,sy));
+                ctx.font = `900 ${1.66*wlem}px IM Fell English `;
+                ctx.fillStyle = "rgba(255,255,255,.6)";
+                ctx.strokeStyle = "rgba(80,80,80,.6)";
+                ctx.textAlign = "center";
+                ctx.lineWidth = 1*wlem
+                let howFar = distance(mx,my,sx,sy)/inch;
+                ctx.strokeText( `<-- `+parseFloat(howFar).toFixed(1)+`" -->` , howFar/2*inch, 0);
+                ctx.fillText  ( `<-- `+parseFloat(howFar).toFixed(1)+`" -->` , howFar/2*inch, 0);
+                ctx.closePath();ctx.restore();
+            }
+        
         } //for
     } //end of player doppler function
 
@@ -400,8 +417,8 @@ if(distance(mx,my,sx,sy)/inch>3){
         &&
         !this.hasMoved && 
         (!ball.isOnGround || (distance(mouX,mouY,ball.x,ball.y)>ball.ballSize &&ball.isOnGround))//not on a ball
-        && (distance(this.posX,this.posY,mouX,mouY)>this.baseRadius //not on itself
-            || this.remainingSprint < this.sprint * inch) &&
+        && 
+        (distance(this.posX,this.posY,mouX,mouY)>this.baseRadius/2 || this.remainingSprint < this.sprint * inch) &&
         teamz.filter(el=>el.name!==this.name).every(el=>el.posX>0?distance(el.posX,el.posY,mouX,mouY)>el.baseRadius:true)//not on anyone else
         ) {
             if (distance(this.posX, this.posY, mouX, mouY) > this.remainingSprint - this.baseRadius && !this.runPaid && !this.isCharging && !this.wasCharging) {
@@ -469,21 +486,19 @@ class Gajmer {
         this.tokens = [];
         this.oponent;
     }
-
     interaction(teaMate){
         if(this.tokens)
             this.tokens.forEach( (el,i)=>{
-                if(!el.isInHand && el.type ==="trap")
-                    {
-                        if(distance(teaMate.posX,teaMate.posY,el.posX,el.posY)<=el.baseRadius+teaMate.baseRadius+1*inch && this.oponent.squaddies &&
-                            this.oponent.squaddies.some(el=>el.name===teaMate.name) )
+                if(!el.isInHand && el.type ==="trap" &&
+                    distance(teaMate.posX,teaMate.posY,el.posX,el.posY)<=el.baseRadius+teaMate.baseRadius+1*inch && 
+                    this.oponent.squaddies && this.oponent.squaddies.some(el=>el.name===teaMate.name) )
                         {
                             snare(teaMate);
                             teaMate.hpMin-=1;
                             this.tokens.splice(i,1);
                         }
                     }
-                 } 
+                  
             )
     }
 }

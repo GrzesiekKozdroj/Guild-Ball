@@ -810,6 +810,7 @@ function modelInfo(m1) {
 }
 
 function escapist(m1, otherGamer, m2 = m1) {
+            $('body').find('.snapBallButton').remove();
             teamz.forEach(el => {
                 if (el.canSnap) {
                     el.canSnap = false;
@@ -1108,34 +1109,23 @@ function squadz(objx){
     return squads;
 }
 function cloneX (objc){
-    let GameDataSlice = {
-		momentum: objc.momentum,
-		score: objc.score,
-		goals: objc.goals,
-		influence: objc.influence,
-        squaddies:squadz(objc),
-		active:objc.active,
-		guild:new Guild(
-			objc.guild.color,
-			objc.guild.name,
-			objc.guild.icon,
-			objc.guild.squaddies,
-			objc.guild.fontColor,
-			objc.guild.mercenaries
-			),
-		side:objc.side,
-        deployment:objc.deployment,
-        time: objc.time,
-        tokens:objc.tokens?objc.tokens.forEach(el=>{new Token(el.posX,el.posY,el.size,el.type)}):[],//requiers special attention
-		gp:new GoalPost(
-			objc.gp.x,
-			objc.gp.y,
-			objc.gp.color
-            ),
-        oponent: objc.oponent,//requiers special attention
-        interaction:Gamer.interaction,
-    };
-    //console.log(GameDataSlice);
+    let squaddies =  squadz(objc);
+    let tokenz = [];
+    for(let tz= 0; tz <objc.tokens.length;tz++){
+        tkn = objc.tokens[tz];
+        let tknx = new Token(tkn.posX,tkn.posY,tkn.baseRadius,tkn.type);
+            tknx.classification = tkn.classification;
+            tknx.id = tkn.id;
+            tknx.isInHand = tkn.isInHand;
+            tknx.isPlacable = tkn.isPlacable;
+        tokenz.push(tknx);
+    }
+    let GameDataSlice = new Gajmer(objc.momentum, objc.score, objc.goals,squaddies, objc.influence, objc.active, squaddies[0].theGuild, 
+                                   [objc.gp.x,objc.gp.y,squaddies[0].theGuild.color],
+                                   objc.deployment,objc.side);
+        GameDataSlice.time =  objc.time;
+        GameDataSlice.tokens.push(...tokenz);console.log(GameDataSlice.tokens)//<------UNDEFINES ANY FURTHER ENEMY MOVEMENTS
+        GameDataSlice.oponent =  objc.oponent;//requiers special attention
 	return GameDataSlice;
 }
 function ballCloneX (ball){

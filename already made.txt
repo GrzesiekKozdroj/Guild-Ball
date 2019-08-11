@@ -1,0 +1,15 @@
+passiveGiven
+
+passiveOwned
+Anatomical Precision
+Light Footed
+Swift Strikes
+Venomous Strike
+
+activeGiven
+
+activeOwned
+Back to the Shadows
+Big ame Traps
+Gut and String
+

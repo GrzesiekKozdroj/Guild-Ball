@@ -1,20 +1,23 @@
 console.log('hello skillz buttonz');
 
+//["Winter's Blessing", "Lunar Eclipse"], [], ["Skewered","Last Light"]
+function hasPassive (m1,name){
+    return m1.abilities.passiveOwned.some(el => el.includes(name));
+}
+function makePassiveButton(id,text){
+    return `<div id="${id}" class="passiveSkill">${text}</div>`
+}
+function makeActiveButton(){
 
+}
+function hasActive (m1,name){
+    return m1.abilities.activeOwned.some(el => el.includes(name));
+}
 
 function abilityButtons(teaMate, Gamer, color) {
     let m1 = teaMate;
     let abilities = [];
 
-    if (teaMate.abilities.passiveOwned) {
-        let anatomicalPrecision = teaMate.abilities.passiveOwned.some(el => el.includes("Anatomical Precision")) ?
-            `<div id="anatomicalPrecision" class="passiveSkill">Anatomical Precision</div>` : '';
-        abilities.push(anatomicalPrecision);
-
-        let lightFooted = teaMate.abilities.passiveOwned.some(el => el.includes("Light Footed")) ?
-            `<div id="lightFooted" class="passiveSkill">Light Footed</div>` : '';
-        abilities.push(lightFooted);
-    }
 
     if (teaMate.abilities.activeOwned) {
 
@@ -34,6 +37,21 @@ function abilityButtons(teaMate, Gamer, color) {
         abilities.push(flurry, snapFire, gutAndString, bigGameTraps);
     }
 
+    if (teaMate.abilities.passiveOwned) {
+        let anatomicalPrecision = teaMate.abilities.passiveOwned.some(el => el.includes("Anatomical Precision")) ?
+            `<div id="anatomicalPrecision" class="passiveSkill">Anatomical Precision</div>` : '';
+
+        let backToShadows = hasActive(teaMate,"Back to the Shadows") ? makePassiveButton("backToShadows","Back to the Shadows") : '';
+
+        let lightFooted = teaMate.abilities.passiveOwned.some(el => el.includes("Light Footed")) ?
+            `<div id="lightFooted" class="passiveSkill">Light Footed</div>` : '';
+
+        let wintersBlessing = hasPassive(teaMate,"Winter's Blessing") ? `<div id="winterBlessing" class="passiveSkill">Winter's Blessing</div>`:'';
+
+
+        
+        abilities.push(anatomicalPrecision, backToShadows, lightFooted, wintersBlessing);
+    }
     return abilities.join('');
 }
 

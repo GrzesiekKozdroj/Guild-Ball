@@ -149,6 +149,11 @@ switcher = (event) => {
     }
     $('#players').off();
     $('#app').empty().off();
+    $('body').off();
+    $('body').find('.snapBallButton').remove();
+    dummyState1 = cloneX(Gamer1);
+    dummyState2 = cloneX(Gamer2);
+    dummyBall = ballCloneX (ball);
     if(Gamer.gp.hasBall){
         Gamer.gp.isKicking = true;
         ball.beingKicked = true;
@@ -166,7 +171,45 @@ switcher = (event) => {
     for (let all = 0; all < Gamer.squaddies.length; all++) {
         let teaMate = Gamer.squaddies[all];
         let m1 = teaMate;
+        m1.oldX = m1.posX; m1.oldY = m1.posY;
         //adminToolz(event,teaMate,Gamer,'d')
+                //////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////____MOVEMENT___EVENT___LISTENERS__________///////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////
+
+        $('#players').on(contextmenuEv, (event) => {
+            defaultPreventer(event);
+            if (!teaMate.hasMoved && Gamer.active && distance(teaMate.posX, teaMate.posY, mouX, mouY) < (teaMate.baseRadius) &&
+                !teaMate.moveAura && 
+                //event.button == 2 &&
+                 teaMate.isActivating && !teaMate.isKnockedDown) {
+                teaMate.moveAura = true;
+                teamz.forEach(el=>!el.isActivating || el.wasCharging?el.moveAura=false:el.moveAura=true)
+                // teaMate.isMoving = true;
+                sendMessage(`if ${teaMate.nameDisplayed} has influence, ${teaMate.nameDisplayed} could sprint, left-click to move. You can cancel by pressing escape, hovering beyond movement zone or on other player.`)
+                // message = `if ${teaMate.nameDisplayed} has influence, ${teaMate.nameDisplayed} could sprint, left-click to move. You can cancel by pressing escape, hovering beyond movement zone or on other player.`
+                // $('#app').empty();
+                // $('#app').append(appMaker(teaMate, Gamer));
+        $('#players').on('click', function (e) { //drops a guy down after movement if possible
+            //  console.log(teaMate.isMoving,teaMate.hasMoved,teaMate.moveAura)
+            if (teaMate.moveAura
+                && distance(teaMate.posX, teaMate.posY, mouX, mouY) <= ((teaMate.infMin > 0 ? teaMate.remainingRun : teaMate.remainingSprint) - teaMate.baseRadius
+                )) {
+                    defaultPreventer(e);
+                teaMate.dropper(teamz);
+            }; //if
+        } //if
+        ); //mouseDown
+            } else if (Gamer.active && distance(teaMate.posX, teaMate.posY, mouX, mouY) < (teaMate.baseRadius) && 
+            //event.button == 2 && 
+            teaMate.isActivating) {
+                sendMessage(`${teaMate.nameDisplayed} has already moved this turn.`);
+                // $('#app').empty();
+                // $('#app').append(appMaker(teaMate, Gamer));
+            }
+        })
+        //##########################____MOVEMENT__ENDS___##########################################//
+
         ////////////////////////////////////////////////////////////////////////////////////////////////
         ////////////////////////__________DISPLAY__MODEL__PROPERTIES_______________//////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////
@@ -185,9 +228,6 @@ switcher = (event) => {
                // $('#app').css('background', 'url(./icons/cursor/wood.jpg) 0 0 / 390px');
                 // //--the other guy reverting his state
 
-    dummyState1 = cloneX(Gamer1);
-    dummyState2 = cloneX(Gamer2);
-    dummyBall = ballCloneX (ball);
                 let otherSquaddie = Gamer.squaddies.filter(el => el.isActivating === true).filter(el => el.name !== teaMate.name);
                 otherSquaddie.forEach(el => el.isActivating = false);
                 message = `left-click on a ${Gamer.guild.name} squaddie model to activate it, or click on model to activate it and display movement zone.`;
@@ -358,41 +398,7 @@ switcher = (event) => {
                 }
             })
         }
-        //////////////////////////////////////////////////////////////////////////////////////////////
-        /////////////////////____MOVEMENT___EVENT___LISTENERS__________///////////////////////////////
-        //////////////////////////////////////////////////////////////////////////////////////////////
 
-        $('#players').on(contextmenuEv, (event) => {
-            defaultPreventer(event);
-            if (!teaMate.hasMoved && Gamer.active && distance(teaMate.posX, teaMate.posY, mouX, mouY) < (teaMate.baseRadius) &&
-                !teaMate.moveAura && 
-                //event.button == 2 &&
-                 teaMate.isActivating && !teaMate.isKnockedDown) {
-                teaMate.moveAura = true;
-                teamz.forEach(el=>!el.isActivating || el.wasCharging?el.moveAura=false:el.moveAura=true)
-                // teaMate.isMoving = true;
-                sendMessage(`if ${teaMate.nameDisplayed} has influence, ${teaMate.nameDisplayed} could sprint, left-click to move. You can cancel by pressing escape, hovering beyond movement zone or on other player.`)
-                // message = `if ${teaMate.nameDisplayed} has influence, ${teaMate.nameDisplayed} could sprint, left-click to move. You can cancel by pressing escape, hovering beyond movement zone or on other player.`
-                // $('#app').empty();
-                // $('#app').append(appMaker(teaMate, Gamer));
-            } else if (Gamer.active && distance(teaMate.posX, teaMate.posY, mouX, mouY) < (teaMate.baseRadius) && 
-            //event.button == 2 && 
-            teaMate.isActivating) {
-                message = `${teaMate.nameDisplayed} has already moved this turn.`;
-                // $('#app').empty();
-                // $('#app').append(appMaker(teaMate, Gamer));
-            }
-        })
-        $('#players').on('click', function (e) { //drops a guy down after movement if possible
-            //  console.log(teaMate.isMoving,teaMate.hasMoved,teaMate.moveAura)
-            if (teaMate.moveAura
-                && distance(teaMate.posX, teaMate.posY, mouX, mouY) <= ((teaMate.infMin > 0 ? teaMate.remainingRun : teaMate.remainingSprint) - teaMate.baseRadius
-                )) {
-                    defaultPreventer(e);
-                teaMate.dropper(teamz);
-            }; //if
-        } //if
-        ); //mouseDown
 
         //////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////_____________HUD___EVENT___LISTENERS_______//////////////////////////
