@@ -399,7 +399,7 @@ moseDraw();
 const cheetah = (n) => {
     if (n) {
         let bookOfLife1 = [];[Jaecar,vetMinx,vetHearne,Egret].forEach(el=>bookOfLife1.push(new Player(...el) ));
-        let bookOfLife2 = [];[PinVice,Mainspring,Mother].forEach(el=>bookOfLife2.push(new Player(...el) ));
+        let bookOfLife2 = [];[PinVice,Jaecar,vetMinx,Egret].forEach(el=>bookOfLife2.push(new Player(...el) ));
         Gamer1 = new Gajmer(
             0,0,0,
             bookOfLife1,

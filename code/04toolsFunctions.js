@@ -98,7 +98,7 @@ function playbookStitcher(m1, i, wrap, mode) {
         let isMomentus = mom === 0 ? 'white' : m1.theGuild.color;
         let isTackle = tackle === 0 ? '' : 'T<br>';
         let isKD = KD === 0 ? '' : 'KD<br>';
-        let ability = m1.playBook[i][0].length>7?'o<br>':'';
+        let ability = (m1.playBook[i][0].length>7&&m1.playBook[i][0][6]>0)?'oo<br>':m1.playBook[i][0].length>7?'o<br>':'';
         let bookElement = `${ability}${isKD}${isTackle}${hasDamage}${hasDodges}${hasPushes}`;
         const shouldIbother = true//Boolean(dmg + mom + ddge + psh + tackle + KD > 0);
         let $plajbookEl = shouldIbother ? `<li class='plajBookTopCell ${wrap[2]} activeOptions' 
@@ -122,7 +122,7 @@ function playbookStitcher(m1, i, wrap, mode) {
     let isMomentus = mom === 0 ? 'white' : m1.theGuild.color;
     let isTackle = tackle === 0 ? '' : 'T<br>';
     let isKD = KD === 0 ? '' : 'KD<br>';
-    let ability = m1.playBook[i][1].length>7?'o<br>':'';
+    let ability = (m1.playBook[i][1].length>7&&m1.playBook[i][1][6]>0)?'oo<br>':m1.playBook[i][1].length>7?'o<br>':'';
     let bookElement = `${ability}${isKD}${isTackle}${hasDamage}${hasDodges}${hasPushes}`;
     const shouldIbother = true//Boolean(dmg + mom + ddge + psh + tackle + KD > 0)
     let $plajbookEl = shouldIbother ? `<li class='plajBookCell ${wrap[3]} activeOptions' 
@@ -145,9 +145,9 @@ function buttonStitching(wrap, m1, m2, ball, Gamer, mode, continueMovement) {
                 let psh = Number($(this).data('psh'));
                 let tackle = Number($(this).data('tackle'));
                 let kd = Number($(this).data('kd'));
-                let abil = $(this).data('abil')!=='false'?Number($(this).data('abil')):false;
-                if ( false
-                    //(m2.isKnockedDown && dmg < 1 && ddge < 1 && psh < 1 && ((m2.hasBall && tackle < 1) || (!m2.hasBall && tackle > 0))) || (!m2.hasBall && dmg < 1 && ddge < 1 && psh < 1 && ((!m2.isKnockedDown && kd < 1) || (m2.isKnockedDown && kd > 0)))
+                let abil = $(this).data('abil')!==false?Number($(this).data('abil')):false;
+                if ( !abil && 
+                    ( (m2.isKnockedDown && dmg < 1 && ddge < 1 && psh < 1 && ((m2.hasBall && tackle < 1) || (!m2.hasBall && tackle > 0))) || (!m2.hasBall && dmg < 1 && ddge < 1 && psh < 1 && ((!m2.isKnockedDown && kd < 1) || (m2.isKnockedDown && kd > 0)) ) )
                     ){
                     let circumstances = tackle > 0 ? `tackle if there is no ball` : kd > 0 ? `knock down lying person` : `do this`;
                     sendMessage(`${m1.nameDisplayed} can't ${circumstances}, choose different result.`)
@@ -194,6 +194,9 @@ function buttonStitching(wrap, m1, m2, ball, Gamer, mode, continueMovement) {
                     if(abil!==false && typeof(m1.playBook[abil>9?abil-10:abil][abil>9?1:0][7])==="function")
                     {
                         m1.playBook[abil>9?abil-10:abil][abil>9?1:0][7](m1,m2);
+                    } else if (abil!==false && typeof(m1.playBook[abil>9?abil-10:abil][abil>9?1:0][6])==="function")
+                    {
+                        m1.playBook[abil>9?abil-10:abil][abil>9?1:0][6](m1,m2);
                     }
                     if(dmg>0)
                     {
@@ -252,6 +255,7 @@ function waaar(Gamer, otherGamer, m1, victim, mode = 'attack', continueMovement)
             $playBookTop = [];
         }//if mode=attack
         let neededToHit = m2.def + m2.defensiveStance - ( m2.abilities.activeGiven.some(el=>el==="Gut and String")?1:0 );
+            neededToHit = neededToHit < 2 ? 2 : neededToHit;
         let theRoll = diceRoller(Gamer, otherGamer, m1, m2, mode); //diceRoll(actualTac)
         let successRolls = theRoll.filter(el => el >= neededToHit);
         let armourCount = m2.arm > 0 && m1.abilities.passiveOwned && m1.abilities.passiveOwned.some(el=>el.includes("Anatomical Precision")) ? m2.arm - 1 : m2.arm ;
@@ -510,7 +514,16 @@ function mouse(Gamer = dummy, otherGamer = dummy, ball) {
             drawSword();
             let m2 = el;
             if (showLeaflet && counter > -1) {
-                let diceCount = m1 ?
+                let bonusDice = 0;
+                let neededToHit = m2.def + m2.defensiveStance - ( m2.abilities.activeGiven.some(el=>el==="Gut and String")?1:0 );
+                if (neededToHit < 2) {
+                    bonusDice = 2-neededToHit
+                    neededToHit = 0;
+                } else if (neededToHit > 6){
+                    bonusDice = 6 - neededToHit 
+                    neededToHit = 6;
+                }
+                let diceCount = m1 ? bonusDice +
                     m1.tac + (m2.inCover ? -1 : 0) + (m1.wasCharging ? 4 : 0) + (m1.bonusTime ? 1 : 0) + Gamer.squaddies.filter(el => el.name !== m1.name).filter(el => distance(el.posX, el.posY, m2.posX, m2.posY) <= (el.meleeRadius + m2.baseRadius)).length - otherGamer.squaddies.filter(el => el.name !== m2.name).filter(el => distance(m1.posX, m1.posY, el.posX, el.posY) <= (el.meleeRadius + m1.baseRadius)).length : ``;
                 if (m1 && m2
                     && distance(m1.posX, m1.posY, m2.posX, m2.posY) > 4 * inch
@@ -575,7 +588,7 @@ function mouse(Gamer = dummy, otherGamer = dummy, ball) {
             }
         }
     }
-    if(mouX>36*inch+2 && mouX<36.25*inch+2){//display time left       
+    if(mouX>36*inch+2 && mouX<36.25*inch+2&&Gamer.time){//display time left       
         let timeLeft = Math.floor(Gamer.time/60)+':'+Gamer.time%60;
         sctx.beginPath();
         sctx.lineWidth = 15;
@@ -831,7 +844,7 @@ function escapist(m1, otherGamer, m2 = m1) {
                 m1.hasMoved = false;
             }
             m1.drawAbilityAura = 0;//cancels drawing max rane of abilities.
-            $("#players").off('click.bigGameTraps');
+            $("#players").off('click.usingAbility');
             //m1.isCharging = false;
             m1.pressedAbutton = false;
             m1.isDodging = false; m2.isDodging = false;

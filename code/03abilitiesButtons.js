@@ -59,14 +59,18 @@ function commonPreInstruction(options) {
     options.m1.moveAura = false;
     options.m1.isDodging = false;
     options.m1.remainingDodge = 0;
+    options.m1.drawAbilityAura = 0;
+    options.m1.drawAbilityTargetAura = 0;
+    //$("#players").off('click.usingAbility');
 }
 
 function commonAfterInstruction(options) {
     options.m1.moveAura = false;
     options.m1.drawAbilityAura = 0;
-    if (options.m1.isMoving) options.m1.hasMoved = true;
-    options.m1.pressedAbutton = true;
     options.m1.drawAbilityTargetAura = 0;
+    if (options.m1.isMoving) {options.m1.isMoving = false;options.m1.hasMoved = true}
+    options.m1.pressedAbutton = true;
+    $("#players").off('click.usingAbility');
 }
 
 function trigerOnDamageEffects(m1,m2) {
@@ -102,7 +106,7 @@ function abilitiesEvents(m1, Gamer, otherGamer) {
             commonPreInstruction({ m1: m1 })
             //m1.moveAura = false;
             m1.drawAbilityAura = m1.baseRadius + 2 * inch + 2 * smallBase;
-            $("#players").on('click.bigGameTraps', () => {
+            $("#players").on('click.usingAbility', () => {
                 if (distance(m1.posX, m1.posY, mouX, mouY) <= m1.baseRadius + 2 * inch + smallBase && snaret.isPlacable) {
                     commonAfterInstruction({ m1: m1 })
                     //m1.drawAbilityAura = 0;
@@ -114,7 +118,7 @@ function abilitiesEvents(m1, Gamer, otherGamer) {
                             m1.abilities.activeOwned[i][1]++
                         }
                     })
-                    $("#players").off('click.bigGameTraps');
+                    //$("#players").off('click.bigGameTraps');
                     $('#BigGameTraps' + m1.name).remove();
                 }
             })
@@ -125,12 +129,12 @@ function abilitiesEvents(m1, Gamer, otherGamer) {
         let m2 = otherGamer.squaddies[hy];
 
         $("#app").on('click', '#flurry' + m1.name, () => {
-            if (m1.abilities.activeOwned.some(el => el.includes("Flurry") && el[1] < 1)) {
                 commonPreInstruction({ m1: m1 });
+            if (m1.abilities.activeOwned.some(el => el.includes("Flurry") && el[1] < 1)) {
                 m1.drawAbilityAura = m1.baseRadius + 8 * inch;
                 m1.drawAbilityTargetAura = 2;
 
-                $("#players").on('click.flurry', () => {
+                $("#players").on('click.usingAbility', () => {
                     if (distance(m2.posX, m2.posY, m1.posX, m1.posY) <= m1.baseRadius + 8 * inch + m2.baseRadius && distance(mouX, mouY, m2.posX, m2.posY) <= m2.baseRadius && payPrice(2,m1) ) {
                         //
                         m1.abilities.activeOwned.forEach(el => {
@@ -154,7 +158,7 @@ function abilitiesEvents(m1, Gamer, otherGamer) {
                             } //if abilities
 
                         }
-                        $("#players").off('click.flurry');
+                        //$("#players").off('click.flurry');
                 })//click.flurry
             }//if has flurry
         })//flury
@@ -162,7 +166,7 @@ function abilitiesEvents(m1, Gamer, otherGamer) {
         $("#app").on("click", "#snapFire" + m1.name, () => {
             commonPreInstruction({ m1: m1 });
             m1.drawAbilityAura = m1.baseRadius + 6 * inch;
-            $("#players").on("click.snapFire", () => {
+            $("#players").on("click.usingAbility", () => {
                 if (distance(m1.posX, m1.posY, m2.posX, m2.posY) <= m1.baseRadius + m2.baseRadius + 6 * inch &&
                     distance(mouX, mouY, m2.posX, m2.posY) <= m2.baseRadius && payPrice(1,m1)) {
                     if (abilitiesRoll(m1, m2, 1) > 0) {
@@ -170,7 +174,7 @@ function abilitiesEvents(m1, Gamer, otherGamer) {
                         m2.hpMin-=1;
                     }
                     commonAfterInstruction({ m1: m1 });
-                    $("#players").off("click.snapFire");
+                    //$("#players").off("click.snapFire");
                 }
             })
         })//snap fire

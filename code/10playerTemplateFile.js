@@ -449,7 +449,7 @@ Ballista = [5,8,8,6,4,6,3,1,4,0,6,1,18,1,engiFam,[0,0,200,200], "Ballista",
 
 
 //---------------------------------------------Hunters---------------------------------------------------------------------------------------//
-    //const playbookMAP = top then bottom:{damage,momentum,dodges,pushes,tackle,KD};
+    //const playbookMAP = top then bottom:{damage,momentum,dodges,pushes,tackle,KD,cupAbil,ballAbil};
 
     //Captains
     Theron = [5, 8, 8, 6, 3, 6, 4, 1, 4, 0, 6, 1, 16, 1, huntFam, [-400,-400,200,200], 'Theron',
@@ -487,7 +487,7 @@ Ballista = [5,8,8,6,4,6,3,1,4,0,6,1,18,1,engiFam,[0,0,200,200], "Ballista",
         , [0,25,largeScale] ],
 
     vetHearne = [4, 6, 6, 5, 3, 6, 3, 1, 2, 0, 3, 2, 20, 2, huntFam, [0,-800,200,200],"vHearne",
-[  [[1,0,0,0,0,0],[0,1,0,1,0,0]] , [[0,1,0,0,1,0],[0,1,0,0,0,1]] , [[2,0,0,0,0,0],[0,1,0,2,0,0]] , [[],[3,1,0,0,0,0]] , [[],[0,1,0,0,0,0]]  ], 10, Hunters,["unknown",["Human"],"Male","Centre Back","Squaddie"], "Hearne"  
+[  [[1,0,0,0,0,0],[0,1,0,1,0,0]] , [[0,1,0,0,1,0],[0,1,0,0,0,1]] , [[2,0,0,0,0,0],[0,1,0,2,0,0]] , [[],[3,1,0,0,0,0]] , [[],[0,1,0,0,0,0,1,Skewered ]]  ], 10, Hunters,["unknown",["Human"],"Male","Centre Back","Squaddie"], "Hearne"  
 , [0,100,largeScale], [  [], ["Winter's Blessing", "Lunar Eclipse"], [], ["Skewered","Last Light"]  ] ],
 
     Jaecar = [7, 9, 9, 6, 2, 6, 4, 0, 2, 0, 4, 1, 14, 1, huntFam, [-200,-200,200,200], 'Jaecar',

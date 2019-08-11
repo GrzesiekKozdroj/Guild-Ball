@@ -70,6 +70,8 @@ function anime(m1, teams, otherGamer, options) {
                     if ($('#app').find('.activeOptions').length < 1 && wrath.willCounter && !teamz.some(el => el.isDodging)) {
                     distance(m1.posX, m1.posY, receiver.posX, receiver.posY) <= (wrath.meleeRadius + receiver.baseRadius) ?
                         waaar(otherGamer, Gamer, wrath, receiver, 'counterattack') : ''; wrath.willCounter = false;
+                    } else{
+                        wrath.willCounter = false;
                     }
                 }
                 !m1.isActivating ? snapBallButtonCreator('end') : console.log(m1.posX, m1.posY);
@@ -80,6 +82,8 @@ function anime(m1, teams, otherGamer, options) {
                     if ($('#app').find('.activeOptions').length < 1 && wrath && wrath.willCounter && !teamz.some(el => el.isPushed)) {
                         distance(m1.posX, m1.posY, receiver.posX, receiver.posY) <= (wrath.meleeRadius + receiver.baseRadius) ?
                             waaar(otherGamer, Gamer, wrath, receiver, 'counterattack') : '';
+                        wrath.willCounter = false;
+                    } else{
                         wrath.willCounter = false;
                     }
                 }
@@ -171,5 +175,5 @@ function anime(m1, teams, otherGamer, options) {
             !continueMovement ? requestAnimationFrame(anim) : false;
         }
     }
-    anim()
+    if(m1.remainingSprint>0&&m1.isMoving||m1.isDodging||m1.isPushed)anim()
 }

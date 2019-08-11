@@ -229,7 +229,7 @@ switcher = (event) => {
                 // //--the other guy reverting his state
 
                 let otherSquaddie = Gamer.squaddies.filter(el => el.isActivating === true).filter(el => el.name !== teaMate.name);
-                otherSquaddie.forEach(el => el.isActivating = false);
+                otherSquaddie.forEach(el => {el.isActivating = false;el.moveAura = false;});
                 message = `left-click on a ${Gamer.guild.name} squaddie model to activate it, or click on model to activate it and display movement zone.`;
                 $('#appDisplay').slideDown();
                 $('#app').empty().append(appMaker(Gamer.squaddies.filter(el => el.isActivating)[0], Gamer));
