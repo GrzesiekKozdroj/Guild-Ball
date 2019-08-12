@@ -1,3 +1,4 @@
+"use strict";
 //__animation__of__movement__///////////////////
 //////////////////////////////////////////////////
 function anime(m1, teams, otherGamer, options) {
@@ -55,7 +56,7 @@ function anime(m1, teams, otherGamer, options) {
                 m1.posX = x + ((endX - x) * deltaTime);
                 m1.posY = y + ((endY - y) * deltaTime);
             } else if (checkCollision || checkgoalcollision || m1.shouldntBeHere > 1 || (m1.wasCharging && m1.shouldntBeHere === 1)) {
-                wallCrushed = true;
+                //wallCrushed = true;
                 collisionBouncer(m1, teamz);
             }
 
@@ -83,7 +84,7 @@ function anime(m1, teams, otherGamer, options) {
                         distance(m1.posX, m1.posY, receiver.posX, receiver.posY) <= (wrath.meleeRadius + receiver.baseRadius) ?
                             waaar(otherGamer, Gamer, wrath, receiver, 'counterattack') : '';
                         wrath.willCounter = false;
-                    } else{
+                    } else if(wrath){
                         wrath.willCounter = false;
                     }
                 }
@@ -154,8 +155,8 @@ function anime(m1, teams, otherGamer, options) {
             ///////////////////////////////////////////////__PARTING__BLOWS__///////////////////////////////////////////
             if (m1.posX > 0 && (m1.isMoving || m1.isCharging)) {
                 let currentlyEngaging = []
-                for (cE = 0; cE < otherGamer.squaddies.length; cE++) {
-                    cEm2 = otherGamer.squaddies[cE];
+                for (let cE = 0; cE < otherGamer.squaddies.length; cE++) {
+                    let cEm2 = otherGamer.squaddies[cE];
                     if (distance(cEm2.posX, cEm2.posY, m1.posX, m1.posY) <= (m1.baseRadius + cEm2.meleeRadius)) currentlyEngaging.push(cEm2);
                 }
 

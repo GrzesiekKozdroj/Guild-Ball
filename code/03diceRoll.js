@@ -1,3 +1,4 @@
+"use strict";
 let diceRoller = (Gamer, otherGamer, m1, m2 = m1, mode, abilityCost) => {
     let unfrendlies = otherGamer.squaddies.filter(el => distance(m1.posX, m1.posY, el.posX, el.posY) <= (el.meleeRadius + m1.baseRadius) &&
         m2.name!==el.name).length

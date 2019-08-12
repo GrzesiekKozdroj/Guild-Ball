@@ -1,3 +1,4 @@
+"use strict";
 var squaddies;
 const alchIco = "./icons/Alchemists.png", 
       blacIco = "./icons/Blacksmiths.png", 

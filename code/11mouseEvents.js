@@ -1,3 +1,4 @@
+"use strict";
 //$((e) => {
 
 //cheetah(true)
@@ -151,9 +152,9 @@ switcher = (event) => {
     $('#app').empty().off();
     $('body').off();
     $('body').find('.snapBallButton').remove();
-    dummyState1 = cloneX(Gamer1);
-    dummyState2 = cloneX(Gamer2);
-    dummyBall = ballCloneX (ball);
+    let dummyState1 = cloneX(Gamer1);
+    let dummyState2 = cloneX(Gamer2);
+    let dummyBall = ballCloneX (ball);
     if(Gamer.gp.hasBall){
         Gamer.gp.isKicking = true;
         ball.beingKicked = true;
@@ -192,11 +193,11 @@ switcher = (event) => {
                 // $('#app').append(appMaker(teaMate, Gamer));
         $('#players').on('click', function (e) { //drops a guy down after movement if possible
             //  console.log(teaMate.isMoving,teaMate.hasMoved,teaMate.moveAura)
-            if (teaMate.moveAura
-                && distance(teaMate.posX, teaMate.posY, mouX, mouY) <= ((teaMate.infMin > 0 ? teaMate.remainingRun : teaMate.remainingSprint) - teaMate.baseRadius
+            if (teaMate.moveAura && distance (mouX,mouY,teaMate.posX,teaMate.posY)>teaMate.baseRadius*.30 &&
+                distance(teaMate.posX, teaMate.posY, mouX, mouY) <= ((teaMate.infMin > 0 ? teaMate.remainingRun : teaMate.remainingSprint) - teaMate.baseRadius
                 )) {
                     defaultPreventer(e);
-                teaMate.dropper(teamz);
+                    teaMate.dropper(teamz);
             }; //if
         } //if
         ); //mouseDown
@@ -549,6 +550,7 @@ switcher = (event) => {
         $('#app').on('click', '#dropBall' + teaMate.name, () => {
             ball.isInHand = true;
             ball.drawDropAura(teaMate.baseRadius);
+            teaMate.moveAura = false;
             $('#players').on('click', () => {
                 if (distance(teaMate.posX, teaMate.posY, mouX, mouY) <= (teaMate.baseRadius + 1 * inch + ball.ballSize) && ball.isInHand && teaMate.hasBall && !teaMate.hasSnapped) {
                     movementHistory = [];
@@ -609,6 +611,7 @@ switcher = (event) => {
 if (distance(m1.posX, m1.posY, ball.x, ball.y) <= (m1.baseRadius + inch + ball.ballSize) && //player-ball distance
     distance(mouX, mouY, ball.x, ball.y) <= ball.ballSize                                   //klick on ball
     && ball.isOnGround && !m1.hasSnapped && m1.isActivating && !m1.isKnockedDown) {
+        m1.moveAura = false;
     ball.isOnGround = false;
     m1.hasBall = true;
     movementHistory = [];

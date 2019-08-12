@@ -1,3 +1,4 @@
+"use strict";
 class Ball_marker {
     constructor(x, y) {
         this.x = x;

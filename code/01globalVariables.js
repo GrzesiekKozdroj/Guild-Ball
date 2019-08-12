@@ -1,3 +1,4 @@
+"use strict";
 let hlem = $(window).height() / 100;
 let wlem = window.innerWidth / 100;
 window.addEventListener('resize', function(e){
@@ -56,7 +57,7 @@ let degree = Math.PI/180;
 let healCursor = 0;//heal cursor display
 let hasConditions = (m2)=>(m2.isBleeding||m2.isBurning||m2.isDiseased||m2.isKnockedDown||m2.isPoisoned||m2.isSnared)?true:false;
 let fontz = new FontFace('IM Fell English', 'url(https://fonts.googleapis.com/css?family=Merienda)');
-showLeaflet = true;
+let showLeaflet = true;
 let movementHistory = [];
 const savedGameState = [];
 //let endsquadieactivvariable;
@@ -70,7 +71,7 @@ let rulerDopplers = [];
 let rdLength = 0;
 let rnd = Math.random();//this randomises who is to start
 let rndDeploy = Math.random();
-let cheetos = true;
+let cheetos = false;
 
 const smallBase = 1.2 * cm;
 

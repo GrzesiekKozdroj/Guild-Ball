@@ -1,3 +1,4 @@
+"use strict";
 class Player {
     constructor(sprint, run, charge, tac, kick, kickDist, def, arm,
         infGen, infMin, infMax, meleeZone, hp, baseSize,
@@ -413,13 +414,22 @@ class Player {
     } //end of player doppler function
 
     dropper() { //drops the model on current mouse position;
-        if (distance(18 * inch, 30 * inch+2.5*cm,mouX,mouY) > 2.5*cm && distance(18 * inch, 6 * inch-2.5*cm,mouX,mouY)>2.5*cm //not on goal post
-        &&
-        !this.hasMoved && 
-        (!ball.isOnGround || (distance(mouX,mouY,ball.x,ball.y)>ball.ballSize &&ball.isOnGround))//not on a ball
-        && 
-        (distance(this.posX,this.posY,mouX,mouY)>this.baseRadius/2 || this.remainingSprint < this.sprint * inch) &&
-        teamz.filter(el=>el.name!==this.name).every(el=>el.posX>0?distance(el.posX,el.posY,mouX,mouY)>el.baseRadius:true)//not on anyone else
+        if (
+            distance(18 * inch, 30 * inch+2.5*cm,mouX,mouY) > 2.5*cm && 
+            distance(18 * inch, 6 * inch-2.5*cm,mouX,mouY)>2.5*cm //not on goal post
+            &&
+            !this.hasMoved && 
+            (
+                !ball.isOnGround || 
+                (distance(mouX,mouY,ball.x,ball.y)>ball.ballSize && ball.isOnGround)
+            )//not on a ball
+            && 
+            (
+                distance(this.posX,this.posY,mouX,mouY)>this.baseRadius/2 || 
+                this.remainingSprint < this.sprint * inch
+            ) 
+            &&
+            teamz.filter(el=>el.name!==this.name).every(el=>el.posX>0?distance(el.posX,el.posY,mouX,mouY)>el.baseRadius:true)//not on anyone else
         ) {
             if (distance(this.posX, this.posY, mouX, mouY) > this.remainingSprint - this.baseRadius && !this.runPaid && !this.isCharging && !this.wasCharging) {
                 this.infMin -= 1; //if model runed, looses one influence

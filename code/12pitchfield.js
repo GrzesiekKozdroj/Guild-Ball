@@ -1,11 +1,17 @@
+"use strict";
 /*-----------------------------------------------------BEHOLD THE GAME---------------------------------------------------*\
 \*----------------------------------------------------------ENGINE-------------------------------------------------------*/
 let bigBang = (e)=>{//document.addEventListener('DOMContentLoaded', function (e) {
 
 
     $("#gameScreen").prepend(canvases);
-    if (Gamer.guild.color === otherGamer.guild.color){
-        Gamer.guild.color = "#" + Math.floor(Math.random() * 16777215).toString(16);
+    if (Gamer1.guild.color === Gamer2.guild.color){
+        let newPaintJob = "#" + Math.floor(Math.random() * 16777215).toString(16);
+        Gamer1.guild.color = newPaintJob;
+        Gamer1.squaddies.forEach(el=>{
+            el.theGuild = new Guild(Gamer1.guild.color, Gamer1.guild.name, Gamer1.guild.icon, Gamer1.guild.squaddies, Gamer1.guild.fontColor, Gamer1.guild.mercenaries)
+        })
+        Gamer1.gp.color = newPaintJob;
     }
     canvas          = document.getElementById("gameItems");
     ctx             = canvas.getContext("2d");
@@ -377,6 +383,19 @@ let bigBang = (e)=>{//document.addEventListener('DOMContentLoaded', function (e)
 
 // slow part
 
+setInterval(function(){if(Gamer.active && counter>=0){
+    if(Gamer.time>=0)
+        {
+            Gamer.time-=1
+        }
+            else
+        {
+            Gamer.time = 60;
+            endSquaddieActivation(Gamer.squaddies.filter(el=>el.isActivating)[0],Gamer1,Gamer2,Gamer, switcher,teamz,turnTransition)
+        } 
+    } 
+}, 1000);
+}
 
 
 /*----------------------------------------------------GAME ENGINE-------------------------------------------------------*\
@@ -384,8 +403,8 @@ let bigBang = (e)=>{//document.addEventListener('DOMContentLoaded', function (e)
 /*--------------------------------------------TESTING-------------------------------------------------------------------*\
 \*---------------------------------------------STARTS-------------------------------------------------------------------*/
     //var randomColor = "#" + Math.floor(Math.random() * 16777215).toString(16) //generates random color
-//}) //DOM
-}
+
+
 
 
 function moseDraw () {
@@ -441,16 +460,3 @@ const cheetah = (n) => {
     }
 }
 cheetah(cheetos);
-
-setInterval(function(){if(Gamer.active && counter>=0){
-    if(Gamer.time>=0)
-        {
-            Gamer.time-=1
-        }
-            else
-        {
-            Gamer.time = 60;
-            endSquaddieActivation(Gamer.squaddies.filter(el=>el.isActivating)[0],Gamer1,Gamer2,Gamer, switcher,teamz,turnTransition)
-        } 
-    } 
-}, 1000);

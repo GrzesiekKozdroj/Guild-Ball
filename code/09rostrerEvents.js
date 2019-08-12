@@ -1,5 +1,4 @@
-
-
+"use strict";
 let allTheGuildsForMenu = [alchemists, blacksmiths, brewers, butchers, cooks, engineers, falconers, farmers, fishermen, hunters, masons, miners, morticians, navigators, solthecian, ratcatchers, union];
 let totalNumberOfDuds = 0;
 let
@@ -25,7 +24,7 @@ let buildGuildsVar;
        if(counter === -2){
            buildGuilds();
            buildGuildsEvents();
-           bookOfLife = [];
+           let bookOfLife = [];
            for(let sq = 0; sq<matter.length;sq++){
                 let bobsko = new Player(...allPlayersAsArray.filter(el=>el[16]===($(matter[sq]).data("name") ) ) [0] );
                 bookOfLife.push(bobsko)
@@ -37,7 +36,7 @@ let buildGuildsVar;
                 bookOfLife,
                 addInfGen (bookOfLife),
                 rnd > 0.5 ? true : false,//active?
-                bookOfLife[0].theGuild,
+                new Guild(bookOfLife[0].theGuild.color, bookOfLife[0].theGuild.name, bookOfLife[0].theGuild.icon, bookOfLife[0].theGuild.squaddies, bookOfLife[0].theGuild.fontColor, bookOfLife[0].theGuild.mercenaries),//bookOfLife[0].theGuild,
                 rndDeploy > 0.5 ? [18 * inch, 6 * inch - 2.5 * cm] : [18 * inch, 30 * inch + 2.5 * cm],
                 rndDeploy > 0.5 ?                [0, 10 * inch]    :    [26 * inch, 1080/*canvas.height*/],
                 rndDeploy > 0.5 ?                       'top'      :        'bottom' 
@@ -45,7 +44,7 @@ let buildGuildsVar;
             } else if (counter === -1){
                 buildGuilds();
                 buildGuildsEvents();
-                bookOfLife = [];
+                let bookOfLife = [];
                 for(let sq = 0; sq<matter.length;sq++){
                      let bobsko = new Player(...allPlayersAsArray.filter(el=>el[16]===($(matter[sq]).data("name") ) ) [0] );
                      bookOfLife.push(bobsko)
@@ -57,7 +56,7 @@ let buildGuildsVar;
                      bookOfLife,
                      addInfGen (bookOfLife),
                      rnd > 0.5 ? false : true,//active?
-                     bookOfLife[0].theGuild,
+                     new Guild(bookOfLife[0].theGuild.color, bookOfLife[0].theGuild.name, bookOfLife[0].theGuild.icon, bookOfLife[0].theGuild.squaddies, bookOfLife[0].theGuild.fontColor, bookOfLife[0].theGuild.mercenaries),//bookOfLife[0].theGuild,
                      rndDeploy > 0.5 ? [18 * inch, 30 * inch + 2.5 * cm] : [18 * inch, 6 * inch - 2.5 * cm],
                      rndDeploy > 0.5 ? [26 * inch, 1080 /*canvas.height*/ ] : [0, 10 * inch],
                      rndDeploy > 0.5 ? 'bottom'  : 'top'

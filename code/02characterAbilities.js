@@ -1,4 +1,4 @@
-
+"use strict";
 let trapsArray = [];
 class CharacterAbilities {
     constructor (...abil){
@@ -89,5 +89,3 @@ function abilitiesCleaner(m1){//activates at the end of the turn and cleanses al
     m1.abilities.activeOwned.forEach(el=>el[1]=0);
     m1.abilities.passiveOwned.forEach(el=>el[1]=0);
 }
-
-

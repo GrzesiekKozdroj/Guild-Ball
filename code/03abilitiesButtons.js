@@ -1,5 +1,5 @@
-console.log('hello skillz buttonz');
-
+"use strict";
+let idear = 0;//used to smoothily identify and jump between unique abilities without triggering others, dirty workout
 //["Winter's Blessing", "Lunar Eclipse"], [], ["Skewered","Last Light"]
 function hasPassive (m1,name){
     return m1.abilities.passiveOwned.some(el => el.includes(name));
@@ -7,8 +7,8 @@ function hasPassive (m1,name){
 function makePassiveButton(id,text){
     return `<div id="${id}" class="passiveSkill">${text}</div>`
 }
-function makeActiveButton(){
-
+function makeActiveButton(id,text){
+    return `<div id="${id}" class="activeSkill traitPlaysButtonsChild>${text}</div>`
 }
 function hasActive (m1,name){
     return m1.abilities.activeOwned.some(el => el.includes(name));
@@ -22,24 +22,24 @@ function abilityButtons(teaMate, Gamer, color) {
     if (teaMate.abilities.activeOwned) {
 
         let flurry = teaMate.abilities.activeOwned.some(el => el.includes("Flurry") && el[1] < 1) ?
-            `<div id="flurry${teaMate.name}" class="activeSkill" style="border-color:${m1.theGuild.color}">Flurry</div>` : '';
+            `<div id="flurry${teaMate.name}" class="activeSkill traitPlaysButtonsChild" style="border-color:${m1.theGuild.color}">Flurry</div>` : '';
 
         let bigGameTraps = teaMate.abilities.activeOwned.some((el, i) => el.includes("Big Game Traps") && el[1] < 1) &&
 
-            teaMate.isActivating ? `<div id="BigGameTraps${m1.name}" class="activeSkill" style="border-color:${m1.theGuild.color};">Big Game Traps</div>` : '';
+            teaMate.isActivating ? `<div id="BigGameTraps${m1.name}" class="activeSkill traitPlaysButtonsChild" style="border-color:${m1.theGuild.color};">Big Game Traps</div>` : '';
 
         let gutAndString = teaMate.abilities.activeOwned.some(el => el.includes("Gut and String") && el[1] === 0) ?
-            `<div id="gutAndString" class="activeSkill" style="border-color:${m1.theGuild.color};">Gut and String</div>` : '';
+            `<div id="gutAndString" class="activeSkill traitPlaysButtonsChild" style="border-color:${m1.theGuild.color};">Gut and String</div>` : '';
 
         let snapFire = teaMate.abilities.activeOwned.some(el => el.includes("Snap Fire")) ?
-            `<div id="snapFire${m1.name}" class="activeSkill" style="border-color:${m1.theGuild.color};">Snap Fire</div>` : '';
+            `<div id="snapFire${m1.name}" class="activeSkill traitPlaysButtonsChild" style="border-color:${m1.theGuild.color};">Snap Fire</div>` : '';
 
         abilities.push(flurry, snapFire, gutAndString, bigGameTraps);
     }
 
     if (teaMate.abilities.passiveOwned) {
         let anatomicalPrecision = teaMate.abilities.passiveOwned.some(el => el.includes("Anatomical Precision")) ?
-            `<div id="anatomicalPrecision" class="passiveSkill">Anatomical Precision</div>` : '';
+            `<div id="anatomicalPrecision" class="passiveSkill traitPlaysButtonsChild">Anatomical Precision</div>` : '';
 
         let backToShadows = hasActive(teaMate,"Back to the Shadows") ? makePassiveButton("backToShadows","Back to the Shadows") : '';
 
@@ -56,6 +56,7 @@ function abilityButtons(teaMate, Gamer, color) {
 }
 
 function commonPreInstruction(options) {
+    //$("#app").on("click",".traitPlaysButtonsChild",()=>{$("#players").off('click.usingAbility',"#players");})
     options.m1.moveAura = false;
     options.m1.isDodging = false;
     options.m1.remainingDodge = 0;
@@ -71,6 +72,7 @@ function commonAfterInstruction(options) {
     if (options.m1.isMoving) {options.m1.isMoving = false;options.m1.hasMoved = true}
     options.m1.pressedAbutton = true;
     $("#players").off('click.usingAbility');
+    idear = 0;
 }
 
 function trigerOnDamageEffects(m1,m2) {
@@ -99,14 +101,14 @@ function payPrice (n,m1){
 function abilitiesEvents(m1, Gamer, otherGamer) {
     ///////////////////////////_____HUNTERS_____///////////////////////////////////////////////////
     $('#app').on('click', '#BigGameTraps' + m1.name, () => {
+            commonPreInstruction({ m1: m1 })
         if (Gamer.tokens.length < 5 && counter === 5 && !m1.wasCharging && !m1.isDodging && $(".pW0").find(".plajBookCell").length === 0) {
             const snaret = new Token(mouX, mouY, smallBase, "trap");
             snaret.isInHand = true;
             Gamer.tokens.push(snaret);
-            commonPreInstruction({ m1: m1 })
             //m1.moveAura = false;
             m1.drawAbilityAura = m1.baseRadius + 2 * inch + 2 * smallBase;
-            $("#players").on('click.usingAbility', () => {
+            $("#players").on('click.usingAbility',  () => {
                 if (distance(m1.posX, m1.posY, mouX, mouY) <= m1.baseRadius + 2 * inch + smallBase && snaret.isPlacable) {
                     commonAfterInstruction({ m1: m1 })
                     //m1.drawAbilityAura = 0;
@@ -130,12 +132,13 @@ function abilitiesEvents(m1, Gamer, otherGamer) {
 
         $("#app").on('click', '#flurry' + m1.name, () => {
                 commonPreInstruction({ m1: m1 });
+                idear = 1;
             if (m1.abilities.activeOwned.some(el => el.includes("Flurry") && el[1] < 1)) {
                 m1.drawAbilityAura = m1.baseRadius + 8 * inch;
                 m1.drawAbilityTargetAura = 2;
 
-                $("#players").on('click.usingAbility', () => {
-                    if (distance(m2.posX, m2.posY, m1.posX, m1.posY) <= m1.baseRadius + 8 * inch + m2.baseRadius && distance(mouX, mouY, m2.posX, m2.posY) <= m2.baseRadius && payPrice(2,m1) ) {
+                $("#players").on('click.usingAbility',() => {
+                    if (idear === 1 && distance(m2.posX, m2.posY, m1.posX, m1.posY) <= m1.baseRadius + 8 * inch + m2.baseRadius && distance(mouX, mouY, m2.posX, m2.posY) <= m2.baseRadius && payPrice(2,m1) ) {
                         //
                         m1.abilities.activeOwned.forEach(el => {
                             if (el.includes("Flurry")) el[1]++;
@@ -164,10 +167,11 @@ function abilitiesEvents(m1, Gamer, otherGamer) {
         })//flury
 
         $("#app").on("click", "#snapFire" + m1.name, () => {
+            idear = 2;
             commonPreInstruction({ m1: m1 });
             m1.drawAbilityAura = m1.baseRadius + 6 * inch;
             $("#players").on("click.usingAbility", () => {
-                if (distance(m1.posX, m1.posY, m2.posX, m2.posY) <= m1.baseRadius + m2.baseRadius + 6 * inch &&
+                if (idear===2 && distance(m1.posX, m1.posY, m2.posX, m2.posY) <= m1.baseRadius + m2.baseRadius + 6 * inch &&
                     distance(mouX, mouY, m2.posX, m2.posY) <= m2.baseRadius && payPrice(1,m1)) {
                     if (abilitiesRoll(m1, m2, 1) > 0) {
                         trigerOnDamageEffects(m1,m2);
@@ -178,7 +182,6 @@ function abilitiesEvents(m1, Gamer, otherGamer) {
                 }
             })
         })//snap fire
-        
     }//for m2
-
 }
+

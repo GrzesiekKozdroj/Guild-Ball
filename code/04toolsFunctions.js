@@ -1,3 +1,4 @@
+"use strict";
 function healFunction(teaMate, Gamer, ammountHealed, momentumUsed, healingScore) {
     teaMate.heal += healingScore;
     teaMate.hpMin += ammountHealed;
@@ -823,12 +824,17 @@ function modelInfo(m1) {
 }
 
 function escapist(m1, otherGamer, m2 = m1) {
+            idear = 0;//used to identify abilities and smoothly jump between them
             $('body').find('.snapBallButton').remove();
             teamz.forEach(el => {
                 if (el.canSnap) {
                     el.canSnap = false;
                     $('body').find('.snapBallButton').remove();
                 }
+                el.remainingDodge = 0;
+                el.remainingPush = 0;
+                el.isDodging = false;
+                el.isPushed = false;
             });
             m1.drawAbilityTargetAura = 0;
             m1.declaringAcharge = false;
@@ -1016,7 +1022,7 @@ function addInfGen (squaddies){
 function squadz(objx){
     let squads = [];
     for(let ox = 0; ox<objx.squaddies.length;ox++){
-        obj = objx.squaddies[ox];
+        let obj = objx.squaddies[ox];
         			let xXx = new Player(
         				obj.sprint,
         				obj.run,
@@ -1096,7 +1102,7 @@ function squadz(objx){
             		xXx.remainingSprint = obj.remainingSprint;
             		xXx.remainingDodge = obj.remainingDodge; 
             		xXx.remainingPush = obj.remainingPush;
-            		xXx.counterForAttack = obj.counterForAttack;
+            		xXx.counterForAttack = xXx.counterForAttack.push(...obj.counterForAttack);
             		xXx.willCounter= obj.willCounter;
             		xXx.defensiveStance = obj.defensiveStance;
             		xXx.inCover = obj.inCover;
@@ -1192,11 +1198,17 @@ function addHexColor(c1, c2) {
 
 
 function endSquaddieActivation(m1, Gamer1, Gamer2, Gamer, switcher, teamz, turnTransition) {
-    if(m1.abilities.activeOwned.some(el=>el.includes("Back to the Shadows") && el[1]!== true && el[1]>0) ){
+    if(m1.abilities.activeOwned.some(el=>el.includes("Back to the Shadows")  && el[1]>0) ){
         $('#players').off();$("#app").off();
         m1.isDodging = true;
         m1.dodgeSquaddie(4,"Back to the Shadows");
-        m1.abilities.activeOwned.forEach(el=>el.includes("Back to the Shadows")?el[1]=true:false);
+        m1.abilities.activeOwned.forEach(el=>{if(el.includes("Back to the Shadows"))el[1]=0});
+        $('#app').on('click', `.passActivation` + m1.name, () => { //end activation
+            if (Gamer.active && m1.isActivating) {
+                saveGameState();
+                endSquaddieActivation(m1, Gamer1, Gamer2, Gamer, switcher, teamz, turnTransition);
+            }else if(otherGamer.gp.hasBall){sendMessage(`click on ${otherGamer.guild.name} goal post.`)}
+        })
     }else{
     escapist(m1,otherGamer,m1);
     console.log('activation ended')
@@ -1386,7 +1398,7 @@ function drawTimeLeft (goblin) {
         let color = goblin.guild.color;
         let timeLeft = goblin.time;
         sctx.beginPath();
-        lineLength = 36*inch/2700;
+        let lineLength = 36*inch/2700;
         sctx.strokeStyle = color;
         sctx.lineWidth = .5*inch;
         sctx.moveTo(0,2+(36*inch-(timeLeft*lineLength) )   );

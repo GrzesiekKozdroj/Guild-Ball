@@ -1,3 +1,4 @@
+"use strict";
 class Terrain {
     constructor(
         x,y,type,picture,sizeX,sizeY, bounduaries          ,rotation
@@ -114,7 +115,7 @@ function terrainsDetector(teaMate){
 
 
 const pitchConstructor = () => {//generates an array of terrains to display
-    for (i = 0; i < coords.length; i++) {
+    for (let i = 0; i < coords.length; i++) {
         let roll;
         let cleard = td.filter(el=>typeof el !== "undefined").filter(el=>el!==undefined).filter(el=>el).filter(el=>el!==0).filter(el=>el!==false).filter(el=>el!=="").filter(el=>el!==NaN).filter(el=>el!==null).filter(el=>el[0].kind);
         if (cleard
