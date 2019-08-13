@@ -480,8 +480,8 @@ Ballista = [5,8,8,6,4,6,3,1,4,0,6,1,18,1,engiFam,[0,0,200,200], "Ballista",
     ["Mald",["Human"],"Male","Defensive Midfielder","Squaddie"], "Chaska", [0,0,largeScale] ],
 
     Egret = [6, 8, 8, 4, 3, 8, 4, 1, 2, 0, 4, 1, 12, 1, huntFam, [-200,0,200,200], 'Egret',
-        [[[1, 0, 0, 0, 0, 0], [0, 1, 1, 0, 0, 0]], [[0, 0, 2, 0, 0, 0], [0, 1, 0, 0, 1, 0]], [[], [1, 0, 0, 0, 1, 0]], [[2, 0, 0, 0, 0, 0], [0, 1, 1, 1, 0, 0]]], 6, Hunters,["Castellyain",["Human"],"Female","Striker","Squaddie"], "Egret"
-        , [50,0,largeScale], [ [],["Swift Strikes","Venomous Strike"],[],["Flurry","Snap Fire","Back to the Shadows"] ] ],
+        [[[1, 0, 0, 0, 0, 0], [0, 1, 1, 0, 1, 0]], [[], [0, 0, 2, 0, 0, 0]], [[], [1, 0, 0, 0, 1, 0]], [[2, 0, 0, 0, 0, 0], [0, 1, 1, 1, 0, 0]]], 6, Hunters,["Castellyain",["Human"],"Female","Striker","Squaddie"], "Egret"
+        , [50,0,largeScale], [ [],["Swift Strikes","Venomous Strike","Close Control"],[],["Flurry","Snap Fire","Back to the Shadows"] ] ],
 
     Hearne = [4, 6, 6, 5, 3, 6, 3, 1, 1, 0, 3, 2, 20, 2, huntFam, [0,-200,200,200], 'Hearne',
         [[[1, 0, 0, 0, 0, 0], [0, 1, 0, 0, 0, 0]], [[0, 0, 0, 1, 0, 0], [2, 1, 0, 0, 0, 0]], [[0, 0, 0, 0, 0, 1], [0, 1, 0, 2, 0, 0]], [[0, 0, 0, 0, 1, 0], [3, 1, 0, 0, 0, 0]], [[], [0, 1, 0, 0, 0, 0]]], 10, Hunters,["unknown",["Human"],"Male","Centre Back","Squaddie"],"Hearne"
@@ -492,7 +492,8 @@ Ballista = [5,8,8,6,4,6,3,1,4,0,6,1,18,1,engiFam,[0,0,200,200], "Ballista",
 , [0,100,largeScale], [  [], ["Winter's Blessing", "Lunar Eclipse"], [], ["Skewered","Last Light"]  ] ],
 
     Jaecar = [7, 9, 9, 6, 2, 6, 4, 0, 2, 0, 4, 1, 14, 1, huntFam, [-200,-200,200,200], 'Jaecar',
-        [[[], [1, 1, 1, 0, 0, 0, 0]], [[0, 0, 0, 0, 0, 0, 0, GutAndString], [2, 1, 1, 0, 0, 0, 0]], [[0, 0, 0, 0, 1, 0, 0], [2, 1, 2, 0, 0, 0, 0]], [[2, 0, 0, 0, 0, 0, 0, GutAndString], [2, 1, 1, 1, 0, 0, 0]], [[], [3, 0, 0, 0, 0, 0, 0]], [[], [4, 1, 0, 0, 0, 0, 0]]], 7, Hunters,
+        [[[0,0,0,0,0,0,0,GutAndString], [1, 1, 1, 0, 0, 0, 0]], [[0, 0, 0, 0, 1, 0], [2, 1, 1, 0, 0, 0, 0]], 
+        [[2, 0, 0, 0, 0, 0, 0, GutAndString], [2, 1, 2, 0, 0, 0, 0]], [[], [3, 1, 1, 1, 0, 0, 0]], [[], [3, 0, 0, 0, 0, 0, 0, GutAndString]], [[], [4, 1, 0, 0, 0, 0, 0]]], 7, Hunters,
         ["Castellyan",["Human"],"Male","Winger","Squaddie"],"Jaecar", [50,25,largeScale], [[],["Anatomical Precision","Light Footed"],[],["Gut and String","Back to the Shadows", "Big Game Traps"] ] ],
 
     vetMinx = [7, 9, 9, 5, 3, 6, 4, 1, 2, 0, 4, 2, 12, 1, huntFam,[-200,-800,200,200], "vMinx", 

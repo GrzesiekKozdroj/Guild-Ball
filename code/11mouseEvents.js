@@ -98,6 +98,8 @@ function turnTransition(event) {
 
         Gamer.squaddies.filter(el => el.isTakenOut).forEach((el, i) => {
             el.isTakenOut = false;
+            el.isActivating = false;
+            el.hasActivated = false;
             el.posX = (canvas.width - 4 * inch) / 2 + (i+1) * inch;
             el.posY = Gamer.deployment[0] < canvas.height / 2 ? el.baseRadius + 5 : canvas.height - el.baseRadius - 5;
             adminToolz(event, el, Gamer, 'comeback')

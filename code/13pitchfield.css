@@ -11,7 +11,7 @@ body {
 }
 
 .tesdsfhkjlkjhgfdster {
-  color: rgba(209, 59, 49, 0.932);
+  color: rgba(240, 212, 161, 0.932);
 }
 
 .background-Alchemist {
@@ -2930,6 +2930,7 @@ button:hover {
 
 .teaMenu {
   max-height: 9vw;
+  min-height: 8vw;
   overflow-y: scroll;
   background-color: rgba(94, 93, 88, 0.31);
   border-radius: 2.0px;
@@ -3547,13 +3548,15 @@ html {
   border-radius: 2px;
   pointer-events: none;
   position: absolute;
-  opacity: .95;
+  opacity: .98;
   color: white;
   width: 12vw;
   padding: 1vw;
   -webkit-text-stroke: 1px rgba(99, 93, 93, 0.699);
   font-weight: 900;
-  font-size: 1.1vw;
+  font-size: 1.4vw;
+  text-shadow: -1px -1px 50px black;
+  background-color: white;
 }
 
 [id^="cancel"]:hover:after {
@@ -3563,7 +3566,7 @@ html {
   -webkit-animation: Gradient 30s ease infinite;
   -moz-animation: Gradient 30s ease infinite;
   animation: Gradient 30s ease infinite;
-  content: 'cancel current action and auras. For example if you were about to charge but changed your mind its time to click here or press esc button.';
+  content: "cancel current action and auras. For example if you were about to charge but changed your mind its time to click here or press esc button.";
 }
 
 @-webkit-keyframes Gradient {
@@ -4071,4 +4074,10 @@ html {
   100% {
     background-position: 0% 100%;
   }
+}
+
+.passiveSkill {
+  background-color: rgba(187, 168, 168, 0.349);
+  color: rgba(56, 56, 56, 0.938);
+  border-color: rgba(56, 56, 56, 0.938);
 }

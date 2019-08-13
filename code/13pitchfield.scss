@@ -12,7 +12,7 @@ body {
     box-sizing:border-box;
 }
 .tesdsfhkjlkjhgfdster{
-    color:rgba(209, 59, 49, 0.932);
+    color:rgba(240, 212, 161, 0.932);
 }
 
 $guilds:(
@@ -509,7 +509,7 @@ button:hover{
         div{
             width: 99%;
             &:active{
-                transform:scale(.95)
+                transform:scale(.95);
             }
         }
     }
@@ -553,6 +553,7 @@ button:hover{
 }
 .teaMenu{
     max-height:9vw;
+    min-height:8vw;
     overflow-y:scroll;
     background-color: rgba(94, 93, 88, 0.31);
     border-radius:2.0px;
@@ -1016,20 +1017,22 @@ cursor:none;
             border-radius: 2px;
             pointer-events: none;
             position: absolute;
-            opacity:.95;
-            color:rgba(255, 255, 255, 255);
+            opacity:.98;
+            color:rgb(255, 255, 255);
             width:12vw;
             padding:1vw;
             -webkit-text-stroke:1px rgba(99, 93, 93, 0.699);
             font-weight: 900;
-            font-size: 1.1vw;
+            font-size: 1.4vw;
+            text-shadow: -1px -1px 50px rgba(0, 0, 0, 1);
+            background-color: white;
 }
 [id^="cancel"]{
     &:hover{
         &:after{
             @extend %hoverExpansion;
             @include bajckground(27deg,23deg,52deg,rgba(141, 8, 8, 0.932),30s);
-            content:'cancel current action and auras. For example if you were about to charge but changed your mind its time to click here or press esc button.'
+            content:"cancel current action and auras. For example if you were about to charge but changed your mind its time to click here or press esc button.";
         }
     }
 }
@@ -1133,5 +1136,10 @@ cursor:none;
     }
 }
 
+.passiveSkill{
+    background-color:rgba(187, 168, 168, 0.349);
+    color:rgba(56, 56, 56, 0.938);
+    border-color:rgba(56, 56, 56, 0.938);
+}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////

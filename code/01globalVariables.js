@@ -71,7 +71,7 @@ let rulerDopplers = [];
 let rdLength = 0;
 let rnd = Math.random();//this randomises who is to start
 let rndDeploy = Math.random();
-let cheetos = false;
+let cheetos = true;
 
 const smallBase = 1.2 * cm;
 

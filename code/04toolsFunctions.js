@@ -100,7 +100,7 @@ function playbookStitcher(m1, i, wrap, mode) {
         let isTackle = tackle === 0 ? '' : 'T<br>';
         let isKD = KD === 0 ? '' : 'KD<br>';
         let ability = (m1.playBook[i][0].length>7&&m1.playBook[i][0][6]>0)?'oo<br>':m1.playBook[i][0].length>7?'o<br>':'';
-        let bookElement = `${ability}${isKD}${isTackle}${hasDamage}${hasDodges}${hasPushes}`;
+        let bookElement = `${ability}${isKD}${isTackle}${hasDamage}${hasPushes}${hasDodges}`;
         const shouldIbother = true//Boolean(dmg + mom + ddge + psh + tackle + KD > 0);
         let $plajbookEl = shouldIbother ? `<li class='plajBookTopCell ${wrap[2]} activeOptions' 
                         data-dmg=${dmg} data-mom=${mom} data-ddge=${ddge} data-psh=${psh} data-tackle=${tackle} data-kd=${KD} 
@@ -124,7 +124,7 @@ function playbookStitcher(m1, i, wrap, mode) {
     let isTackle = tackle === 0 ? '' : 'T<br>';
     let isKD = KD === 0 ? '' : 'KD<br>';
     let ability = (m1.playBook[i][1].length>7&&m1.playBook[i][1][6]>0)?'oo<br>':m1.playBook[i][1].length>7?'o<br>':'';
-    let bookElement = `${ability}${isKD}${isTackle}${hasDamage}${hasDodges}${hasPushes}`;
+    let bookElement = `${ability}${isKD}${isTackle}${hasDamage}${hasPushes}${hasDodges}`;
     const shouldIbother = true//Boolean(dmg + mom + ddge + psh + tackle + KD > 0)
     let $plajbookEl = shouldIbother ? `<li class='plajBookCell ${wrap[3]} activeOptions' 
                                 data-dmg=${dmg} data-mom=${mom} data-ddge=${ddge} data-psh=${psh} data-tackle=${tackle} data-kd=${KD} 
@@ -146,8 +146,8 @@ function buttonStitching(wrap, m1, m2, ball, Gamer, mode, continueMovement) {
                 let psh = Number($(this).data('psh'));
                 let tackle = Number($(this).data('tackle'));
                 let kd = Number($(this).data('kd'));
-                let abil = $(this).data('abil')!==false?Number($(this).data('abil')):false;
-                if ( !abil && 
+                let abil = $(this).data('abil')!==false?Number($(this).data('abil')):false;console.log(typeof(abil))
+                if ( !abil && typeof(abil) !== 'number' &&
                     ( (m2.isKnockedDown && dmg < 1 && ddge < 1 && psh < 1 && ((m2.hasBall && tackle < 1) || (!m2.hasBall && tackle > 0))) || (!m2.hasBall && dmg < 1 && ddge < 1 && psh < 1 && ((!m2.isKnockedDown && kd < 1) || (m2.isKnockedDown && kd > 0)) ) )
                     ){
                     let circumstances = tackle > 0 ? `tackle if there is no ball` : kd > 0 ? `knock down lying person` : `do this`;
@@ -177,13 +177,15 @@ function buttonStitching(wrap, m1, m2, ball, Gamer, mode, continueMovement) {
                             };
                         }
                     };
-                    if (tackle > 0 && m2.hasBall) {
+                    if (tackle > 0 && m2.hasBall && (!hasPassive(m2,"Close Control") || hasPassiveUsed(m2,"Close Control"))) {
                         if (!ball.isOnGround) {
                             m2.hasBall = false;
                             m1.hasBall = true;
                             ball.x = m1.posX;
                             ball.y = m1.posY
                         }
+                    } else if (tackle > 0 && m2.hasBall && hasPassiveUnused(m2,"Close Control")){
+                        m2.abilities.passiveOwned.forEach(el => {if(el.includes("Close Control")){el[1]++}})
                     }
                     if (kd === 1 && !m2.isKnockedDown) {
                         knockedDown(m2, ball);
@@ -1102,7 +1104,7 @@ function squadz(objx){
             		xXx.remainingSprint = obj.remainingSprint;
             		xXx.remainingDodge = obj.remainingDodge; 
             		xXx.remainingPush = obj.remainingPush;
-            		xXx.counterForAttack = xXx.counterForAttack.push(...obj.counterForAttack);
+            		xXx.counterForAttack.push(...obj.counterForAttack);
             		xXx.willCounter= obj.willCounter;
             		xXx.defensiveStance = obj.defensiveStance;
             		xXx.inCover = obj.inCover;
@@ -1131,7 +1133,7 @@ function cloneX (objc){
     let squaddies =  squadz(objc);
     let tokenz = [];
     for(let tz= 0; tz <objc.tokens.length;tz++){
-        tkn = objc.tokens[tz];
+        let tkn = objc.tokens[tz];
         let tknx = new Token(tkn.posX,tkn.posY,tkn.baseRadius,tkn.type);
             tknx.classification = tkn.classification;
             tknx.id = tkn.id;

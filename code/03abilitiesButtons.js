@@ -4,6 +4,12 @@ let idear = 0;//used to smoothily identify and jump between unique abilities wit
 function hasPassive (m1,name){
     return m1.abilities.passiveOwned.some(el => el.includes(name));
 }
+function hasPassiveUnused(m1,name){
+    return m1.abilities.passiveOwned.some(el => el.includes(name) && el[1]<1)
+}
+function hasPassiveUsed(m1,name){
+    return m1.abilities.passiveOwned.some(el => el.includes(name) && el[1]>0)
+}
 function makePassiveButton(id,text){
     return `<div id="${id}" class="passiveSkill">${text}</div>`
 }
@@ -43,14 +49,18 @@ function abilityButtons(teaMate, Gamer, color) {
 
         let backToShadows = hasActive(teaMate,"Back to the Shadows") ? makePassiveButton("backToShadows","Back to the Shadows") : '';
 
+        let closeControl = hasPassiveUnused(teaMate, "Close Control") ? makePassiveButton(`closeControl`,"Close Control"):'';
+
         let lightFooted = teaMate.abilities.passiveOwned.some(el => el.includes("Light Footed")) ?
             `<div id="lightFooted" class="passiveSkill">Light Footed</div>` : '';
+        let swiftStrikes = hasPassive(teaMate,"Swift Strikes") ? makePassiveButton(`swiftStrikes`,"Swift Strikes"):'';
+        let venomousStrike = hasPassive(teaMate,"Venomous Strike") ? makePassiveButton(`venomousStrike`,"Venomous Strike"):'';
 
         let wintersBlessing = hasPassive(teaMate,"Winter's Blessing") ? `<div id="winterBlessing" class="passiveSkill">Winter's Blessing</div>`:'';
 
 
         
-        abilities.push(anatomicalPrecision, backToShadows, lightFooted, wintersBlessing);
+        abilities.push(anatomicalPrecision, backToShadows, closeControl, lightFooted, swiftStrikes, wintersBlessing, venomousStrike);
     }
     return abilities.join('');
 }

@@ -198,6 +198,7 @@ let bigBang = (e)=>{//document.addEventListener('DOMContentLoaded', function (e)
                 generatePuddle(m1);
                 removeConditionsFuncion(m1, Gamer, 0, 0);        
                 m1.isActivating = false;
+                //m1.hasActivated = false;
                 m1.isMoving = false;
                 m1.hasMoved = false;
                 m1.isAttacking = false;
