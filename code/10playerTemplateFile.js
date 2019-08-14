@@ -487,9 +487,9 @@ Ballista = [5,8,8,6,4,6,3,1,4,0,6,1,18,1,engiFam,[0,0,200,200], "Ballista",
         [[[1, 0, 0, 0, 0, 0], [0, 1, 0, 0, 0, 0]], [[0, 0, 0, 1, 0, 0], [2, 1, 0, 0, 0, 0]], [[0, 0, 0, 0, 0, 1], [0, 1, 0, 2, 0, 0]], [[0, 0, 0, 0, 1, 0], [3, 1, 0, 0, 0, 0]], [[], [0, 1, 0, 0, 0, 0]]], 10, Hunters,["unknown",["Human"],"Male","Centre Back","Squaddie"],"Hearne"
         , [0,25,largeScale] ],
 
-    vetHearne = [4, 6, 6, 5, 3, 6, 3, 1, 2, 0, 3, 2, 20, 2, huntFam, [0,-800,200,200],"vHearne",
+    vetHearne = [4, 6, 6, 15, 3, 6, 3, 1, 2, 0, 3, 2, 20, 2, huntFam, [0,-800,200,200],"vHearne",
 [  [[1,0,0,0,0,0],[0,1,0,1,0,0]] , [[0,1,0,0,1,0],[0,1,0,0,0,1]] , [[2,0,0,0,0,0],[0,1,0,2,0,0]] , [[],[3,1,0,0,0,0]] , [[],[0,1,0,0,0,0,1,Skewered ]]  ], 10, Hunters,["unknown",["Human"],"Male","Centre Back","Squaddie"], "Hearne"  
-, [0,100,largeScale], [  [], ["Winter's Blessing", "Lunar Eclipse"], [], ["Skewered","Last Light"]  ] ],
+, [0,100,largeScale], [  [], ["Winters Blessing", "Lunar Eclipse"], [], ["Skewered","Last Light"]  ] ],
 
     Jaecar = [7, 9, 9, 6, 2, 6, 4, 0, 2, 0, 4, 1, 14, 1, huntFam, [-200,-200,200,200], 'Jaecar',
         [[[0,0,0,0,0,0,0,GutAndString], [1, 1, 1, 0, 0, 0, 0]], [[0, 0, 0, 0, 1, 0], [2, 1, 1, 0, 0, 0, 0]], 

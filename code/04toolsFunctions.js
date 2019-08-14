@@ -146,7 +146,7 @@ function buttonStitching(wrap, m1, m2, ball, Gamer, mode, continueMovement) {
                 let psh = Number($(this).data('psh'));
                 let tackle = Number($(this).data('tackle'));
                 let kd = Number($(this).data('kd'));
-                let abil = $(this).data('abil')!==false?Number($(this).data('abil')):false;console.log(typeof(abil))
+                let abil = $(this).data('abil')!==false?Number($(this).data('abil')):false;
                 if ( !abil && typeof(abil) !== 'number' &&
                     ( (m2.isKnockedDown && dmg < 1 && ddge < 1 && psh < 1 && ((m2.hasBall && tackle < 1) || (!m2.hasBall && tackle > 0))) || (!m2.hasBall && dmg < 1 && ddge < 1 && psh < 1 && ((!m2.isKnockedDown && kd < 1) || (m2.isKnockedDown && kd > 0)) ) )
                     ){
@@ -175,6 +175,9 @@ function buttonStitching(wrap, m1, m2, ball, Gamer, mode, continueMovement) {
                             {
                                 m1.remainingDodge+=2*inch;
                             };
+                            if(hasPassive(m1,"Lunar Eclipse")){console.log(hi)
+                                lunarEclipse(m1,m2);//"Lunar Eclipse"
+                            }
                         }
                     };
                     if (tackle > 0 && m2.hasBall && (!hasPassive(m2,"Close Control") || hasPassiveUsed(m2,"Close Control"))) {
@@ -232,8 +235,12 @@ function buttonStitching(wrap, m1, m2, ball, Gamer, mode, continueMovement) {
 function waaar(Gamer, otherGamer, m1, victim, mode = 'attack', continueMovement) {
     m1.moveAura = false;
     let m2 = victim;
+    m2.drawAbilityAura = 0;
+    m1.drawAbilityAura = 0;
+    m1.drawAbilityTargetAura = 0;
+    m2.drawAbilityTargetAura = 0;
     //--02-S---selected squaddie makes an attack                                                  && 
-    if ($('#app').find('.activeOptions').length < 1 &&
+    if ($('#app').find('.activeOptions').length < 1 && !m2.isPushed && !m2.isDodging &&
         //BUG: I can postpone counterattack while i.e. dodging from attack and not finshing dodge but attacking again.
         mode === 'parting blow' || Boolean(mode === 'counterattack' && distance(m1.posX, m1.posY, m2.posX, m2.posY) <= (m1.meleeRadius + m2.baseRadius)) ||
         m1.infMin > 0 && m1.isActivating && !m1.isKnockedDown && distance(m1.posX, m1.posY, m2.posX, m2.posY) <= (m1.meleeRadius + m2.baseRadius) && !m2.willCounter) {
@@ -480,9 +487,30 @@ function legalPlacementDetector(m1) {
             typesofTerrain.push(filtered_td[wT][0].kind);
         }
     }//the below always returns false!!
-    if ((!colorClose.includes(255) || (colorClose.includes(255) && !typesofTerrain.includes("wall") && !typesofTerrain.includes("obstacle"))) && (!ball.isOnGround || distance(mouX, mouY, ball.x, ball.y) > ball.ballSize + m1.baseRadius) && teamz.forEach(el => el.name !== m1.name && distance(el.posX, el.posY, mouX, mouY) > el.baseRadius + m1.baseRadius) && distance(mouX, mouY, Gamer.gp.x, Gamer.gp.y) > m1.baseRadius + 2.5 * cm && distance(mouX, mouY, otherGamer.gp.x, otherGamer.gp.y) > m1.baseRadius + 2.5 * cm) {
-        return true
-    } else { return false }
+    //------------------------------------------------------
+    console.log("colors",Boolean(!colorClose.includes(255) || 
+    (
+        colorClose.includes(255) && !typesofTerrain.includes("wall") && !typesofTerrain.includes("obstacle")
+    )),"ball",Boolean(!ball.isOnGround || distance(mouX, mouY, ball.x, ball.y) > ball.ballSize + m1.baseRadius),"squaddies",teamz.filter(el => el.name !== m1.name && distance(el.posX, el.posY, mouX, mouY) <= el.baseRadius + m1.baseRadius).lenth,"goalposts",Boolean(distance(mouX, mouY, Gamer.gp.x, Gamer.gp.y) > m1.baseRadius + 2.5 * cm && 
+    distance(mouX, mouY, otherGamer.gp.x, otherGamer.gp.y) > m1.baseRadius + 2.5 * cm))
+    //----------------------------------------------------------
+    if (
+        (!colorClose.includes(255) || 
+            (
+                colorClose.includes(255) && !typesofTerrain.includes("wall") && !typesofTerrain.includes("obstacle")
+            )
+        ) 
+        && 
+        (
+            !ball.isOnGround || distance(mouX, mouY, ball.x, ball.y) > ball.ballSize + m1.baseRadius
+        ) 
+        && 
+        teamz.filter(el => el.name !== m1.name && distance(el.posX, el.posY, mouX, mouY) <= el.baseRadius + m1.baseRadius).length<1 &&
+        distance(mouX, mouY, Gamer.gp.x, Gamer.gp.y) > m1.baseRadius + 2.5 * cm && 
+        distance(mouX, mouY, otherGamer.gp.x, otherGamer.gp.y) > m1.baseRadius + 2.5 * cm) 
+        {
+            return true
+        } else { return false }
 }
 
 
@@ -827,6 +855,8 @@ function modelInfo(m1) {
 
 function escapist(m1, otherGamer, m2 = m1) {
             idear = 0;//used to identify abilities and smoothly jump between them
+            rulerDopplers = [];
+            ruler = false;
             $('body').find('.snapBallButton').remove();
             teamz.forEach(el => {
                 if (el.canSnap) {
@@ -837,6 +867,7 @@ function escapist(m1, otherGamer, m2 = m1) {
                 el.remainingPush = 0;
                 el.isDodging = false;
                 el.isPushed = false;
+                el.drawAbilityAura=0;
             });
             m1.drawAbilityTargetAura = 0;
             m1.declaringAcharge = false;
@@ -1145,7 +1176,7 @@ function cloneX (objc){
                                    [objc.gp.x,objc.gp.y,squaddies[0].theGuild.color],
                                    objc.deployment,objc.side);
         GameDataSlice.time =  objc.time;
-        GameDataSlice.tokens.push(...tokenz);console.log(GameDataSlice.tokens)//<------UNDEFINES ANY FURTHER ENEMY MOVEMENTS
+        GameDataSlice.tokens.push(...tokenz);//<------UNDEFINES ANY FURTHER ENEMY MOVEMENTS
         GameDataSlice.oponent =  objc.oponent;//requiers special attention
 	return GameDataSlice;
 }
@@ -1154,14 +1185,13 @@ function ballCloneX (ball){
     xXx.isOnGround = ball.isOnGround;
     xXx.isInHand = ball.isInHand;
     xXx.teaMate = ball.teaMate;
-    //console.log(xXx);
+    
     return xXx;
 }
 
 function addHexColor(c1, c2) {
     let hexStr = (parseInt(c1, 16) + parseInt(c2, 16)).toString(16);
-    while (hexStr.length < 6) { hexStr = '0' + hexStr; } // Zero pad.
-    console.log (hexStr)
+    while (hexStr.length < 6) { hexStr = '0' + hexStr; } 
     return hexStr;
   }
 
@@ -1193,7 +1223,6 @@ function addHexColor(c1, c2) {
             stepsB[i] = start['B'] + ((diffB / steps) * i);
             stepsHex[i] = '#' + Math.round(stepsR[i]).toString(16) + '' + Math.round(stepsG[i]).toString(16) + '' + Math.round(stepsB[i]).toString(16);
     }
-    console.log(stepsHex)
     return stepsHex;
 
 }
@@ -1213,13 +1242,13 @@ function endSquaddieActivation(m1, Gamer1, Gamer2, Gamer, switcher, teamz, turnT
         })
     }else{
     escapist(m1,otherGamer,m1);
-    console.log('activation ended')
     message = '';
     diceRolledForDisplay = [];
     $teamplays = [];
     m1.hasActivated = true;
     m1.isActivating = false;
     teamz.forEach(el => {
+        el.drawAbilityAura=0;
         el.kickReRoll = 0;
         el.isAttacking = false;
         el.isKicking = false;

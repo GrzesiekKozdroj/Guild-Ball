@@ -91,8 +91,8 @@ function terrainsDetector(teaMate){
         if( colorClose.includes(255) && !teaMate.inRoughGround /*&& (teaMate.isMoving || teaMate.wasCharging)*/ && ( typesofTerrain.includes("forest") || typesofTerrain.includes("roughGround") ) && !teaMate.isGliding ){
             let hasLightFooted = Boolean(teaMate.abilities.passiveOwned && teaMate.abilities.passiveOwned.some(el=>el.includes("Light Footed") ) );
             teaMate.inRoughGround = true; 
-            teaMate.remainingRun -= hasLightFooted ? 0 : 2* inch; 
-            teaMate.remainingSprint -= hasLightFooted ? 0 : 2 * inch;
+            teaMate.remainingRun += ( (hasPassive(teaMate,"Winters Blessing")?4*inch:0)-(hasLightFooted ? 0 : 2* inch) ); 
+            teaMate.remainingSprint += ( (hasPassive(teaMate,"Winters Blessing")?4*inch:0)-(hasLightFooted ? 0 : 2 * inch) );
             teaMate.inForest = typesofTerrain.includes("forest") ? true : false;
         } else if ( !colorClose.includes(255) ) { teaMate.inRoughGround = false }
 

@@ -1,4 +1,6 @@
 "use strict";
+let idear = 0;
+
 let trapsArray = [];
 class CharacterAbilities {
     constructor (...abil){
@@ -10,6 +12,32 @@ class CharacterAbilities {
             
         }
     }
+}
+
+
+function hasPassive (m1,name){
+    return m1.abilities.passiveOwned.some(el => el.includes(name));
+}
+function hasPassiveUnused(m1,name){
+    return m1.abilities.passiveOwned.some(el => el.includes(name) && el[1]<1)
+}
+function hasPassiveUsed(m1,name){
+    return m1.abilities.passiveOwned.some(el => el.includes(name) && el[1]>0)
+}
+function makePassiveButton(id,text){
+    return `<div id="${id}" class="passiveSkill">${text}</div>`
+}
+function hasActive (m1,name){
+    return m1.abilities.activeOwned.some(el => el.includes(name)) || m1.abilities.passiveGiven.some(el => el.includes(name));
+}
+function hasActiveUnused(m1,name){
+    return m1.abilities.activeOwned.some(el => el.includes(name) && el[1]<1)
+}
+function makeActiveButton(id,text){
+    return `<div id="${id}" class="activeSkill traitPlaysButtonsChild">${text}</div>`
+}
+function makeActiveOpt(m1,name){
+    m1.abilities.activeOwned.forEach(el=>{if(el[0]===name){el[1]+=1}});
 }
 
 class Token {
@@ -61,7 +89,6 @@ class Token {
         }
     }
 }
-
 function GutAndString (m1,m2){
     if(m1.abilities.activeOwned.some(el=>el.includes("Gut and String") && el[1] === 0 ) 
     && !m2.abilities.activeGiven.some(el=>el==="Gut and String"))
@@ -73,12 +100,34 @@ function GutAndString (m1,m2){
     }
 }
 
+
+
 function Skewered (m1,m2){
-    m2.hpMin-=3;
-    snare(m2);
+    if(hasActiveUnused(m1,"Skewered")){
+        m2.hpMin-=3;
+        snare(m2);
+        makeActiveOpt(m1,"Skewered");
+        if(m1.nameSpec==="vHearne")lunarEclipse(m1,m2);
+    }
 }
 
-
+function lunarEclipse(m1,m2){
+        commonPreInstruction({ m1: m1 });
+    m2.drawAbilityAura = m1.baseRadius*2+1*inch+m2.baseRadius;
+    idear = "lunarEclipse";
+    ruler = true;
+    $("#players").on('click.usingAbility', ()=>{
+        if(hasPassive(m1,'Lunar Eclipse') && 
+            distance(mouX,mouY,m2.posX,m2.posY)<=m1.baseRadius*2+m2.baseRadius+1*inch && 
+            $('#app').find('.activeOptions').length < 1 && legalPlacementDetector(m1)){
+            m1.posX = mouX;
+            m1.posY = mouY;
+            commonAfterInstruction({ m1: m1 });
+            m2.drawAbilityAura=0;
+            ruler = false;
+        }
+    })
+}
 
 
 
