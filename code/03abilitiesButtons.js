@@ -101,7 +101,7 @@ function abilitiesEvents(m1, Gamer, otherGamer) {
     $('#app').on('click', '#BigGameTraps' + m1.name, () => {
             commonPreInstruction({ m1: m1 });
         if (Gamer.tokens.length < 5 && counter === 5 && !m1.wasCharging && !m1.isDodging && $(".pW0").find(".plajBookCell").length === 0) {
-            const snaret = new Token(mouX, mouY, smallBase, "trap");
+            const snaret = new Token(mouX, mouY, smallBase, "trap", Gamer.guild.color);
             snaret.isInHand = true;
             Gamer.tokens.push(snaret);
             //m1.moveAura = false;

@@ -1231,6 +1231,7 @@ function addHexColor(c1, c2) {
 function endSquaddieActivation(m1, Gamer1, Gamer2, Gamer, switcher, teamz, turnTransition) {
     if(m1.abilities.activeOwned.some(el=>el.includes("Back to the Shadows")  && el[1]>0) ){
         $('#players').off();$("#app").off();
+        if(m1.moveAura){m1.isMoving = false; m1.moveAura = false}
         m1.isDodging = true;
         m1.dodgeSquaddie(4,"Back to the Shadows");
         m1.abilities.activeOwned.forEach(el=>{if(el.includes("Back to the Shadows"))el[1]=0});
@@ -1317,8 +1318,8 @@ function endSquaddieActivation(m1, Gamer1, Gamer2, Gamer, switcher, teamz, turnT
                     m1.hpMin = m1.icySponge;
                     m1.posX = undefined;
                     m1.posY = undefined;
-                    m1.hasActivated = true;
-                    m1.hasMoved = true;
+                    m1.hasActivated = false;
+                    m1.hasMoved = false;
                     m1.isPushed = false;
                     m1.isDodging = false;
                     m1.isTakenOut = true;

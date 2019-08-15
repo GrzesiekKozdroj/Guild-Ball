@@ -66,6 +66,7 @@ function turnTransition(event) {
                             Gamer.squaddies.filter(el => el.isActivating).forEach(m1 => {
                                 m1.hasMoved = false;
                                 m1.isMoving = false;
+                                m1.moveAura = false;
                                 m1.isActivating = false;
                                 m1.remainingSprint = m1.sprint * inch + m1.baseRadius;
                                 m1.remainingRun = m1.run * inch + m1.baseRadius;
@@ -187,6 +188,7 @@ switcher = (event) => {
                 //event.button == 2 &&
                  teaMate.isActivating && !teaMate.isKnockedDown) {
                 teaMate.moveAura = true;
+                if(teaMate.isDodging)teaMate.isDodging = false;
                 teamz.forEach(el=>!el.isActivating || el.wasCharging?el.moveAura=false:el.moveAura=true)
                 // teaMate.isMoving = true;
                 sendMessage(`if ${teaMate.nameDisplayed} has influence, ${teaMate.nameDisplayed} could sprint, left-click to move. You can cancel by pressing escape, hovering beyond movement zone or on other player.`)

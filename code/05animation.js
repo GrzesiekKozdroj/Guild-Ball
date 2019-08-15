@@ -176,5 +176,5 @@ function anime(m1, teams, otherGamer, options) {
             !continueMovement ? requestAnimationFrame(anim) : false;
         }
     }
-    if(m1.remainingSprint>0&&m1.isMoving||m1.isDodging||m1.isPushed)anim()
+    if(m1.remainingSprint>0&&m1.isMoving||m1.isDodging||m1.isPushed||m2.isPushed)anim()
 }

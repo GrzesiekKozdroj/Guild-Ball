@@ -41,7 +41,7 @@ function makeActiveOpt(m1,name){
 }
 
 class Token {
-    constructor(xo,yo,size,type){
+    constructor(xo,yo,size,type,color){
         this.classification = "token";
         this.id = Math.floor(Math.random()*10000);
         this.posX = xo;
@@ -52,6 +52,7 @@ class Token {
         this.icon.src = this.type === "trap" ? "./icons/snared.png" : "";
         this.isInHand = false;
         this.isPlacable;
+        this.color = color;
     }
     drawToken(x = this.posX, y = this.posY){
         //letx =  ; 
@@ -67,7 +68,7 @@ class Token {
             pcl.beginPath();
             pcl.arc(x, y, this.baseRadius, 0, Math.PI * 2, true);
             pcl.fillStyle = "rgba(164, 192, 120, 0.74)";
-            pcl.strokeStyle= "rgba(209, 59, 49, 0.932)";
+            pcl.strokeStyle= this.color;
             pcl.fill();
             pcl.stroke();
             pcl.closePath();
@@ -76,7 +77,7 @@ class Token {
             pcl.beginPath();
             //draw icons
             pcl.drawImage(this.icon, x - this.baseRadius, y - this.baseRadius, this.baseRadius*2, this.baseRadius*2);
-            pcl.lineWidth = 1;
+            pcl.lineWidth = 2;
             pcl.closePath();
             pcl.restore();
         }

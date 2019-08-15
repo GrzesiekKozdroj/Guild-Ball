@@ -196,7 +196,16 @@ let bigBang = (e)=>{//document.addEventListener('DOMContentLoaded', function (e)
             //-------------------DEATH HERE------------------------------
             if(m1.hpMin<1){
                 generatePuddle(m1);
-                removeConditionsFuncion(m1, Gamer, 0, 0);        
+                removeConditionsFuncion(m1, Gamer, 0, 0);  
+                if(!m1.isTakenOut){
+                    if(Gamer.squaddies.some(el=>el.name===m1.name)){
+                        otherGamer.score+= m1.identity.status === 'Mascot'? 1 : m1.nameDisplayed ==='Memory'?0 : 2;
+                        otherGamer.momentum+=1;
+                        if(counter===5)endSquaddieActivation(m1,Gamer1,Gamer2,Gamer, switcher,teamz,turnTransition);
+                    } else if(!Gamer.squaddies.some(el=>el.name===m1.name)){
+                    Gamer.score+= m1.identity.status === 'Mascot'? 1 : m1.nameDisplayed ==='Memory'?0 : 2;
+                    Gamer.momentum+=1
+                }      
                 m1.isActivating = false;
                 //m1.hasActivated = false;
                 m1.isMoving = false;
@@ -217,15 +226,6 @@ let bigBang = (e)=>{//document.addEventListener('DOMContentLoaded', function (e)
                 m1.bonusTime = false;
                 m1.pressedAbutton = false;
                 m1.hasSnapped = false;
-                if(!m1.isTakenOut){
-                    if(Gamer.squaddies.some(el=>el.name===m1.name)){
-                        otherGamer.score+= m1.identity.status === 'Mascot'? 1 : m1.nameDisplayed ==='Memory'?0 : 2;
-                        otherGamer.momentum+=1;
-                        endSquaddieActivation(m1,Gamer1,Gamer2,Gamer, switcher,teamz,turnTransition);
-                    } else if(!Gamer.squaddies.some(el=>el.name===m1.name)){
-                    Gamer.score+= m1.identity.status === 'Mascot'? 1 : m1.nameDisplayed ==='Memory'?0 : 2;
-                    Gamer.momentum+=1
-                }
                 
                 if(m1.hasBall){
                     m1.hasBall = false;
