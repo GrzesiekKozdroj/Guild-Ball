@@ -175,9 +175,7 @@ function buttonStitching(wrap, m1, m2, ball, Gamer, mode, continueMovement) {
                             {
                                 m1.remainingDodge+=2*inch;
                             };
-                            if(hasPassive(m1,"Lunar Eclipse")){console.log(hi)
-                                lunarEclipse(m1,m2);//"Lunar Eclipse"
-                            }
+                                lunarEclipse(m1,m2);
                         }
                     };
                     if (tackle > 0 && m2.hasBall && (!hasPassive(m2,"Close Control") || hasPassiveUsed(m2,"Close Control"))) {
@@ -260,11 +258,12 @@ function waaar(Gamer, otherGamer, m1, victim, mode = 'attack', continueMovement)
         if (mode === 'attack' || mode === 'charge') {
             plajBookWraz();//clears playbook container template
             m1.hasAttacked = true;
-            m1.infMin -= m1.wasCharging ? 2 : 1;
+            m1.infMin -= m1.wasCharging && hasPassive(m1,"Furious")? 0 : m1.wasCharging? 2 : 1;
             $playBookCircle = [];
             $playBookTop = [];
         }//if mode=attack
-        let neededToHit = m2.def + m2.defensiveStance - ( m2.abilities.activeGiven.some(el=>el==="Gut and String")?1:0 );
+        let neededToHit = m2.def + m2.defensiveStance - ( m2.abilities.activeGiven.some(el=>el==="Gut and String")?1:0 ) +
+                        (hasPassiveGiven(m2,"Nimble")?1:0);
             neededToHit = neededToHit < 2 ? 2 : neededToHit;
         let theRoll = diceRoller(Gamer, otherGamer, m1, m2, mode); //diceRoll(actualTac)
         let successRolls = theRoll.filter(el => el >= neededToHit);
@@ -858,6 +857,7 @@ function escapist(m1, otherGamer, m2 = m1) {
             rulerDopplers = [];
             ruler = false;
             $('body').find('.snapBallButton').remove();
+            $('body').find('.counterbox').off().remove();
             teamz.forEach(el => {
                 if (el.canSnap) {
                     el.canSnap = false;
@@ -868,6 +868,16 @@ function escapist(m1, otherGamer, m2 = m1) {
                 el.isDodging = false;
                 el.isPushed = false;
                 el.drawAbilityAura=0;
+                el.pressedAbutton = idear==="powerOfVooDoo" ? false : true;
+                if(hasActiveGiven(el,"The Power of Voodoo")){console.log("bob")
+                    el.isMoving = false;
+                    el.hasMoved = false;
+                    el.moveAura = false;
+                    el.remainingRun =    el.run*inch+el.baseRadius-movementHindrances(el);
+                    el.remainingSprint = el.sprint*inch+el.baseRadius-movementHindrances(el);
+                    el.abilities.activeGiven.forEach((em,i)=>{if(em.includes("The Power of Voodoo"))el.abilities.activeGiven.splice(i,1)  } ) 
+                    $('#players').off("click.abilitiesMove");
+                }
             });
             m1.drawAbilityTargetAura = 0;
             m1.declaringAcharge = false;

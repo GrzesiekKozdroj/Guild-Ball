@@ -281,10 +281,12 @@ switcher = (event) => {
                 //<<------== counteratttacks:
                 //<<---=== here counter attack buttons
                 //counteratttacks <<-------==
-                if (m1.drawAbilityAura === 0 && m1.isActivating && 
+                if ( m1.drawAbilityAura === 0 && m1.isActivating && 
                     (distance(m1.posX, m1.posY, m2.posX, m2.posY) <= (m1.meleeRadius + m2.baseRadius) &&
                     distance(mouX, mouY, m2.posX, m2.posY) < m2.baseRadius
-                )) {let inMelee = (distance(m1.posX, m1.posY, m2.posX, m2.posY) <= m2.meleeRadius + m1.baseRadius) ? true : false;
+                )) {
+                        if(m1.isMoving)unpredictableMovement(m1);
+                    let inMelee = (distance(m1.posX, m1.posY, m2.posX, m2.posY) <= m2.meleeRadius + m1.baseRadius) ? true : false;
                     if ( (inMelee && !m2.counterForAttack.includes(m1.name) && !m2.knockedDown && otherGamer.momentum>0)
                         || ((m1.isCharging^m1.wasCharging) && otherGamer.momentum>0)
                          ) {
@@ -350,9 +352,8 @@ switcher = (event) => {
                             m2.counterForAttack.push(m1.name);
                             $('body').find('#counterbox' + m2.name).off().remove();
                             $('body').off('click.counterattack')
-                        })
-
-                    } else {
+                        });
+                    }else{
                         waaar(Gamer, otherGamer, m1, m2);
                     }; //counterattacks
                 }
@@ -578,6 +579,7 @@ switcher = (event) => {
             ball = ballCloneX(dummyBall)
             teamz = [...Gamer1.squaddies, ...Gamer2.squaddies]
             $("#pitchfield").empty();
+            $('body').find('.counterbox').off().remove();
             $('#app').empty()//.append(appMaker(m1, Gamer));
             Gamer1.active = Gamer1.active ? false : true;
             Gamer2.active = Gamer2.active ? false : true;
@@ -635,6 +637,7 @@ if (m1.isKicking && ball.beingKicked) {
 ////////////////////////////////////////////////////////////////////////////////////////////////////// 
 {    //--kick--happening--against--goalpost------------------------
                     if (m1.isMoving) {
+                        unpredictableMovement(m1);
                         m1.isMoving = false;
                         m1.hasMoved = true;
                     }
@@ -714,6 +717,7 @@ if (m1.isKicking && ball.beingKicked) {
                     if (m1.hasBall && distance(m1.posX, m1.posY, mouX, mouY) <= (m1.kickDist * inch + m2.baseRadius + m1.baseRadius) && distance(m2.posX, m2.posY, mouX, mouY) < (m2.baseRadius) && m1.name !== m2.name) {
 
                         if (m1.isMoving) {
+                            unpredictableMovement(m1);
                             m1.isMoving = false;
                             m1.hasMoved = true;
                         }
@@ -841,6 +845,7 @@ if (m1.isKicking && ball.beingKicked) {
                         } else {
 
                             if (m1.isMoving) {
+                                unpredictableMovement(m1);
                                 m1.isMoving = false;
                                 m1.hasMoved = true;
                             }
@@ -863,6 +868,7 @@ if (m1.isKicking && ball.beingKicked) {
                         (m1.hasBall && distance(m1.posX, m1.posY, mouX, mouY) <= (m1.kickDist * inch + m1.baseRadius - ball.ballSize) && m1.infMin > 0 && Gamer.squaddies.filter(el => el.name !== m1.name).filter(el => distance(mouX, mouY, el.posX, el.posY) < el.baseRadius).length < 1) {
                         let kickRoll = diceRoller(Gamer, otherGamer, m1, m1, 'kick');
                         if (m1.isMoving) {
+                            unpredictableMovement(m1);
                             m1.isMoving = false;
                             m1.hasMoved = true;
                         }

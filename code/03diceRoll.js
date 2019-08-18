@@ -4,7 +4,8 @@ let diceRoller = (Gamer, otherGamer, m1, m2 = m1, mode, abilityCost) => {
         m2.name!==el.name).length
     let bonusedTime = m1.bonusTime || m2.bonusTime ? 1 : 0;
     let bonusDice = 0;
-    let neededToHit = m2.def + m2.defensiveStance - ( m2.abilities.activeGiven.some(el=>el==="Gut and String")?1:0 );
+    let neededToHit = m2.def + m2.defensiveStance - ( m2.abilities.activeGiven.some(el=>el==="Gut and String")?1:0 ) +
+                        (hasPassiveGiven(m2,"Nimble")?1:0);
     if (neededToHit < 2) {
         bonusDice = 2-neededToHit
         neededToHit = 0;
@@ -82,10 +83,12 @@ function diceRolled(all, minimum, color, armour = 0) {
 };
 function abilitiesRoll (m1, m2, abilityCost){
     diceRolledForDisplay = [];
+    let neededToHit = m2.def + (hasPassiveGiven(m2,"Nimble")?1:0);
+    neededToHit = neededToHit > 6 ? 6 : neededToHit < 1 ? 2 : neededToHit;
     let all = diceRoller (Gamer, otherGamer, m1, m2, 'ability', abilityCost);
-    diceRolled(all, m2.def, m1.theGuild.color, 0);
+    diceRolled(all, neededToHit, m1.theGuild.color, 0);
     $('#app').empty().append(appMaker(m1, Gamer));
-    let success = all.filter(el=>el>=m2.def)
+    let success = all.filter(el=>el>=neededToHit)
     return success.length;
 }
 
@@ -349,6 +352,10 @@ function counterAttackDialogBox(m1, m2){
        border:2px solid ${m2.theGuild.color};
    ">not <br> yet</button>`:``;
 
+//    const unpredi = hasPassiveUnused(m2,"Unpredictable Movement") ? 
+//                     `<button id='opt8${m2.name}' class='opt8' style = "border:2px solid 
+//                     ${m2.theGuild.color};">  dodge<br>away!</button>`:'';
+
 const dont = (Boolean(m1.isCharging^m1.wasCharging) && otherGamer.momentum>0) || !m2.counterForAttack.includes(m1.name) && !m2.isKnockedDown && otherGamer.momentum>0 ? `            <button 
     id='opt3${m2.name}' 
     class='opt3'
@@ -360,7 +367,7 @@ const dont = (Boolean(m1.isCharging^m1.wasCharging) && otherGamer.momentum>0) ||
         id='counterbox${m2.name}' 
         class='counterbox background-${m2.theGuild.name}' 
         style=" 
-        top:${m2.posY-75 + (offsetX ? offsetX : 0)}px;
+        top:${m2.posY+50 + (offsetX ? offsetX : 0)}px;
         left:${m2.posX-75 + (offsetY ? offsetY : 0)}px;
         border:3px solid ${m2.theGuild.color};
         ">
@@ -373,4 +380,3 @@ const dont = (Boolean(m1.isCharging^m1.wasCharging) && otherGamer.momentum>0) ||
         ${bonusDefCounter}
     </div>`);
 }
-

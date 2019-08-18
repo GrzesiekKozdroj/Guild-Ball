@@ -280,4 +280,3 @@ const union = [
     "—Mallet, Mason’s Guild",
     ["Benediction","Grace","Harry","Mist"]
 ];
-

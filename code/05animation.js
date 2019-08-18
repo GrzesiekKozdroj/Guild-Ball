@@ -49,9 +49,11 @@ function anime(m1, teams, otherGamer, options) {
         let checkCollision = teams
             .some(el => distance(m1.posX, m1.posY, el.posX, el.posY) <= (m1.baseRadius + el.baseRadius) && el.name !== m1.name);
 //<<-------=========== conditions to stop movement combined into one list of instructions.
-        if (deltaTime > 1 || checkCollision || checkgoalcollision || m1.shouldntBeHere > 1 || (!m1.isPushed && !m1.isDodging && (distance(m1.posX,
+        if (deltaTime >= 1 || checkCollision || checkgoalcollision || m1.shouldntBeHere > 1 || (!m1.isPushed && !m1.isDodging && (distance(m1.posX,
             m1.posY, endX, endY) >= m1.remainingRun) && m1.shouldntBeHere === 1) || m1.remainingRun < 5 || (m1.isCharging && m1.shouldntBeHere === 1))
         {
+
+
             if (!checkCollision && !checkgoalcollision && deltaTime <= 1) {
                 m1.posX = x + ((endX - x) * deltaTime);
                 m1.posY = y + ((endY - y) * deltaTime);
@@ -60,9 +62,10 @@ function anime(m1, teams, otherGamer, options) {
                 collisionBouncer(m1, teamz);
             }
 
-            if (m1.isMoving && m1.isActivating || m1.isMoving && counter > 5) {
+            if (m1.isMoving && (m1.isActivating || options.mode ==="abilities") || m1.isMoving && counter > 5) {
                 if ((m1.remainingSprint < 26 && m1.infMin === 0) || m1.remainingRun < 26) {
                     m1.moveAura = false;
+                    otherGamer.squaddies.forEach(m2=>{ if(hasPassiveUnused(m2,"Unpredictable Movement")){unpredictableMovement(m2)} });
                     //if(m1.runPaid && teaMate.remainingRun === teaMate.remainingSprint)m1.infMin++
                 }
             } else if (m1.isPushed) {
@@ -125,6 +128,7 @@ function anime(m1, teams, otherGamer, options) {
             }
             console.log("kickback investigation point");
             m1.chargeTarget = false;
+            //unpredictableMovement(m1);
         } else {
             if (!isNaN(m1.posX) && m1.posX > 0) {
                 safeX = m1.posX;
@@ -140,7 +144,7 @@ function anime(m1, teams, otherGamer, options) {
             m1.posX = x + ((endX - x) * deltaTime);
             m1.posY = y + ((endY - y) * deltaTime);
             if (m1.posX > 0) {
-                if (m1.isMoving && m1.isActivating) {
+                if (m1.isMoving && (m1.isActivating || options.mode ==="abilities")) {
                     m1.remainingSprint -= distance(m1.posX, m1.posY, safeX, safeY);
                     m1.remainingRun -= distance(m1.posX, m1.posY, safeX, safeY);
                 };
@@ -176,5 +180,5 @@ function anime(m1, teams, otherGamer, options) {
             !continueMovement ? requestAnimationFrame(anim) : false;
         }
     }
-    if(m1.remainingSprint>0&&m1.isMoving||m1.isDodging||m1.isPushed||m2.isPushed)anim()
-}
+    if(m1.remainingSprint>0&&m1.isMoving||m1.isDodging||m1.isPushed){anim()};
+};

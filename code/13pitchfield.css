@@ -3196,6 +3196,11 @@ button:hover {
   padding-top: 0;
 }
 
+.unpredictableMovement {
+  height: 64px;
+  background: rgba(0, 0, 48, 0.623);
+}
+
 .snapBallButton {
   position: absolute;
   display: inline-block;

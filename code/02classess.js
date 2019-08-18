@@ -155,7 +155,7 @@ class Player {
             for(let th = 0; th<teamz.length; th++){
                 let m2 = teamz[th];
                 if(this.drawAbilityTargetAura > 0 && distance(mouX,mouY,m2.posX,m2.posY)<=m2.baseRadius)
-                    aurora(m2.posX,m2.posY,0,m2.posX,m2.posY,this.drawAbilityTargetAura * inch+m2.baseRadius, abilityColor,redColor);
+                    aurora(m2.posX,m2.posY,this.baseRadius+5,m2.posX,m2.posY,this.drawAbilityTargetAura * inch+m2.baseRadius, abilityColor,redColor);
             }
         }
         ctx.beginPath() //shows melee radius
@@ -436,7 +436,7 @@ class Player {
                 this.runPaid = true;
             }
             this.isMoving = true;
-            anime(this, teamz, otherGamer, {mode: this.isCharging ? 'charging' : '' })
+            anime(this, teamz, otherGamer, {mode: this.isCharging ? 'charging' : '' });
 
         }
     } //dropperr
