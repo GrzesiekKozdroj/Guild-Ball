@@ -148,28 +148,26 @@ function abilitiesEvents(m1, Gamer, otherGamer) {
     for (let hy = 0; hy < otherGamer.squaddies.length; hy++) {
         let m2 = otherGamer.squaddies[hy];
 
-        $("#app").on('click', '#chainBolas'+m1.name, ()=>{
-            if(hasActiveUnused(m1,"Chain Bolas")){
-            idear = "chainBolas";
-            commonPreInstruction({ m1: m1 });
-            m1.drawAbilityAura = m1.baseRadius+8*inch;
-            $("#players").on('click.usingAbility',()=>{
-                if(idear==="chainBolas" && 
-                    distance(m1.posX,m1.posY,m2.posX,m2.posY)<=m1.baseRadius+8*inch+m2.baseRadius &&
-                    distance(mouX,mouY,m2.posX,m2.posY)<=m2.baseRadius && payPrice(2,m1)){
-                        if(abilitiesRoll(m1,m2,2)>0)
-                        {
-                            chainBolas(m1,m2);
-                            commonAfterInstruction({ m1: m1 });
-                        }else{
-                            makeActiveOpt(m1,"Chain Bolas");;
-                        }
-                    }else{
-                        sendMessage(`${m1.nameDisplayed} can't use this ability because there is not enough influence`);
+    $("#app").on("click","#chainBolas"+m1.name,()=>{
+        idear="chainBolas";
+        commonPreInstruction({ m1: m1 });
+        m1.drawAbilityAura = m1.baseRadius+8*inch;
+        $("#players").on("click.usingAbility",()=>{
+            if(idear==="chainBolas" && hasActiveUnused(m1,"Chain Bolas") && distance(m1.posX,m1.posY,m2.posX,m2.posY)<=m1.baseRadius+m2.baseRadius+8*inch &&
+                distance(mouX,mouY,m2.posX,m2.posY)<=m2.baseRadius && payPrice(2,m1) ){
+                    if(abilitiesRoll(m1,m2,2)>0)
+                    {
+                        trigerOnDamageEffects(m1,m2);
+                        chainBolas(m1,m2);
                         commonAfterInstruction({ m1: m1 });
-                    }
-            })
-        }else{sendMessage(`${m1.nameDisplayed} can't use this ability second time`)}})
+                    } else 
+                    {
+                        makeActiveOpt(m1,"Chain Bolas");
+                        commonAfterInstruction({ m1: m1 });
+                    };
+            }
+        })
+    })
         $("#app").on('click', '#flurry' + m1.name, () => {
                 commonPreInstruction({ m1: m1 });
                 idear = 1;
@@ -214,7 +212,8 @@ function abilitiesEvents(m1, Gamer, otherGamer) {
                     distance(mouX,mouY,m2.posX,m2.posY)<=m2.baseRadius && payPrice(2,m1) ){
                         if(abilitiesRoll(m1,m2,2)>0)
                         {
-                            trigerOnDamageEffects(m1,m2);Skewered (m1,m2)
+                            trigerOnDamageEffects(m1,m2);
+                            Skewered (m1,m2);
                         } else 
                         {
                             makeActiveOpt(m1,"Skewered");

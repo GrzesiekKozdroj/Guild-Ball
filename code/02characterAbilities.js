@@ -112,15 +112,6 @@ function GutAndString (m1,m2){
 
 
 
-function Skewered (m1,m2){
-    if(hasActiveUnused(m1,"Skewered")){
-        m2.hpMin-=3;
-        snare(m2);
-        makeActiveOpt(m1,"Skewered");
-        commonAfterInstruction({ m1: m1 });
-        if(m1.nameSpec==="vHearne")lunarEclipse(m1,m2);
-    }
-}
 
 function lunarEclipse(m1,m2){
     if(hasPassive(m1,'Lunar Eclipse')){
@@ -140,6 +131,16 @@ function lunarEclipse(m1,m2){
     })
     }
 };
+
+function Skewered (m1,m2){
+    if(hasActiveUnused(m1,"Skewered")){
+        m2.hpMin-=3;
+        snare(m2);
+        makeActiveOpt(m1,"Skewered");
+        commonAfterInstruction({ m1: m1 });
+        if(m1.nameSpec==="vHearne")lunarEclipse(m1,m2);
+    }
+}
 
 function unpredictableMovement(m1){
     otherGamer.squaddies.forEach(m2=>{
@@ -193,7 +194,6 @@ function chainBolas (m1,m2){
         snare(m2);
         makeActiveOpt(m1,"Chain Bolas");
     }
-    commonAfterInstruction({ m1: m1 });
 }
 
 
@@ -208,7 +208,7 @@ function abilitiesCleaner(m1){//activates at the end of the turn and cleanses al
 
 function movementHindrances(m1){
     let totalHindrance = (!hasPassive(m1,"Light Footed")&&m1.inRoughGround?2:0)+
-                         (hasActive(m1,"Gut and String")?2:0)+
+                         (hasActiveGiven(m1,"Gut and String")?2:0)+
                          (m1.isSnared?2:0)+
                          (m1.isBurning?2:0)
     return totalHindrance*inch;

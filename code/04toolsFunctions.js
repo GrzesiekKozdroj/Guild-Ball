@@ -230,7 +230,7 @@ function buttonStitching(wrap, m1, m2, ball, Gamer, mode, continueMovement) {
 } //buttons loop
 
 
-function waaar(Gamer, otherGamer, m1, victim, mode = 'attack', continueMovement) {
+function waaar(Gamer, otherGamer, m1, victim, mode = 'attack', continueMovement) {console.log("Fahad Charge")
     m1.moveAura = false;
     let m2 = victim;
     m2.drawAbilityAura = 0;
@@ -241,7 +241,7 @@ function waaar(Gamer, otherGamer, m1, victim, mode = 'attack', continueMovement)
     if ($('#app').find('.activeOptions').length < 1 && !m2.isPushed && !m2.isDodging &&
         //BUG: I can postpone counterattack while i.e. dodging from attack and not finshing dodge but attacking again.
         mode === 'parting blow' || Boolean(mode === 'counterattack' && distance(m1.posX, m1.posY, m2.posX, m2.posY) <= (m1.meleeRadius + m2.baseRadius)) ||
-        m1.infMin > 0 && m1.isActivating && !m1.isKnockedDown && distance(m1.posX, m1.posY, m2.posX, m2.posY) <= (m1.meleeRadius + m2.baseRadius) && !m2.willCounter) {
+        (m1.infMin > 0 || (m1.wasCharging && hasPassive(m1,"Furious")) ) && m1.isActivating && !m1.isKnockedDown && distance(m1.posX, m1.posY, m2.posX, m2.posY) <= (m1.meleeRadius + m2.baseRadius) && !m2.willCounter) {
 
         if (m1.isDodging || m1.isPushed || m2.isDodging || m2.isPushed) {
             m1.isPushed = false;

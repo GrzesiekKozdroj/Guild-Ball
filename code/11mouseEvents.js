@@ -290,7 +290,7 @@ switcher = (event) => {
                     if ( (inMelee && !m2.counterForAttack.includes(m1.name) && !m2.knockedDown && otherGamer.momentum>0)
                         || ((m1.isCharging^m1.wasCharging) && otherGamer.momentum>0)
                          ) {
-                        if (m1.infMin > 0) counterAttackDialogBox(m1, m2);
+                        if (m1.infMin > 0|| (m1.wasCharging && hasPassive(m1,"Furious"))) counterAttackDialogBox(m1, m2);
                         $('body').on('click.counterattack', '#opt1' + m2.name, () => {
                             waaar(Gamer, otherGamer, m1, m2);
                             m2.willCounter = true;
@@ -365,7 +365,7 @@ switcher = (event) => {
         for(let bvcm = 0; bvcm < otherGamer.squaddies.length; bvcm++){
                 let m2 = otherGamer.squaddies[bvcm];
             $('#app').on('click', `#charge` + teaMate.name, () => {
-                if (m1.infMin > 1 && !m1.isMoving && !m1.hasMoved && !m1.isCharging && !m1.isKnockedDown && m1.isActivating) {
+                if ((m1.infMin > 1 || hasPassive(m1,"Furious")) && !m1.isMoving && !m1.hasMoved && !m1.isCharging && !m1.isKnockedDown && m1.isActivating) {
                     teaMate.declaringAcharge = true;
                     teaMate.moveAura = false;
                     sendMessage(`${m1.nameDisplayed} can now charge in a straight line. Click one enemy in its threat range to declare a target.`);

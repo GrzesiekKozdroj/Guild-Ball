@@ -91,7 +91,7 @@ function anime(m1, teams, otherGamer, options) {
                         wrath.willCounter = false;
                     }
                 }
-                !m1.isActivating ? snapBallButtonCreator('end') : console.log(m1.posX, m1.posY);
+                if(!m1.isActivating) snapBallButtonCreator('end');
             }
             if ((ball.isOnGround && distance(m1.posX, m1.posY, ball.x, ball.y) <= (m1.baseRadius + ball.ballSize)) ||
                 m1.shouldntBeHere > 0 ||
@@ -144,7 +144,7 @@ function anime(m1, teams, otherGamer, options) {
             m1.posX = x + ((endX - x) * deltaTime);
             m1.posY = y + ((endY - y) * deltaTime);
             if (m1.posX > 0) {
-                if (m1.isMoving && (m1.isActivating || options.mode ==="abilities")) {
+                if (m1.isMoving && (m1.isActivating || options.mode ==="abilities") && !m1.isDodging) {
                     m1.remainingSprint -= distance(m1.posX, m1.posY, safeX, safeY);
                     m1.remainingRun -= distance(m1.posX, m1.posY, safeX, safeY);
                 };

@@ -100,7 +100,7 @@ function actionButtons(teaMate, Gamer, color = Gamer.guild.color) {
     //kick
     let $kickButton = (teaMate.hasBall && teaMate.infMin > 0 && counter === 5 || counter === 2) ? `<div id='kick${teaMate.name}'  class="a-${guildName}"  style='border-color:${color}'>Kick</div>` : ``;
     //charge
-    let $chargeButton = (teaMate.infMin > 1 && !teaMate.isMoving && !teaMate.hasMoved && !teaMate.isEngaged && counter > 4) ? `<div id='charge${teaMate.name}'  class="a-${guildName}" style='border-color:${color}'>Charge</div>` : ``;
+    let $chargeButton = ((teaMate.infMin > 1 || hasPassive(teaMate,"Furious"))&& !teaMate.isMoving && !teaMate.hasMoved && !teaMate.isEngaged && counter > 4) ? `<div id='charge${teaMate.name}'  class="a-${guildName}" style='border-color:${color}'>Charge</div>` : ``;
     //bonus time
     let $bonusTimeButton = (Gamer.momentum > 0 && !teaMate.bonusTime) ? `<div id='bonusTime${teaMate.name}'  class="a-${guildName}" style='border-color:${color}'>Bonus time</div>` : ``;
     //heal self
@@ -287,25 +287,8 @@ let appMaker = (teaMate, Gamer) => {
 </div>
     
     <p class='message'>${message}</p>
-    </div>`)
-    // <div id='charge' style='border-color:${color}'>Charge</div>
-    // <div id='bonusTime'>Bonus Time</div>
-    // <div id='glide'>Glide</div>
-    // <div id='healSelf'>Heal Self</div>
-    // <div id='healMate'>Heal Friend</div>
-    // <div id='selfConditons'>Remove Conditions</div>
-    // <div id='friendsConditions'>Take Breather</div>
-
-    // <div id='conditions'>
-    //     <ul id='condition-list'>
-    //         <li style='border-color:${color}'>KD</li>
-    //         <li style='border-color:${color}'>snared</li>
-    //         <li style='border-color:${color}'>bleed</li>
-    //         <li style='border-color:${color}'>burn</li>
-    //         <li style='border-color:${color}'>poison</li>
-    //         <li style='border-color:${color}'>disea</li>
-    //     </ul>
-    // </div>
+    </div>`
+)
 }
 function counterAttackDialogBox(m1, m2){
     let inMelee = (distance(m1.posX, m1.posY, m2.posX, m2.posY) <= m2.meleeRadius + m1.baseRadius) ? true : false;
