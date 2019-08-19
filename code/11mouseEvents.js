@@ -147,7 +147,6 @@ switcher = (event) => {
     Gamer2.active = Gamer2.active ? false : true;
     Gamer = Gamer2.active ? Gamer2 : Gamer1;
     otherGamer = Gamer2.active ? Gamer1 : Gamer2;
-
     if (Gamer.squaddies.filter(el => !el.hasActivated).length === 0) {
         switcher(event);
     }
@@ -184,7 +183,7 @@ switcher = (event) => {
         $('#players').on(contextmenuEv, (event) => {
             defaultPreventer(event);
             if (!teaMate.hasMoved && Gamer.active && distance(teaMate.posX, teaMate.posY, mouX, mouY) < (teaMate.baseRadius) &&
-                !teaMate.moveAura && 
+                !teaMate.moveAura && teaMate.drawAbilityAura === 0 &&
                 //event.button == 2 &&
                  teaMate.isActivating && !teaMate.isKnockedDown) {
                 teaMate.moveAura = true;
@@ -197,7 +196,7 @@ switcher = (event) => {
                 // $('#app').append(appMaker(teaMate, Gamer));
         $('#players').on('click', function (e) { //drops a guy down after movement if possible
             //  console.log(teaMate.isMoving,teaMate.hasMoved,teaMate.moveAura)
-            if (teaMate.moveAura && distance (mouX,mouY,teaMate.posX,teaMate.posY)>teaMate.baseRadius*.30 &&
+            if (teaMate.moveAura && distance (mouX,mouY,teaMate.posX,teaMate.posY)>teaMate.baseRadius*.42 &&
                 distance(teaMate.posX, teaMate.posY, mouX, mouY) <= ((teaMate.infMin > 0 ? teaMate.remainingRun : teaMate.remainingSprint) - teaMate.baseRadius
                 )) {
                     defaultPreventer(e);
@@ -221,11 +220,13 @@ switcher = (event) => {
 
         $('#players').on(`click ${contextmenuEv}`, function (event) {
             defaultPreventer(event);
-
             //--01-S---activate a squaddie and display him
             if (!Gamer.gp.hasBall && !teaMate.hasActivated && Gamer.squaddies.filter(el => el.isActivating).filter(el => el.name !== teaMate.name)
                 .filter(el => el.hasMoved || el.hasAttacked || el.hasDropped || el.isKicking || el.hasKicked || el.isMoving || el.pressedAbutton || el.hasSnapped).length < 1 && Gamer.active && distance(teaMate.posX, teaMate.posY, mouX, mouY) < (teaMate.baseRadius) && $('#app').find('.plajBookCell').length < 1 //&& !teaMate.isActivating
             ) {
+                Gamer.squaddies.forEach(elm=>{
+                    elm.declaringAcharge = false;
+                });
                 if (!teaMate.isActivating && teaMate.isKnockedDown) {
                     teaMate.hasMoved = false;
                 }
@@ -365,7 +366,7 @@ switcher = (event) => {
         for(let bvcm = 0; bvcm < otherGamer.squaddies.length; bvcm++){
                 let m2 = otherGamer.squaddies[bvcm];
             $('#app').on('click', `#charge` + teaMate.name, () => {
-                if ((m1.infMin > 1 || hasPassive(m1,"Furious")) && !m1.isMoving && !m1.hasMoved && !m1.isCharging && !m1.isKnockedDown && m1.isActivating) {
+                if ((m1.infMin > 1 || hasPassive(m1,"Furious")) && !m1.isMoving && !m1.hasMoved && !m1.isCharging && !m1.isKnockedDown && m1.isActivating && isEngaged(m1)<1) {
                     teaMate.declaringAcharge = true;
                     teaMate.moveAura = false;
                     sendMessage(`${m1.nameDisplayed} can now charge in a straight line. Click one enemy in its threat range to declare a target.`);
@@ -420,8 +421,8 @@ switcher = (event) => {
             }else if(otherGamer.gp.hasBall){sendMessage(`click on ${otherGamer.guild.name} goal post.`)}
         })
         $('#app').on('click', `#bonusTime` + teaMate.name, () => {
-            teaMate.pressedAbutton = true;
             if (Gamer.momentum > 0 && !teaMate.bonusTime) {
+            teaMate.pressedAbutton = true;
                 Gamer.momentum -= 1;
                 teaMate.bonusTime = true;
                 $('#actionButtons').empty().append(actionButtons(teaMate, Gamer));
@@ -557,7 +558,7 @@ switcher = (event) => {
             ball.drawDropAura(teaMate.baseRadius);
             teaMate.moveAura = false;
             $('#players').on('click', () => {
-                if (distance(teaMate.posX, teaMate.posY, mouX, mouY) <= (teaMate.baseRadius + 1 * inch + ball.ballSize) && ball.isInHand && teaMate.hasBall && !teaMate.hasSnapped) {
+                if (distance(teaMate.posX, teaMate.posY, mouX, mouY) <= (teaMate.baseRadius + 1 * inch + ball.ballSize) && ball.isInHand && teaMate.hasBall && !teaMate.hasSnapped && isEngaged(m1)<1) {
                     movementHistory = [];
                     ball.isInHand = false;
                     teaMate.hasBall = false;
@@ -581,6 +582,8 @@ switcher = (event) => {
             $("#pitchfield").empty();
             $('body').find('.counterbox').off().remove();
             $('#app').empty()//.append(appMaker(m1, Gamer));
+            $teamplays = [];
+            $(`.playbookNodes`).empty();
             Gamer1.active = Gamer1.active ? false : true;
             Gamer2.active = Gamer2.active ? false : true;
             Gamer = Gamer2.active ? Gamer2 : Gamer1;
@@ -642,7 +645,7 @@ if (m1.isKicking && ball.beingKicked) {
                         m1.hasMoved = true;
                     }
         teaMate.hasKicked = true;
-        let minRollToPass = distance(m1.posX, m1.posY, otherGamer.gp.x, otherGamer.gp.y) <= (m1.kickDist * inch / 2+2.5*cm) ? 3 : 4;
+        let minRollToPass = distance(m1.posX, m1.posY, otherGamer.gp.x, otherGamer.gp.y) <= (m1.kickDist * inch / 2+2.5*cm+m1.baseRadius) ? 3 : 4;
         let kickRoll = diceRoller(Gamer, otherGamer, m1, m1, 'kick');//rool dies
         let succesfulKickDice = kickRoll.filter(el => el >= minRollToPass).length;//check for succesful roll
         diceRolledForDisplay = [];
@@ -727,7 +730,7 @@ if (m1.isKicking && ball.beingKicked) {
                             ball.beingKicked = false;
                             m1.infMin -= 1;
                             $teamplays = [];
-                        let minRollToPass = distance(m1.posX, m1.posY, m2.posX, m2.posY) <= ((m1.kickDist * inch + m1.baseRadius / 2)) ? 3 : 4;
+                        let minRollToPass = distance(m1.posX, m1.posY, m2.posX, m2.posY) <= ((m1.kickDist * inch/ 2)+ m1.baseRadius +m2.baseRadius) ? 3 : 4;
                         let kickRoll = diceRoller(Gamer, otherGamer, m1, m2, 'kick');
                         let succesfulKickDice = kickRoll.filter(el => el >= minRollToPass).length;
                         diceRolledForDisplay = [];
@@ -749,7 +752,7 @@ if (m1.isKicking && ball.beingKicked) {
                                 $teamplays = [];
                                 $('#app').empty();
                                 $('#app').append(appMaker(m1, Gamer));
-                                $(`.playbookNodes`).empty()
+                                $(`.playbookNodes`).empty();
                             }); //bank momentum
                             $('#app').on('click', `#recdo2${m1.name}`, () => {
                                 $teamplays = [];

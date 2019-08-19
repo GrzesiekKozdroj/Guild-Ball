@@ -86,7 +86,7 @@ function payPrice (n,m1){
     let isFree = m1.abilities.passiveGiven.some(el => el.includes("Blessing of the Sun Father")) ? true : false;
     let lastLight = m1.abilities.passiveGiven.some(el=>el.includes("Last Light"))? true:false;
     if (m1.drawAbilityAura > 0 && (isFree || m1.infMin > n-1 || (lastLight&&Gamer.momentum>=n) )) {
-    if(m1.infMin>=n && !lastLight){
+    if((m1.infMin>=n && !lastLight) || (lastLight && Gamer.momentum<n) ){
         m1.infMin -= isFree ? 0 : n;
         if (isFree) m1.abilities.passiveGiven.forEach((el, i) => {
             if (el === "Blessing of the Sun Father") m1.abilities.passiveGiven.splice(i, 1);
@@ -118,10 +118,7 @@ function abilitiesEvents(m1, Gamer, otherGamer) {
             $("#players").on('click.usingAbility',  () => {
                 if (distance(m1.posX, m1.posY, mouX, mouY) <= m1.baseRadius + 2 * inch + smallBase && snaret.isPlacable) {
                     commonAfterInstruction({ m1: m1 })
-                    //m1.drawAbilityAura = 0;
-                    //if(m1.isMoving)m1.hasMoved = true;
                     snaret.isInHand = false;
-                    //m1.pressedAbutton = true;
                     m1.abilities.activeOwned.forEach((el, i) => {
                         if (el.includes("Big Game Traps")) {
                             m1.abilities.activeOwned[i][1]++

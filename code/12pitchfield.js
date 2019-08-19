@@ -452,7 +452,7 @@ const cheetah = (n) => {
         //Gamer1.squaddies.forEach(el => el.posY = 16*inch);
         //Gamer2.squaddies.forEach(el => el.posY = 17*inch);
         teamz.forEach(el => {el.infMin += 6; el.hpMin-=5});
-        Gamer1.momentum += 3; Gamer2.momentum += 3;
+        Gamer1.momentum += 0; Gamer2.momentum += 0;
 
         Gamer1.oponent = Gamer2;
         Gamer2.oponent = Gamer1;

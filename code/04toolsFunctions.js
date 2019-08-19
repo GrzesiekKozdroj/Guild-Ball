@@ -868,7 +868,7 @@ function escapist(m1, otherGamer, m2 = m1) {
                 el.isDodging = false;
                 el.isPushed = false;
                 el.drawAbilityAura=0;
-                el.pressedAbutton = idear==="powerOfVooDoo" ? false : true;
+                el.pressedAbutton = idear==="powerOfVooDoo" ? false : el.pressedAbutton;
                 if(hasActiveGiven(el,"The Power of Voodoo")){console.log("bob")
                     el.isMoving = false;
                     el.hasMoved = false;
@@ -1195,7 +1195,6 @@ function ballCloneX (ball){
     xXx.isOnGround = ball.isOnGround;
     xXx.isInHand = ball.isInHand;
     xXx.teaMate = ball.teaMate;
-    
     return xXx;
 }
 
@@ -1240,7 +1239,7 @@ function addHexColor(c1, c2) {
 
 function endSquaddieActivation(m1, Gamer1, Gamer2, Gamer, switcher, teamz, turnTransition) {
     if(m1.abilities.activeOwned.some(el=>el.includes("Back to the Shadows")  && el[1]>0) ){
-        $('#players').off();$("#app").off();
+        $('#players').off();$("#app").off();$(`.playbookNodes`).empty()
         if(m1.moveAura){m1.isMoving = false; m1.moveAura = false}
         m1.isDodging = true;
         m1.dodgeSquaddie(4,"Back to the Shadows");
@@ -1449,3 +1448,8 @@ function drawTimeLeft (goblin) {
         sctx.closePath();
     }
 };
+
+function isEngaged(m1){
+    let numberOfEngaging = otherGamer.squaddies.filter(el=>distance(m1.posX,m1.posY,el.posX,el.posY)<=m1.baseRadius+el.meleeRadius).length;
+    return numberOfEngaging;
+}

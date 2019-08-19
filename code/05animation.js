@@ -145,7 +145,7 @@ function anime(m1, teams, otherGamer, options) {
             m1.posY = y + ((endY - y) * deltaTime);
             if (m1.posX > 0) {
                 if (m1.isMoving && (m1.isActivating || options.mode ==="abilities") && !m1.isDodging) {
-                    m1.remainingSprint -= distance(m1.posX, m1.posY, safeX, safeY);
+                    m1.remainingSprint -= m1.remainingSprint>0?distance(m1.posX, m1.posY, safeX, safeY):0;
                     m1.remainingRun -= distance(m1.posX, m1.posY, safeX, safeY);
                 };
                 if (m1.isDodging) m1.remainingDodge -= distance(m1.posX, m1.posY, safeX, safeY);
@@ -180,5 +180,5 @@ function anime(m1, teams, otherGamer, options) {
             !continueMovement ? requestAnimationFrame(anim) : false;
         }
     }
-    if(m1.remainingSprint>0&&m1.isMoving||m1.isDodging||m1.isPushed){anim()};
+    if(m1.remainingRun>0&&m1.isMoving||m1.isDodging||m1.isPushed){anim()};
 };

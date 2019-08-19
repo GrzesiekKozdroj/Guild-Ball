@@ -1,7 +1,7 @@
 "use strict";
 let diceRoller = (Gamer, otherGamer, m1, m2 = m1, mode, abilityCost) => {
-    let unfrendlies = otherGamer.squaddies.filter(el => distance(m1.posX, m1.posY, el.posX, el.posY) <= (el.meleeRadius + m1.baseRadius) &&
-        m2.name!==el.name).length
+    let unfrendlies = otherGamer.squaddies.filter(el => distance(m1.posX, m1.posY, el.posX, el.posY) <= (el.meleeRadius + m1.baseRadius)).length;
+    let unfrendliClose = otherGamer.squaddies.filter(el => distance(m2.posX, m2.posY, el.posX, el.posY) <= (el.meleeRadius + m2.baseRadius)).length;
     let bonusedTime = m1.bonusTime || m2.bonusTime ? 1 : 0;
     let bonusDice = 0;
     let neededToHit = m2.def + m2.defensiveStance - ( m2.abilities.activeGiven.some(el=>el==="Gut and String")?1:0 ) +
@@ -15,7 +15,7 @@ let diceRoller = (Gamer, otherGamer, m1, m2 = m1, mode, abilityCost) => {
     }
     let actualTac = 
         mode === 'kick' ? 
-            m1.kick + bonusedTime - unfrendlies - (m1.name !== m2.name && m2.inForest ? 1 : 0) - (m1.name !== m2.name && m1.inForest ? 1 : m1.inForest ? 1: 0):
+            m1.kick + bonusedTime - unfrendlies - unfrendliClose - (m1.name !== m2.name && m2.inForest ? 1 : 0) - (m1.name !== m2.name && m1.inForest ? 1 : m1.inForest ? 1: 0):
         mode === 'parting blow' ? m1.tac + 2 :
         mode === 'ability' ? abilityCost -unfrendlies + bonusedTime < 1 ? 1 : abilityCost -unfrendlies + bonusedTime + bonusDice:
         //normal attack:
