@@ -24,8 +24,23 @@ function hasPassiveUnused(m1,name){
 function hasPassiveUsed(m1,name){
     return m1.abilities.passiveOwned.some(el => el.includes(name) && el[1]>0)
 }
-function makePassiveButton(id,text){
-    return `<div id="${id}" class="passiveSkill">${text}</div>`
+function makePassiveButton(id,text,picLink){
+    return `<div 
+                id="${id}" 
+                class="passiveSkill skill" 
+                style='
+                    background:url(${picLink.icon}) ${picLink.picRatio[0]}% ${picLink.picRatio[1]}%;  
+                    background-size:${picLink.picRatio[2]}%;
+                    border-color:black;'
+                data-desc="${picLink.desc}" 
+                data-type="${picLink.type}" 
+                data-name="${picLink.name}" 
+                data-icost="${picLink.cst?picLink.cst[0]:-2}" 
+                data-pcost="${picLink.cst?picLink.cst[1]:-2}" 
+                data-range="${picLink.rng?picLink.rng:-2}" 
+                data-sus="${picLink.sus?picLink.sus:-2}" 
+                data-opt="${picLink.opt?picLink.opt:-2}" 
+            >${text}</div>`
 }
 function hasActive (m1,name){
     return m1.abilities.activeOwned.some(el => el.includes(name)) || m1.abilities.passiveGiven.some(el => el.includes(name));
@@ -39,8 +54,23 @@ function hasPassiveGiven (m1,name){
 function hasActiveUnused(m1,name){
     return m1.abilities.activeOwned.some(el => el.includes(name) && el[1]<1)
 }
-function makeActiveButton(id,text){
-    return `<div id="${id}" class="activeSkill traitPlaysButtonsChild">${text}</div>`
+function makeActiveButton(id,text,picLink){
+    return `<div 
+        id="${id}" 
+        class="activeSkill skill" 
+        style='
+            background:url(${picLink.icon}) ${picLink.picRatio[0]}% ${picLink.picRatio[1]}%;  
+            background-size:${picLink.picRatio[2]}%;
+            border-color:black;'
+            data-desc="${picLink.desc}" 
+            data-type="${picLink.type}" 
+            data-name="${picLink.name}" 
+            data-icost="${picLink.cst?picLink.cst[0]:-2}" 
+            data-pcost="${picLink.cst?picLink.cst[1]:-2}" 
+            data-range="${picLink.rng?picLink.rng:-2}" 
+            data-sus="${picLink.sus?picLink.sus:-2}" 
+            data-opt="${picLink.opt?picLink.opt:-2}" 
+    >${text}</div>`
 }
 function makeActiveOpt(m1,name){
     m1.abilities.activeOwned.forEach(el=>{if(el[0]===name){el[1]+=1}});
@@ -100,10 +130,10 @@ class Token {
     }
 }
 function GutAndString (m1,m2){
-    if(m1.abilities.activeOwned.some(el=>el.includes("Gut and String") && el[1] === 0 ) 
+    if(m1.abilities.activeOwned.some(el=>el.includes("Gut and String")) 
     && !m2.abilities.activeGiven.some(el=>el==="Gut and String"))
     {
-        m2.abilities.activeGiven.push("Gut and String");console.log(hi)
+        m2.abilities.activeGiven.push("Gut and String");
         m2.remainingSprint-=2*inch;
         m2.remainingRun-=2*inch;
         m1.abilities.activeOwned.forEach(el=>{if(el[0]==="Gut and String"){el[1]+=1}});
@@ -184,7 +214,7 @@ function unpredictableMovement(m1){
 $("body").on("click.unpredictableMovement", '#opt9'+m2.name,()=>{
     $('body').find('#unpredictableMovement' + m2.name).off().remove();
 });
-        }
+    return true    }else{return false}
     })
 };
 
@@ -210,6 +240,7 @@ function movementHindrances(m1){
     let totalHindrance = (!hasPassive(m1,"Light Footed")&&m1.inRoughGround?2:0)+
                          (hasActiveGiven(m1,"Gut and String")?2:0)+
                          (m1.isSnared?2:0)+
-                         (m1.isBurning?2:0)
+                         (m1.isBurning?2:0)-
+                         (hasPassive(m1,"Winters Blessing")?4:0);
     return totalHindrance*inch;
 }

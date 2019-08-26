@@ -95,6 +95,8 @@ class Player {
         this.dopplerColor;
         this.drawAbilityAura = 0;//used for drawing auras for abilities range
         this.drawAbilityTargetAura = 0;
+        this.hoverButtonAura = 0;
+        this.hoverTaretCircle = false;
 
         this.isBleeding = false;
         this.isBurning = false;
@@ -121,7 +123,7 @@ class Player {
         this.inForest = false;
         this.isGliding = false;
         this.shouldntBeHere = 0;
-        this.identity = squaddieIdentity(...identity)
+        this.identity = squaddieIdentity(...identity);
     }
     /*------------------------------------------------------PLAYER--------------------------------------------*\
     \*-----------------------------------------------------METHODS--------------------------------------------*/
@@ -158,6 +160,12 @@ class Player {
                     aurora(m2.posX,m2.posY,this.baseRadius+5,m2.posX,m2.posY,this.drawAbilityTargetAura * inch+m2.baseRadius, abilityColor,redColor);
             }
         }
+        if(this.hoverButtonAura > 0 ){
+            pcl.lineWidth = .1;
+            ctx.lineWidth = .1;
+            aurora(x,y,this.hoverButtonAura-this.hoverButtonAura/3,x,y,this.hoverButtonAura,"rgba(97, 64, 4, 0.35)",uniqColor);
+        };
+        if(this.hoverTargetCircle === true){};
         ctx.beginPath() //shows melee radius
         ctx.globalAlpha = opacity;
         aurora(x, y, this.baseRadius, x, y, this.meleeRadius, meleeColor, meleeColor);
@@ -452,7 +460,7 @@ class Player {
         }
     }; //pushSquaddie
 
-    dodgeSquaddie(n, mode="default") {
+    dodgeSquaddie(n, mode="default") {console.log("Should be dodging")
         this.remainingDodge = n * inch;
         if (this.isDodging) {
             this.doppler(mouX, mouY, 0.5)

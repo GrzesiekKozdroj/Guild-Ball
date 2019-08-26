@@ -12,42 +12,50 @@ function abilityButtons(teaMate, Gamer, color) {
 
 
         let bigGameTraps = teaMate.abilities.activeOwned.some((el, i) => el.includes("Big Game Traps") && el[1] < 1) &&
-            teaMate.isActivating ? `<div id="BigGameTraps${m1.name}" class="activeSkill traitPlaysButtonsChild" style="border-color:${m1.theGuild.color};">Big Game Traps</div>` : '';
-        let chainBolas = hasActiveUnused(teaMate,"Chain Bolas") ? makeActiveButton("chainBolas"+teaMate.name,"Chain Bolas"):'';
-        let flurry = teaMate.abilities.activeOwned.some(el => el.includes("Flurry") && el[1] < 1) ?
-            `<div id="flurry${teaMate.name}" class="activeSkill traitPlaysButtonsChild" style="border-color:${m1.theGuild.color}">Flurry</div>` : '';
+            teaMate.isActivating ? makeActiveButton("bigGameTraps"+teaMate.name,"Big Game Traps",skillzLizt.bigGameTraps) : '';
+        let chainBolas = hasActiveUnused(teaMate,"Chain Bolas") ? makeActiveButton("chainBolas"+teaMate.name,"Chain Bolas",skillzLizt.chainBolas):'';
+        let flurry = teaMate.abilities.activeOwned.some(el => el.includes("Flurry") && el[1] < 1) ? makeActiveButton("flurry"+teaMate.name,"Flurry",   
+            skillzLizt.flurry) : '';
         let gutAndString = teaMate.abilities.activeOwned.some(el => el.includes("Gut and String") && el[1] === 0) ?
-            `<div id="gutAndString" class="activeSkill traitPlaysButtonsChild" style="border-color:${m1.theGuild.color};">Gut and String</div>` : '';
-        let lastLight = hasActiveUnused(teaMate,"Last Light") ? makeActiveButton("lastLight"+teaMate.name,"Last Light"):'';
+            makeActiveButton("gutAndString"+teaMate.name,"Gut & String",skillzLizt.gutAndString)  : '';
+        let lastLight = hasActiveUnused(teaMate,"Last Light") ? makeActiveButton("lastLight"+teaMate.name,"Last Light",skillzLizt.lastLight):'';
         let linked = teaMate.abilities.activeOwned[0]&&teaMate.abilities.activeOwned[0][0].linked ?
-                     makeActiveButton("linked"+teaMate.name,`Linked[${teaMate.abilities.activeOwned[0][0].linked}]`):'';
-        let nimble = hasActiveUnused(teaMate,"Nimble")?makeActiveButton("nimble"+teaMate.name,"Nimble"):'';
-        let powerOfVooDoo = hasActive(teaMate,"The Power of Voodoo")?makeActiveButton("powerOfVooDoo"+teaMate.name,"The Power of Voodoo"):'';
-        let skewered = hasActiveUnused(teaMate,"Skewered")?makeActiveButton("skewered"+teaMate.name,"Skewered"):'';
-        let snapFire = teaMate.abilities.activeOwned.some(el => el.includes("Snap Fire")) ?
-            `<div id="snapFire${m1.name}" class="activeSkill traitPlaysButtonsChild" style="border-color:${m1.theGuild.color};">Snap Fire</div>` : '';
+                     makeActiveButton("linked"+teaMate.name,`Linked[${teaMate.abilities.activeOwned[0][0].linked}]`,skillzLizt.linked):'';
+        let nimble = hasActiveUnused(teaMate,"Nimble")?makeActiveButton("nimble"+teaMate.name,"Nimble",skillzLizt.nimble):'';
+        let powerOfVooDoo = hasActive(teaMate,"The Power of Voodoo")?
+            makeActiveButton("powerOfVooDoo"+teaMate.name,"The Power of Voodoo",   skillzLizt.thePowerOfVoodoo):'';
+        let skewered = hasActiveUnused(teaMate,"Skewered")?makeActiveButton("skewered"+teaMate.name,"Skewered",skillzLizt.skewered):'';
+        let snapFire = teaMate.abilities.activeOwned.some(el => el.includes("Snap Fire")) ? 
+            makeActiveButton("snapFire"+teaMate.name,"Snap Fire",skillzLizt.snapFire) : '';
 
         abilities.push(bigGameTraps, chainBolas, flurry, gutAndString, lastLight, linked, nimble, powerOfVooDoo, skewered, snapFire );
     }
 
     if (teaMate.abilities.passiveOwned) {
-        let anatomicalPrecision = teaMate.abilities.passiveOwned.some(el => el.includes("Anatomical Precision")) ?
-            `<div id="anatomicalPrecision" class="passiveSkill traitPlaysButtonsChild">Anatomical Precision</div>` : '';
+        let anatomicalPrecision = teaMate.abilities.passiveOwned.some(el => el.includes("Anatomical Precision")) ? 
+            makePassiveButton("anatomicalPrecision","Anatomical Precision",skillzLizt.anatomicalPrecision) : '';
 
-        let backToShadows = hasActive(teaMate,"Back to the Shadows") ? makePassiveButton("backToShadows","Back to the Shadows") : '';
-        let closeControl = hasPassiveUnused(teaMate, "Close Control") ? makePassiveButton(`closeControl`,"Close Control"):'';
-        let furious = hasPassive(m1,"Furious") ? makePassiveButton(`furious`,"Furious") : '';
-        let lightFooted = teaMate.abilities.passiveOwned.some(el => el.includes("Light Footed")) ?
-            `<div id="lightFooted" class="passiveSkill">Light Footed</div>` : '';
-        let lunarEclipse = hasPassive(teaMate,"Lunar Eclipse") ? makePassiveButton(`lunarEclipse`,"Lunar Eclipse"):'';
-        let swiftStrikes = hasPassive(teaMate,"Swift Strikes") ? makePassiveButton(`swiftStrikes`,"Swift Strikes"):'';
-        let unpredictableMovement = hasPassiveUnused(teaMate,"Unpredictable Movement")?
-                                    makePassiveButton('unpredictableMovement',"Unpredictable Movement"):'';
-        let wintersBlessing = hasPassive(teaMate,"Winters Blessing") ? `<div id="winterBlessing" class="passiveSkill">Winter's Blessing</div>`:'';
-        let venomousStrike = hasPassive(teaMate,"Venomous Strike") ? makePassiveButton(`venomousStrike`,"Venomous Strike"):'';
+        let backToShadows = hasActive(teaMate,"Back to the Shadows") ? 
+            makePassiveButton("backToShadows","Back to the Shadows",skillzLizt.backToTheShadows) : '';
+        let closeControl = hasPassiveUnused(teaMate, "Close Control") ? 
+            makePassiveButton(`closeControl`,"Close Control",skillzLizt.closeControl):'';
+        let furious = hasPassive(teaMate,"Furious") ? makePassiveButton(`furious`,"Furious",skillzLizt.furious) : '';
+        let isolatedTarget = hasPassive(teaMate,"Isolated Target") ? 
+            makePassiveButton(`isolatedTarget`,"Isolated Tagret",skillzLizt.isolatedTarget) : '';
+        let lightFooted = hasPassive(teaMate,"Light Footed") ?
+                          makePassiveButton('lightFooted',"Light Footed",skillzLizt.lightFooted) : '';
+        let lunarEclipse = hasPassive(teaMate,"Lunar Eclipse") ? 
+            makePassiveButton(`lunarEclipse`,"Lunar Eclipse",skillzLizt.lunarEclipse):'';
+        let swiftStrikes = hasPassive(teaMate,"Swift Strikes") ? makePassiveButton(`swiftStrikes`,"Swift Strikes",skillzLizt.swiftStrikes):'';
+        let unpredictableMovement = hasPassiveUnused(teaMate,"Unpredictable Movement")? 
+                    makePassiveButton('unpredictableMovement',"Unpredictable Movement",skillzLizt.unpredictableMovement):'';
+        let wintersBlessing = hasPassive(teaMate,"Winters Blessing") ? 
+            makePassiveButton("winterBlessing","Winter's Blessing",skillzLizt.wintersBlessing):'';
+        let venomousStrike = hasPassive(teaMate,"Venomous Strike") ? 
+            makePassiveButton(`venomousStrike`,"Venomous Strike",skillzLizt.venomousStrike):'';
         
-        abilities.push(anatomicalPrecision, backToShadows, closeControl, furious, lightFooted, lunarEclipse, swiftStrikes, unpredictableMovement, 
-                       wintersBlessing, venomousStrike);
+        abilities.push(anatomicalPrecision, backToShadows, closeControl, furious, isolatedTarget, lightFooted, lunarEclipse, swiftStrikes, 
+            unpredictableMovement, wintersBlessing, venomousStrike);
     }
     return abilities.join('');
 }
@@ -107,7 +115,7 @@ function payPrice (n,m1){
 
 function abilitiesEvents(m1, Gamer, otherGamer) {
     ///////////////////////////_____HUNTERS_____///////////////////////////////////////////////////
-    $('#app').on('click', '#BigGameTraps' + m1.name, () => {
+    $('#app').on('click', '#bigGameTraps' + m1.name, () => {
         commonPreInstruction({ m1: m1 });
         if (Gamer.tokens.length < 5 && counter === 5 && !m1.wasCharging && !m1.isDodging && $(".pW0").find(".plajBookCell").length === 0) {
             const snaret = new Token(mouX, mouY, smallBase, "trap", Gamer.guild.color);
@@ -125,7 +133,7 @@ function abilitiesEvents(m1, Gamer, otherGamer) {
                         }
                     })
                     //$("#players").off('click.bigGameTraps');
-                    $('#BigGameTraps' + m1.name).remove();
+                    $('#bigGameTraps' + m1.name).remove();
                 }
             })
         }
@@ -288,7 +296,7 @@ function abilitiesEvents(m1, Gamer, otherGamer) {
                     m3.moveAura = true;
                     m3.isPushed = false;
                     m3.isDodging = false;
-                    let savedMoved = m3.hasMoved;
+                    savedBeforVoodoo.push(m3.isMoving?true:false,m3.remainingRun,m3.remainingSprint);
                     m3.remainingRun =    m3.sprint*inch+m3.baseRadius-movementHindrances(m3);
                     m3.remainingSprint = m3.sprint*inch+m3.baseRadius-movementHindrances(m3);
                     m1.abilities.activeOwned.forEach((el,i)=>{if(el.includes("The Power of Voodoo"))m1.abilities.activeOwned.splice(i,1)  } ) 
@@ -299,15 +307,17 @@ function abilitiesEvents(m1, Gamer, otherGamer) {
                         m3.isMoving = true;
                         m3.hasMoved = false;
                         $('#app').empty().append(appMaker(m1, Gamer));
-                        if(distance(mouX,mouY,m3.posX,m3.posY)<=m3.remainingSprint+5)anime(m3, teamz, otherGamer, {mode: 'abilities' });
+                        if(distance(mouX,mouY,m3.posX,m3.posY)<=m3.remainingSprint+5 &&distance(m3.posX,m3.posY,mouX,mouY)>m3.baseRadius*.5)
+                                anime(m3, teamz, otherGamer, {mode: 'abilities' });
                         if(m3.remainingSprint < 30+m3.baseRadius){
                             m3.isMoving = false;
-                            m3.hasMoved = savedMoved;
+                            m3.hasMoved = savedBeforVoodoo[0];
                             m3.moveAura = false;
-                            m3.remainingRun =    m3.run*inch+m3.baseRadius-movementHindrances(m3);
-                            m3.remainingSprint = m3.sprint*inch+m3.baseRadius-movementHindrances(m3);
+                            m3.remainingRun =    savedBeforVoodoo[0]?0:savedBeforVoodoo[1]//m3.run*inch+m3.baseRadius-movementHindrances(m3);
+                            m3.remainingSprint = savedBeforVoodoo[2]//m3.sprint*inch+m3.baseRadius-movementHindrances(m3);
                             m3.abilities.activeOwned.forEach((el,i)=>{if(el.includes("The Power of Voodoo"))m1.abilities.activeGiven.splice(i,1)  } ) 
                             $('#players').off("click.abilitiesMove");
+                            savedBeforVoodoo = [];
                         }
                     })
                 }

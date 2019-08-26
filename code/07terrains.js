@@ -72,7 +72,7 @@ function terrainsDetector(teaMate){
 
         if(teaMate.classification === "squaddie"){
         //<<----==    WALL || OBSTACLE || FOREST || GOAL POST grants cover
-        if( (colorFar.includes(255) && ( typesofTerrain.includes("wall") || typesofTerrain.includes("obstacle") )) || (colorClose.includes(255) && typesofTerrain.includes("forest") ) || (distance(teaMate.posX, teaMate.posY, otherGamer.gp.x,otherGamer.gp.y) <=(teaMate.baseRadius + inch + 2.5 * cm) || distance(teaMate.posX, teaMate.posY, Gamer.gp.x, Gamer.gp.y) <= (teaMate.baseRadius + inch + 2.5 * cm) ) ){
+        if( !teaMate.terrainsMovPenalised&&(colorFar.includes(255) && ( typesofTerrain.includes("wall") || typesofTerrain.includes("obstacle") )) || (colorClose.includes(255) && typesofTerrain.includes("forest") ) || (distance(teaMate.posX, teaMate.posY, otherGamer.gp.x,otherGamer.gp.y) <=(teaMate.baseRadius + inch + 2.5 * cm) || distance(teaMate.posX, teaMate.posY, Gamer.gp.x, Gamer.gp.y) <= (teaMate.baseRadius + inch + 2.5 * cm) ) ){
             teaMate.inCover = true;
         } else {teaMate.inCover = false}
 
@@ -89,10 +89,14 @@ function terrainsDetector(teaMate){
 
         //<<----==    ROUGH GROUND || FOREST grants movement hindrance
         if( colorClose.includes(255) && !teaMate.inRoughGround /*&& (teaMate.isMoving || teaMate.wasCharging)*/ && ( typesofTerrain.includes("forest") || typesofTerrain.includes("roughGround") ) && !teaMate.isGliding ){
-            let hasLightFooted = Boolean(teaMate.abilities.passiveOwned && teaMate.abilities.passiveOwned.some(el=>el.includes("Light Footed") ) );
+            let hasLightFooted = hasPassiveUnused(teaMate,"Light Footed");
+            let hasWinterBlessing = hasPassiveUnused(teaMate,"Winters Blessing");
             teaMate.inRoughGround = true; 
-            teaMate.remainingRun += ( (hasPassive(teaMate,"Winters Blessing")?4*inch:0)-(hasLightFooted ? 0 : 2* inch) ); 
-            teaMate.remainingSprint += ( (hasPassive(teaMate,"Winters Blessing")?4*inch:0)-(hasLightFooted ? 0 : 2 * inch) );
+            teaMate.terrainsMovPenalised = true;
+            teaMate.remainingRun += ( (hasWinterBlessing ? 2 : hasLightFooted ? 0 : -2)* inch ); 
+            teaMate.remainingSprint += ( (hasWinterBlessing ? 2 : hasLightFooted ? 0 : -2) * inch );
+            makePassiveOpt(teaMate,"Winters Blessing");
+            makePassiveOpt(teaMate,"Light Footed");
             teaMate.inForest = typesofTerrain.includes("forest") ? true : false;
         } else if ( !colorClose.includes(255) ) { teaMate.inRoughGround = false }
 

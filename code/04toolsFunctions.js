@@ -105,7 +105,7 @@ function playbookStitcher(m1, i, wrap, mode) {
         let $plajbookEl = shouldIbother ? `<li class='plajBookTopCell ${wrap[2]} activeOptions' 
                         data-dmg=${dmg} data-mom=${mom} data-ddge=${ddge} data-psh=${psh} data-tackle=${tackle} data-kd=${KD} 
                         data-abil=${ability!==''?'0'+i:false}
-                        style="background-color:${isMomentus}; color:${mom ? 'white' : 'black'}">${bookElement}</li>` :
+                        style="background-color:${isMomentus}; animation:showDice ${i*.1}s forwards; color:${mom ? 'white' : 'black'}">${bookElement}</li>` :
             `<li class='playBookNull'></li>`;
         wrap[0].push($plajbookEl);
         // }//sitching plajbook FOR
@@ -129,7 +129,7 @@ function playbookStitcher(m1, i, wrap, mode) {
     let $plajbookEl = shouldIbother ? `<li class='plajBookCell ${wrap[3]} activeOptions' 
                                 data-dmg=${dmg} data-mom=${mom} data-ddge=${ddge} data-psh=${psh} data-tackle=${tackle} data-kd=${KD} 
                                 data-abil=${ability!==''?'1'+i:false}
-                                style="background-color:${isMomentus}; color:${mom ? 'white' : 'black'}">${bookElement}</li>` : `<li class='playBookNull'></li>`;
+                                style="background-color:${isMomentus}; animation:showDice ${i*.1}s forwards; color:${mom ? 'white' : 'black'}">${bookElement}</li>` : `<li class='playBookNull'></li>`;
     wrap[1].push($plajbookEl);
     $('#app').empty().append(appMaker(m1, Gamer));
 }
@@ -138,15 +138,16 @@ function buttonStitching(wrap, m1, m2, ball, Gamer, mode, continueMovement) {
     //stitching playbook FOR---TOP
     for (let yIo = 2; yIo < 4; yIo++) {
         $(`.${wrap[yIo]}`).each(function () {
-            $(this).on("click", function () {
-                wrap[0] = [];
-                wrap[1] = [];
                 let dmg = Number($(this).data('dmg'));
                 let ddge = Number($(this).data('ddge'));
                 let psh = Number($(this).data('psh'));
                 let tackle = Number($(this).data('tackle'));
                 let kd = Number($(this).data('kd'));
                 let abil = $(this).data('abil')!==false?Number($(this).data('abil')):false;
+                let momentum = Number($(this).data('mom'));
+            $(this).on("click", function () {
+                wrap[0] = [];
+                wrap[1] = [];
                 if ( !abil && typeof(abil) !== 'number' &&
                     ( (m2.isKnockedDown && dmg < 1 && ddge < 1 && psh < 1 && ((m2.hasBall && tackle < 1) || (!m2.hasBall && tackle > 0))) || (!m2.hasBall && dmg < 1 && ddge < 1 && psh < 1 && ((!m2.isKnockedDown && kd < 1) || (m2.isKnockedDown && kd > 0)) ) )
                     ){
@@ -157,7 +158,7 @@ function buttonStitching(wrap, m1, m2, ball, Gamer, mode, continueMovement) {
                     m1.abilities.passiveOwned.some(el=>el.includes("Swift Strikes") ) && m1.isActivating) ) {
                         //<<---== this needs to be passed to anime function through m1.dodgeSquaddie and m2.pushSquaddie
                             wrath = m2; receiver = m1;
-                        if (ddge > 0) {
+                        if (ddge > 0) {console.log("Should be dodging")
                             m1.isDodging = true;
                             m1.dodgeSquaddie(ddge, teamz, m2);
                         };
@@ -166,6 +167,7 @@ function buttonStitching(wrap, m1, m2, ball, Gamer, mode, continueMovement) {
                             m2.pushSquaddie(psh, teamz, m2);
                         };
                         if (dmg > 0) {
+                            dmg += m2.isSnared && hasPassive(m1,"Isolated Target") ? 1 : 0;
                             if(ddge === 0 && m1.abilities.passiveOwned.some(el=>el.includes("Swift Strikes") ) && m1.isActivating) 
                             {
                                 m1.isDodging = true; 
@@ -213,7 +215,7 @@ function buttonStitching(wrap, m1, m2, ball, Gamer, mode, continueMovement) {
                     }
                     //knocked down guys can still counter and countering any pushes or dodges makes the attack expire immediately
                     m2.hasMoved = mode === 'parting blow' && Number($(this).data('kd')) > 0 ? true : m2.hasMoved;
-                    Gamer.momentum += Number($(this).data('mom'));
+                    Gamer.momentum += momentum;
                     m2.hpMin -= dmg; Number($(this).data('dmg'));
                     m1.wasCharging = false;
                     m1.bonusTime = false;
@@ -223,8 +225,20 @@ function buttonStitching(wrap, m1, m2, ball, Gamer, mode, continueMovement) {
                         waaar(otherGamer, Gamer, m2, m1, 'counterattack');
                         m2.willCounter = false;
                     }
+                    m1.hoverButtonAura = 0;
+                    m2.hoverButtonAura = 0;
                 }
+    if(momentum>0)$(".momentumShow").text(`${Gamer.momentum}`).addClass("momentumGrow");
+
             });
+    $(this).on('mouseenter', function() {
+        m1.hoverButtonAura = ddge*inch + m1.baseRadius;
+        m2.hoverButtonAura = psh*inch + m2.baseRadius;
+    });
+    $(this).on('mouseleave', function() {
+        m1.hoverButtonAura = 0;
+        m2.hoverButtonAura = 0;
+    });
         }); //if paybook has length
     }//for yIo
 } //buttons loop
@@ -858,6 +872,7 @@ function escapist(m1, otherGamer, m2 = m1) {
             ruler = false;
             $('body').find('.snapBallButton').remove();
             $('body').find('.counterbox').off().remove();
+            $(".infoAbilBox").remove();
             teamz.forEach(el => {
                 if (el.canSnap) {
                     el.canSnap = false;
@@ -871,12 +886,13 @@ function escapist(m1, otherGamer, m2 = m1) {
                 el.pressedAbutton = idear==="powerOfVooDoo" ? false : el.pressedAbutton;
                 if(hasActiveGiven(el,"The Power of Voodoo")){console.log("bob")
                     el.isMoving = false;
-                    el.hasMoved = false;
+                    el.hasMoved = savedBeforVoodoo[0];
                     el.moveAura = false;
-                    el.remainingRun =    el.run*inch+el.baseRadius-movementHindrances(el);
-                    el.remainingSprint = el.sprint*inch+el.baseRadius-movementHindrances(el);
+                    el.remainingRun =    savedBeforVoodoo[0]?0:savedBeforVoodoo[1]//el.run*inch+el.baseRadius-movementHindrances(el);
+                    el.remainingSprint = savedBeforVoodoo[2]//el.sprint*inch+el.baseRadius-movementHindrances(el);
                     el.abilities.activeGiven.forEach((em,i)=>{if(em.includes("The Power of Voodoo"))el.abilities.activeGiven.splice(i,1)  } ) 
                     $('#players').off("click.abilitiesMove");
+                    savedBeforVoodoo = [];
                 }
             });
             m1.drawAbilityTargetAura = 0;
@@ -948,7 +964,7 @@ function drawDeploymentZones(counter/*, Gamer1, Gamer2*/) {
 
 function sendMessage(txt) {
     message = txt;
-    $('#app').find('.message').text(txt);
+    $('#app').find('.message').text(message);
 }
 
 const snapBallButtonCreator = (mode, name) =>
@@ -1238,18 +1254,26 @@ function addHexColor(c1, c2) {
 
 
 function endSquaddieActivation(m1, Gamer1, Gamer2, Gamer, switcher, teamz, turnTransition) {
+    m1.hoverButtonAura = 0;
     if(m1.abilities.activeOwned.some(el=>el.includes("Back to the Shadows")  && el[1]>0) ){
         $('#players').off();$("#app").off();$(`.playbookNodes`).empty()
         if(m1.moveAura){m1.isMoving = false; m1.moveAura = false}
         m1.isDodging = true;
         m1.dodgeSquaddie(4,"Back to the Shadows");
         m1.abilities.activeOwned.forEach(el=>{if(el.includes("Back to the Shadows"))el[1]=0});
-        $('#app').on('click', `.passActivation` + m1.name, () => { //end activation
+        $('#app').on('click', `#passActivation` + m1.name, () => { //end activation
             if (Gamer.active && m1.isActivating) {
                 saveGameState();
                 endSquaddieActivation(m1, Gamer1, Gamer2, Gamer, switcher, teamz, turnTransition);
             }else if(otherGamer.gp.hasBall){sendMessage(`click on ${otherGamer.guild.name} goal post.`)}
         })
+    }else if(    otherGamer.squaddies.some(m2=>
+                        hasPassiveUnused(m2,"Unpredictable Movement") && m1.isMoving 
+                        && distance(m1.posX,m1.posY,m2.posX,m2.posY)<=m2.AmeleeZone*inch+m2.baseRadius+m1.baseRadius
+                    )//array method
+                    )//else if
+    {
+        unpredictableMovement(m1);
     }else{
     escapist(m1,otherGamer,m1);
     message = '';
@@ -1274,10 +1298,11 @@ function endSquaddieActivation(m1, Gamer1, Gamer2, Gamer, switcher, teamz, turnT
     if (teamz.filter(el => !el.hasActivated).length === 0) { ////////resets turn
         teamz.forEach(m1 => {
             abilitiesCleaner(m1);
-            if(m1.abilities.activeOwned)m1.abilities.activeOwned.forEach((el,i)=>{el[1]=0});
-            if(m1.abilities.passiveGiven)m1.abilities.passiveGiven = [];
-            if(m1.abilities.activeGiven)m1.abilities.activeGiven = [];
-            if(m1.abilities.passiveOwned)m1.abilities.passiveOwned.forEach((el,i)=>el[1]=0);
+            m1.inRoughGround = false;
+            m1.inFastGround = false;
+            m1.terrainsMovPenalised = false;
+            m1.remainingRun = m1.run * inch + m1.baseRadius
+            m1.remainingSprint = m1.sprint * inch + m1.baseRadius
             m1.kickReRoll = 0;
             m1.isActivating = false;
             m1.hasActivated = false;
@@ -1292,11 +1317,9 @@ function endSquaddieActivation(m1, Gamer1, Gamer2, Gamer, switcher, teamz, turnT
             m1.heal = 0;
             m1.removedConditions = 0;
             m1.infMin = 0;
-            m1.remainingRun = m1.run * inch + m1.baseRadius;
-            m1.remainingSprint = m1.sprint * inch + m1.baseRadius;
             if(m1.isSnared){
-                //m1.remainingRun -= 2 * inch;
-                //m1.remainingSprint -= 2 * inch;
+                m1.remainingRun -= 2 * inch;
+                m1.remainingSprint -= 2 * inch;
             }
             m1.runPaid = false;
             m1.isCharging = false;
@@ -1314,6 +1337,8 @@ function endSquaddieActivation(m1, Gamer1, Gamer2, Gamer, switcher, teamz, turnT
             }
             if (m1.isBurning) {
                 m1.hpMin -= 1;
+                m1.remainingRun -= 2 * inch;
+                m1.remainingSprint -= 2 * inch;
             }
             if (m1.hpMin < 1) {
                 if (!m1.isTakenOut) {

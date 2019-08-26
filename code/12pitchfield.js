@@ -417,9 +417,9 @@ function moseDraw () {
 }
 moseDraw();
 const cheetah = (n) => {
-    if (n) {
-        let bookOfLife1 = [];[Jaecar,vetMinx,vetHearne,Egret].forEach(el=>bookOfLife1.push(new Player(...el) ));
-        let bookOfLife2 = [];[PinVice,Zarola,vetHearne,Fahad,Egret].forEach(el=>bookOfLife2.push(new Player(...el) ));
+    if (!n) {
+        let bookOfLife1 = [];[Benediction,Anvil,Fahad,Zarola,Jaecar,Egret,vetHearne].forEach(el=>bookOfLife1.push(new Player(...el) ));
+        let bookOfLife2 = [];[Midas,Ox,Zarola,Egret,Jaecar,vetHearne,Fahad].forEach(el=>bookOfLife2.push(new Player(...el) ));
         Gamer1 = new Gajmer(
             0,0,0,
             bookOfLife1,
@@ -451,8 +451,8 @@ const cheetah = (n) => {
         counter = 5;
         //Gamer1.squaddies.forEach(el => el.posY = 16*inch);
         //Gamer2.squaddies.forEach(el => el.posY = 17*inch);
-        teamz.forEach(el => {el.infMin += 6; el.hpMin-=5});
-        Gamer1.momentum += 0; Gamer2.momentum += 0;
+        teamz.forEach(el => {el.infMin += 6; el.hpMin-=5;el.isBleeding=true});
+        Gamer1.momentum += 2; Gamer2.momentum += 2;
 
         Gamer1.oponent = Gamer2;
         Gamer2.oponent = Gamer1;

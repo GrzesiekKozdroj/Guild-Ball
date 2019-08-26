@@ -1,6 +1,7 @@
 "use strict";
 let diceRoller = (Gamer, otherGamer, m1, m2 = m1, mode, abilityCost) => {
-    let unfrendlies = otherGamer.squaddies.filter(el => distance(m1.posX, m1.posY, el.posX, el.posY) <= (el.meleeRadius + m1.baseRadius)).length;
+    let unfrendlies = otherGamer.squaddies.filter(el => distance(m1.posX, m1.posY, el.posX, el.posY) <= (el.meleeRadius + m1.baseRadius) 
+        && el.name!==m2.name).length;
     let unfrendliClose = otherGamer.squaddies.filter(el => distance(m2.posX, m2.posY, el.posX, el.posY) <= (el.meleeRadius + m2.baseRadius)).length;
     let bonusedTime = m1.bonusTime || m2.bonusTime ? 1 : 0;
     let bonusDice = 0;
@@ -34,25 +35,29 @@ function diceRolled(all, minimum, color, armour = 0) {
     all.forEach( (el,i) => {
         switch (el) {
             case 1:
-                diceRolledForDisplay.push(`<div class="die dice-1" style="background-color:${el>=minimum?color:'white'}">
+                diceRolledForDisplay.push(`<div class="die dice-1" style="background-color:${el>=minimum?color:'white'};
+                animation: showDice ${i*.2}s forwards">
                         <div class="die-1 die-eye" style="background-color:${el>=minimum?'white':'rgb(114, 107, 107)'}"></div>
                     </div>`)
                 break;
             case 2:
-                diceRolledForDisplay.push(`<div class="die dice-2" style="background-color:${el>=minimum?color:'white'}">
+                diceRolledForDisplay.push(`<div class="die dice-2" style="background-color:${el>=minimum?color:'white'};
+                animation: showDice ${i*.2}s forwards">
                         <div class="die-1 die-eye" style="background-color:${el>=minimum?'white':'rgb(114, 107, 107)'}"></div>
                         <div class="die-2 die-eye" style="background-color:${el>=minimum?'white':'rgb(114, 107, 107)'}"></div>
                         </div>`)
                 break;
             case 3:
-                diceRolledForDisplay.push(`<div class="die dice-3" style="background-color:${el>=minimum?color:'white'}">
+                diceRolledForDisplay.push(`<div class="die dice-3" style="background-color:${el>=minimum?color:'white'};
+                animation: showDice ${i*.2}s forwards">
                         <div class="die-1 die-eye" style="background-color:${el>=minimum?'white':'rgb(114, 107, 107)'}"></div>
                         <div class="die-2 die-eye" style="background-color:${el>=minimum?'white':'rgb(114, 107, 107)'}"></div>
                         <div class="die-3 die-eye" style="background-color:${el>=minimum?'white':'rgb(114, 107, 107)'}"></div>
                     </div>`)
                 break;
             case 4:
-                diceRolledForDisplay.push(`<div class="die dice-4" style="background-color:${el>=minimum?color:'white'}">
+                diceRolledForDisplay.push(`<div class="die dice-4" style="background-color:${el>=minimum?color:'white'};
+                animation: showDice ${i*.2}s forwards">
                         <div class="die-1 die-eye" style="background-color:${el>=minimum?'white':'rgb(114, 107, 107)'}"></div>
                         <div class="die-2 die-eye" style="background-color:${el>=minimum?'white':'rgb(114, 107, 107)'}"></div>
                         <div class="die-3 die-eye" style="background-color:${el>=minimum?'white':'rgb(114, 107, 107)'}"></div>
@@ -60,7 +65,8 @@ function diceRolled(all, minimum, color, armour = 0) {
                     </div>`)
                 break;
             case 5:
-                diceRolledForDisplay.push(`<div class="die dice-5" style="background-color:${el>=minimum?color:'white'}">
+                diceRolledForDisplay.push(`<div class="die dice-5" style="background-color:${el>=minimum?color:'white'};
+                animation: showDice ${i*.2}s forwards">
                         <div class="die-1 die-eye" style="background-color:${el>=minimum?'white':'rgb(114, 107, 107)'}"></div>
                         <div class="die-2 die-eye" style="background-color:${el>=minimum?'white':'rgb(114, 107, 107)'}"></div>
                         <div class="die-3 die-eye" style="background-color:${el>=minimum?'white':'rgb(114, 107, 107)'}"></div>
@@ -69,7 +75,8 @@ function diceRolled(all, minimum, color, armour = 0) {
                     </div>`)
                 break;
             case 6:
-                diceRolledForDisplay.push(`<div class="die dice-6" style="background-color:${i < armour ? "rgb(143, 159, 168)":color}">
+                diceRolledForDisplay.push(`<div class="die dice-6" style="background-color:${i < armour ? "rgb(143, 159, 168)":color};
+                animation: showDice ${i*.2}s forwards">
                         <div class="die-1 die-eye" style=" background-color:white "></div>
                         <div class="die-2 die-eye" style=" background-color:white "></div>
                         <div class="die-3 die-eye" style=" background-color:white "></div>
@@ -91,91 +98,96 @@ function abilitiesRoll (m1, m2, abilityCost){
     let success = all.filter(el=>el>=neededToHit)
     return success.length;
 }
-
+let utilityPicScale = 100;
+let utilPicStictcher = (a,b) =>`background:url(\".\/icons\/utilities.png\") ${a}% ${b}%; background-size:485%;`;
+let btilPicStictcher = (a,b) =>`background:url(\'.\/icons\/utilities.png\') ${a}% ${b}%; `;
+function makeActiveActionButton(m1,id,claz,color,text,x,y){
+    return `<div id='${id+m1.name}' class="a-${claz}" style='border-color:${color}; ${utilPicStictcher(x,y)}'>${text}</div>`;
+}
+function makeInactiveActionButton(m1,id,claz,color,text,x,y){
+    return `<div id='${id+m1.name}not' class="a-${claz} inactiveActionButton" style='border-color:${color}; ${utilPicStictcher(x,y)}'>${text}</div>`
+}
 function actionButtons(teaMate, Gamer, color = Gamer.guild.color) {
     //drop ball
     let guildName = "background-"+teaMate.theGuild.name;
     let $terrainsGenerator = counter<2?`<div id='generateTerrains' class="a-${guildName}" style='border-color:${color}'>re-roll terrains</div>`:``;
-    let $dropBallButton = teaMate.hasBall && counter > 4 ? `<div id='dropBall${teaMate.name}' class="a-${guildName}"  style='border-color:${color}'>drop ball</div>` : ``;
+    let $assignBallButton = counter === 0 || Boolean(counter === 3 && Boolean(
+        Boolean(Gamer.deployment[0] < canvas.height / 2 && ball.y > canvas.height / 2 - ball.ballSize) ||
+        Boolean(Gamer.deployment[0] > canvas.height / 2 && ball.y < canvas.height / 2 + ball.ballSize))) ? 
+        makeActiveActionButton(teaMate,'giveBallTo',"a${guildName}"  ,color,"Give Ball",100,40) 
+    :
+        (distance(ball.x, ball.y, teaMate.posX, teaMate.posY) < ball.ballSize + teaMate.baseRadius + 1 * inch &&
+        ball.isOnGround) ?makeActiveActionButton(teaMate,'snapBall',"a${guildName}"  ,color,"Snap Ball",50,20) 
+    : 
+        teaMate.hasBall && counter > 4 ? makeActiveActionButton(teaMate,"dropBall","a${guildName}",color,"drop ball",50,20) : makeInactiveActionButton(teaMate,"snapBall","a${guildName}",color,"Snap Ball",50,20);
     //kick
-    let $kickButton = (teaMate.hasBall && teaMate.infMin > 0 && counter === 5 || counter === 2) ? `<div id='kick${teaMate.name}'  class="a-${guildName}"  style='border-color:${color}'>Kick</div>` : ``;
+    let $kickButton = (teaMate.hasBall && teaMate.infMin > 0 && counter === 5 || counter === 2) ? makeActiveActionButton(teaMate,'kick',"a${guildName}"  ,color,"Kick",100,40) : makeInactiveActionButton(teaMate,'kick',"a${guildName}"  ,color,"Kick",100,40);
     //charge
-    let $chargeButton = ((teaMate.infMin > 1 || hasPassive(teaMate,"Furious"))&& !teaMate.isMoving && !teaMate.hasMoved && !teaMate.isEngaged && counter > 4) ? `<div id='charge${teaMate.name}'  class="a-${guildName}" style='border-color:${color}'>Charge</div>` : ``;
+    let $chargeButton = ((teaMate.infMin > 1 || hasPassive(teaMate,"Furious"))&& !teaMate.isMoving && !teaMate.hasMoved && !teaMate.isEngaged && counter > 4) ? makeActiveActionButton(teaMate,'charge',"a${guildName}"  ,color,"Charge",100,0) : makeInactiveActionButton(teaMate,'charge',"a${guildName}"  ,color,"Charge",100,0);
     //bonus time
-    let $bonusTimeButton = (Gamer.momentum > 0 && !teaMate.bonusTime) ? `<div id='bonusTime${teaMate.name}'  class="a-${guildName}" style='border-color:${color}'>Bonus time</div>` : ``;
+    let $bonusTimeButton = (Gamer.momentum > 0 && !teaMate.bonusTime) ? makeActiveActionButton(teaMate,'bonusTime',"a${guildName}"  ,color,"Bonus Time",50,0) : makeInactiveActionButton(teaMate,'bonusTime',"a${guildName}"  ,color,"Bonus Time",50,0);
     //heal self
-    let $healSelfButton = (Gamer.momentum > (!teaMate.isDiseased ? 0 : 1) && teaMate.hpMin < teaMate.hp && teaMate.heal < 1 && teaMate.removedConditions !== 1) ? `<div id='healSelf${teaMate.name}' class="a-${guildName}"  style='border-color:${color}'>heal self</div>` : ``;
+    let $healSelfButton = (Gamer.momentum > (!teaMate.isDiseased ? 0 : 1) && teaMate.hpMin < teaMate.hp && teaMate.heal < 1 && teaMate.removedConditions !== 1) ? makeActiveActionButton(teaMate,'healSelf',"a${guildName}"  ,color,"Heal",50,40) : makeInactiveActionButton(teaMate,'healSelf',"a${guildName}"  ,color,"Heal",50,40);
     //forfeit move
-    let $forfeitMove = (teaMate.isKnockedDown) ? `<div id='forfeitMove${teaMate.name}'  class="a-${guildName}" style='border-color:${color}'>forfeit move</div>` : ``;
+    let $forfeitMove = (teaMate.isKnockedDown) ? makeActiveActionButton(teaMate,'forfeitMove',"a${guildName}"  ,color,"Forfeit Move",75,80) : makeInactiveActionButton(teaMate,'forfeitMove',"a${guildName}"  ,color,"Forfeit Move",75,80);
     //remove conditions self
     let $removeConditionsButton = (teaMate.removedConditions < 1 && teaMate.heal !== 1 && Gamer.momentum > (!teaMate.isDiseased ? 0 : 1) &&
-        (teaMate.isPoisoned || teaMate.isBleeding || teaMate.isKnockedDown || teaMate.isSnared || teaMate.isBurning || teaMate.isDiseased)) ? `<div id='removeConditions${teaMate.name}'  class="a-${guildName}" style='border-color:${color}'>remove conditions</div>` : ``;
+        (teaMate.isPoisoned || teaMate.isBleeding || teaMate.isKnockedDown || teaMate.isSnared || teaMate.isBurning || teaMate.isDiseased)) ? 
+        makeActiveActionButton(teaMate,'removeConditions',"a${guildName}"  ,color,"Remove Conditions",100,80) : makeInactiveActionButton(teaMate,'removeConditions',"a${guildName}"  ,color,"Remove Conditions",100,80);
     //heal friend
     let $healAFriend = (Gamer.momentum > 1 && Gamer.squaddies
             .filter(el => el.hpMin < el.hp)
             .filter(el => el.name !== teaMate.name)
             .filter(el => distance(el.posX, el.posY, teaMate.posX, teaMate.posY) <= (teaMate.baseRadius + el.baseRadius + 8 * inch))
-            .filter(el => el.heal < 1).length > 0) ?
-        `<div id='healAFriend${teaMate.name}'  class="a-${guildName}" style='border-color:${color}'>heal a friend</div>` : ``;
+            .filter(el => el.heal < 1).length > 0) ? makeActiveActionButton(teaMate,'healAFriend',"a${guildName}"  ,color,"Heal a Friend",50,100) : makeInactiveActionButton(teaMate,'healAFriend',"a${guildName}"  ,color,"Heal a Friend",50,100);
     //remove conditions friend
     let $takeAbreather = (Gamer.momentum > 1 && Gamer.squaddies
             .filter(el => el.isBleeding || el.isBurning || el.isDiseased || el.isKnockedDown || el.isPoisoned || el.isSnared)
             .filter(el => el.name !== teaMate.name)
             .filter(el => distance(el.posX, el.posY, teaMate.posX, teaMate.posY) <= (teaMate.baseRadius + el.baseRadius + 8 * inch))
             .filter(el => el.removedConditions < 1)
-            .filter(el => el.heal < 1).length > 0) ?
-        `<div id='takeAbreather${teaMate.name}'  class="a-${guildName}" style='border-color:${color}'>take a breather</div>` : ``;
-    let $glidingButton = Gamer.momentum > 0 ? `<div class='glide${teaMate.name} a-${guildName}' style='border-color:${color}'>Glide</div>` : ``;
-    let $assignBallButton = counter === 0 || Boolean(counter === 3 && Boolean(
-            Boolean(Gamer.deployment[0] < canvas.height / 2 && ball.y > canvas.height / 2 - ball.ballSize) ||
-            Boolean(Gamer.deployment[0] > canvas.height / 2 && ball.y < canvas.height / 2 + ball.ballSize))) ?
-        `<div class='giveBallTo${teaMate.name} a-${guildName}' style='border-color:${color};'>give ball</div>` : ``;
-    let $influenceButtons = counter > 6 || counter > 2 && counter < 5 ? `
-    <div class='addInf${teaMate.name}  a-${guildName}' style='border-color:${color}'>+inf+</div>
-    <div class='minInf${teaMate.name}  a-${guildName}' style='border-color:${color}'>-inf-</div>` : ``;
-    let $snapBallButton = (distance(ball.x, ball.y, teaMate.posX, teaMate.posY) < ball.ballSize + teaMate.baseRadius + 1 * inch &&
-            ball.isOnGround) ?
-        `<div id='snapBall${teaMate.name}'  class="a-${guildName}" style='border-color:${color}'>snap ball</div>` : ``;
+            .filter(el => el.heal < 1).length > 0) ? makeActiveActionButton(teaMate,'takeAbreather',"a${guildName}"  ,color,"Take a Breather",25,100)
+         :  makeInactiveActionButton(teaMate,'takeAbreather',"a${guildName}"  ,color,"Take a Breather",25,100);
+    let $glidingButton = Gamer.momentum > 0 && !hasPassive(teaMate,"Light Footed")?  makeActiveActionButton(teaMate,'glide',"a${guildName}"  ,color,"Glide",25,40) : makeInactiveActionButton(teaMate,'glide',"a${guildName}"  ,color,"Glide",25,40);
 
-    let $kickReRoll = teaMate.kickReRoll===1? `<div id='kickReRoll${teaMate.name}' class="a-${guildName}" style='border-color:${color}'>re-roll kick</div>`:``;
-    let $rulerButton = `<div id='ruler${teaMate.name}'  class="a-${guildName}" style='border-color:${color}'>ruler toggle</div>`;
-    let $passActivationButton = counter < 2 ?
-        `<div class='passActivation${teaMate.name} a-${guildName}' style='border-color:${color}; color:red'>end deployment</div>` :
-        counter < 3 ?
-        `<div class='passActivation${teaMate.name} a-${guildName}' style='border-color:${color}; color:red'>end kickoff</div>` :
-        counter < 5 || counter > 6 ?
-        `<div class='passActivation${teaMate.name} a-${guildName}' style='border-color:${color}; color:red'>end allocation</div>` :
-        `<div class='passActivation${teaMate.name} a-${guildName}' style='border-color:${color}; color:red'>end activation</div>`;
-    let bod = counter === 5 ? [
-        $dropBallButton,
-        $chargeButton,
+    let $influenceButtons = counter > 6 || counter > 2 && counter < 5 ? [makeActiveActionButton(teaMate,'addInf',"a${guildName}"  ,color,"+inf+",0,0),
+    makeActiveActionButton(teaMate,'minInf',"a${guildName}"  ,color,"-inf-",100,60)] : [makeInactiveActionButton(teaMate,'addInf',"a${guildName}"  ,color,"+inf+",0,0),
+    makeInactiveActionButton(teaMate,'minInf',"a${guildName}"  ,color,"-inf-",100,60)];
+    
+
+    let $kickReRoll = teaMate.kickReRoll===1? makeActiveActionButton(teaMate,'kickReRoll',"a${guildName}"  ,color,"Re-roll Kick",50,60):makeInactiveActionButton(teaMate,'kickReRoll',"a${guildName}"  ,color,"Re-roll Kick",50,60);
+    let $rulerButton = makeActiveActionButton(teaMate,'ruler',"a${guildName}"  ,color,"Ruler",0,80);
+    let $passActivationButton = counter < 2 ? makeActiveActionButton(teaMate,'passActivation',"a${guildName}"  ,color,"End Deployment",100,20) :
+        counter < 3 ? makeActiveActionButton(teaMate,'passActivation',"a${guildName}"  ,color,"End Kick Off!",75,20) :
+        counter < 5 || counter > 6 ? makeActiveActionButton(teaMate,'passActivation',"a${guildName}"  ,color,"End Allocation",75,20) :
+        makeActiveActionButton(teaMate,'passActivation',"a${guildName}"  ,color,"End Activation",75,20);
+    let bod = [
         $bonusTimeButton,
+        $chargeButton,
+        $forfeitMove,
+        $glidingButton,
+
+        $kickButton,
+        $assignBallButton,
+        $kickReRoll,
+        $rulerButton,
+
         $healSelfButton,
         $removeConditionsButton,
-        $forfeitMove,
         $healAFriend,
         $takeAbreather,
-        $snapBallButton,
-        $glidingButton,
-        $rulerButton
-    ] : [/*$terrainsGenerator BUGGED*/];
-    let afterStart = counter >=0? [
-            $passActivationButton,
-            $assignBallButton,
-            $influenceButtons,
-            $kickButton,
-            $kickReRoll
-        ]:[];
+        
+        ...$influenceButtons
+        ];
     return (`
-    ${afterStart.join('')}
-    <div class='leaflet${teaMate.name} a-${guildName}' style='border-color:${color}'>show card</div>
-    <div id='undoMove${teaMate.name}'  class="a-${guildName}" style='border-color:${color}'>undo movement</div>
-    <div id="states${teaMate.name}"  class="a-${guildName}" style='border-color:red; color:red;'>reset activation</div>
-    <div id='cancel${teaMate.name}' class="a-${guildName}" style='border-color:${color}; color:red'>end/stop action</div>
+    ${$passActivationButton}
+    <div id='cancel${teaMate.name}' class="a${guildName}" style='border-color:${color}; ${utilPicStictcher(0,40)}'>end/stop action</div>
+    <div id='undoMove${teaMate.name}'  class="a${guildName}" style='border-color:${color};${utilPicStictcher(0,100)}'>undo movement</div>
+    <div id="states${teaMate.name}"  class="a${guildName}" style='border-color:red; ${utilPicStictcher(75,0)};'>reset activation</div>
     ${bod.join('')}
     `)
 }
-
+//<div class='leaflet${teaMate.name} a${guildName}' style='border-color:${color};${utilPicStictcher(25,60)}'>show card</div>
 
 ////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////______HUD__TEMPLATE__/////////////////////////////////////
@@ -188,106 +200,111 @@ let appMaker = (teaMate, Gamer) => {
 
     for (let hpi = 0; hpi < teaMate.hp - (teaMate.hp - teaMate.hpMin); hpi++) {
         hpiCount++;
-        $hpPool.push(`<li class='hpli ${guildName}' style='border-color:${color}'>${hpiCount}</li>`);
+        $hpPool.push(`<li class='hpli hp}' style='border-color:${color}; animation: showDice ${hpiCount*.05}s forwards'>${hpiCount}</li>`);
     }
     for (let hejp = 0; hejp < teaMate.hp - teaMate.hpMin; hejp++) {
         hpiCount++;
-        $hpPool.push(`<li class='hpliMin ${guildName}' style='border-color:${color}'>${hpiCount}</li>`)
+        $hpPool.push(`<li class='hpliMin hp' style='border-color:${color}; animation: showDice ${hpiCount*.05}s forwards'>${hpiCount}</li>`)
     }
     
-    return $(`<div id=appDisplay class="${guildName}">            
-    <h1 id='squaddieName'  class="${guildName}" style='border-color:${color}'>${teaMate.nameDisplayed}</h1>
-    <div id='images'>
-    <ul class='hp plajbooks teaMenu dice'>${diceRolledForDisplay.join('')}</ul>
-        <div id='squaddieFace'>
-            <div id='squaddieFace${teaMate.nameDisplayed}'
-                 style='
-                       background:url(${teaMate.pictureSource}) ${teaMate.picRatio[0]}% ${teaMate.picRatio[1]}%;  
-                       background-size:${teaMate.picRatio[2]}%;
-                       border-color:${color};
-                       width: 100%;
-                       height:100%;'
-            >
+    return $(`
+    <div id=appDisplay class="${guildName}">            
+    <section id="statistics">
+        <h1 id='squaddieName' style='border-color:${color}'>${teaMate.nameDisplayed} - 
+        ${teaMate.identity.status}</h1>
+        <table id='squaddieStats'>
+            <tr>
+                <th class='stat-top-${guildName}' colspan="2" style='border-color:${color}'>MOV</th>
+                <th class='stat-top-${guildName}' style='border-color:${color}'>TAC</th>
+                <th class='stat-top-${guildName}' colspan="2" style='border-color:${color}'>KICK</th>
+                <th class='stat-top-${guildName}' style='border-color:${color}'>DEF</th>
+                <th class='stat-top-${guildName}' style='border-color:${color}'>ARM</th>
+                <th class='stat-top-${guildName}' colspan="2" style='border-color:${color}'>INF</th>
+            </tr>
+            <tr>
+                <td  class="stat--bottom-${guildName} bgn" id='squaddieJog'style='border-color:${color}'>${teaMate.sprint}ˮ</td>
+                <td  class="stat--bottom-${guildName}" id='squaddieSprint'style='border-color:${color}'>${teaMate.run}ˮ</td>
+                <td  class="stat--bottom-${guildName} dbl" id='squaddieTac'style='border-color:${color}'>${teaMate.tac}</td>
+                <td  class="stat--bottom-${guildName}" id='squaddieKickDice'style='border-color:${color}'>${teaMate.kick}</td>
+                <td  class="stat--bottom-${guildName}" id='squaddieKickDistance'style='border-color:${color}'>${teaMate.kickDist}ˮ</td>
+                <td  class="stat--bottom-${guildName} dbl" id='squaddieDeff'style='border-color:${color}'>${teaMate.def}</td>
+                <td  class="stat--bottom-${guildName} dbl" id='squaddieArm'style='border-color:${color}'>${teaMate.arm}</td>
+                <td  class="stat--bottom-${guildName}" id='squaddieInfGen'style='border-color:${color}'>${teaMate.infGen}</td>
+                <td  class="stat--bottom-${guildName} tnd" id='squaddieInfMax'style='border-color:${color}'>${teaMate.infMax}</td>
+            </tr>
+        </table>
+        <section class="bubbles">
+        <ul class="hp pool">
+            ${$hpPool.join('')}
+        </ul>
+        <div class="momentumShow">${Gamer?Gamer.momentum:''}</div>
+        </section>
+        <div id='images'>
+            <div id='squaddieFace'>
+                <div id='squaddieFace${teaMate.nameDisplayed}'
+                     style='
+                           background:url(${teaMate.pictureSource}) ${teaMate.picRatio[0]}% ${teaMate.picRatio[1]}%;  
+                           background-size:${teaMate.picRatio[2]}%;
+                           border-color:${color};
+                           width: 100%;
+                           height:100%;'
+                >
+                </div>
             </div>
         </div>
-
-    </div>
-    <section id="statistics">
-    <table id='squaddieStats'>
-        <tr>
-            <th class='stat-${guildName}' colspan="2" style='border-color:${color}'>MOV</th>
-            <th class='stat-${guildName}' style='border-color:${color}'>TAC</th>
-            <th class='stat-${guildName}' colspan="2" style='border-color:${color}'>KICK</th>
-            <th class='stat-${guildName}' style='border-color:${color}'>DEF</th>
-            <th class='stat-${guildName}' style='border-color:${color}'>ARM</th>
-            <th class='stat-${guildName}' colspan="2" style='border-color:${color}'>INF</th>
-        </tr>
-        <tr>
-            <td  class="stat-${guildName}" id='squaddieJog'style='border-color:${color}'>${teaMate.sprint}</td>
-            <td  class="stat-${guildName}" id='squaddieSprint'style='border-color:${color}'>${teaMate.run}</td>
-            <td  class="stat-${guildName}" id='squaddieTac'style='border-color:${color}'>${teaMate.tac}</td>
-            <td  class="stat-${guildName}" id='squaddieKickDice'style='border-color:${color}'>${teaMate.kick}</td>
-            <td  class="stat-${guildName}" id='squaddieKickDistance'style='border-color:${color}'>${teaMate.kickDist}</td>
-            <td  class="stat-${guildName}" id='squaddieDeff'style='border-color:${color}'>${teaMate.def}</td>
-            <td  class="stat-${guildName}" id='squaddieArm'style='border-color:${color}'>${teaMate.arm}</td>
-            <td  class="stat-${guildName}" id='squaddieInfGen'style='border-color:${color}'>${teaMate.infGen}</td>
-            <td  class="stat-${guildName}" id='squaddieInfMax'style='border-color:${color}'>${teaMate.infMax}</td>
-        </tr>
-    </table>
-    <ul class="hp pool">
-    ${$hpPool.join('')}
-    </ul>
     </section> 
-
-<ul class='hp plajbooks teaMenu playbookNodes'>
-<ul class='playbookWrap pW0' >
-    <ul>${playBookWrap.noWrap[0].join('')}</ul>
-    <ul>${playBookWrap.noWrap[1].join('')}</ul>
-</ul>
-<ul class='playbookWrap pW1'>
-    <ul>${playBookWrap.firstWrap[0].join('')}</ul>
-    <ul>${playBookWrap.firstWrap[1].join('')}</ul>
-</ul>
-<ul class='playbookWrap pW2'>
-    <ul>${playBookWrap.secondWrap[0].join('')}</ul>
-    <ul>${playBookWrap.secondWrap[1].join('')}</ul>
-</ul>
-<ul class='playbookWrap pW3'>
-    <ul>${playBookWrap.thirdWrap[0].join('')}</ul>
-    <ul>${playBookWrap.thirdWrap[1].join('')}</ul>
-</ul>
-<ul class='playbookWrap pW4'>
-    <ul>${playBookWrap.fourthWrap[0].join('')}</ul>
-    <ul>${playBookWrap.fourthWrap[1].join('')}</ul>
-</ul>
-<ul class='playbookWrap pW5'>
-    <ul>${playBookWrap.fifthWrap[0].join('')}</ul>
-    <ul>${playBookWrap.fifthWrap[1].join('')}</ul>
-</ul>
-<ul class='playbookWrap pW6'>
-    <ul>${playBookWrap.sixthWrap[0].join('')}</ul>
-    <ul>${playBookWrap.sixthWrap[1].join('')}</ul>
-</ul>
-<ul class='playbookWrap pW7'>
-    <ul>${playBookWrap.seventhWrap[0].join('')}</ul>
-    <ul>${playBookWrap.seventhWrap[1].join('')}</ul>
-</ul>
-<ul class='playbookWrap pW8'>
-    <ul>${$teamplays.join('')}</ul>
-</ul>
-</ul>
-
-<div class='domesticButtons'>
-    <div id='actionButtons'>
-        ${counter>=0?actionButtons(teaMate,Gamer,color):``}
-    </div>
-    <div id='traitPlaysButtons'>
-        ${counter>3 ? abilityButtons(teaMate,Gamer,color):``}
-    </div>
-</div>
-    
+    <section id="dynamicMessages">
     <p class='message'>${message}</p>
-    </div>`
+    <ul class='hp plajbooks teaMenu dice'>${diceRolledForDisplay.join('')}</ul>
+
+    <ul class='hp plajbooks teaMenu playbookNodes'>
+        <ul class='playbookWrap pW0' >
+            <ul>${playBookWrap.noWrap[0].join('')}</ul>
+            <ul>${playBookWrap.noWrap[1].join('')}</ul>
+        </ul>
+        <ul class='playbookWrap pW1'>
+            <ul>${playBookWrap.firstWrap[0].join('')}</ul>
+            <ul>${playBookWrap.firstWrap[1].join('')}</ul>
+        </ul>
+        <ul class='playbookWrap pW2'>
+            <ul>${playBookWrap.secondWrap[0].join('')}</ul>
+            <ul>${playBookWrap.secondWrap[1].join('')}</ul>
+        </ul>
+        <ul class='playbookWrap pW3'>
+            <ul>${playBookWrap.thirdWrap[0].join('')}</ul>
+            <ul>${playBookWrap.thirdWrap[1].join('')}</ul>
+        </ul>
+        <ul class='playbookWrap pW4'>
+            <ul>${playBookWrap.fourthWrap[0].join('')}</ul>
+            <ul>${playBookWrap.fourthWrap[1].join('')}</ul>
+        </ul>
+        <ul class='playbookWrap pW5'>
+            <ul>${playBookWrap.fifthWrap[0].join('')}</ul>
+            <ul>${playBookWrap.fifthWrap[1].join('')}</ul>
+        </ul>
+        <ul class='playbookWrap pW6'>
+            <ul>${playBookWrap.sixthWrap[0].join('')}</ul>
+            <ul>${playBookWrap.sixthWrap[1].join('')}</ul>
+        </ul>
+        <ul class='playbookWrap pW7'>
+            <ul>${playBookWrap.seventhWrap[0].join('')}</ul>
+            <ul>${playBookWrap.seventhWrap[1].join('')}</ul>
+        </ul>
+        <ul class='playbookWrap pW8'>
+            <ul>${$teamplays.join('')}</ul>
+        </ul>
+    </ul>
+    </section>
+    <div class='domesticButtons'>
+        <div id='actionButtons'>
+            ${counter>=0?actionButtons(teaMate,Gamer,color):``}
+        </div>
+        <div id='traitPlaysButtons'>
+            ${abilityButtons(teaMate,Gamer,color)}
+        </div>
+    </div>
+    <footer>&copy; 2017 Steamforged Games Ltd. All Rights Reserved.</footer>
+</div>`
 )
 }
 function counterAttackDialogBox(m1, m2){
@@ -362,4 +379,82 @@ const dont = (Boolean(m1.isCharging^m1.wasCharging) && otherGamer.momentum>0) ||
         ${defCounter}
         ${bonusDefCounter}
     </div>`);
-}
+};
+
+let infoAbilBox = (lspal)=>{
+    let coins = [];
+    for(let ajcost = 0; ajcost < Number(lspal.icost);ajcost++){
+        coins.push(`<p class="coinGold"></p>`);
+    }
+    for(let ajBook = 0; ajBook <Number(lspal.pcost);ajBook++){
+        coins.push(`<p class="coinSilver"></p>`);
+    }
+    if(lspal.type==="heroic")coins.push(`<article class="coinBlue"></article>`);
+    let cost = lspal.type!=="legendary" && (Number(lspal.icost) > 0 || Number(lspal.pcost) > 0 ) ?
+        `
+                <p class="abilAttribName">$</p>
+                <p class="abilAttripVal"><section id="ashTray">${coins.join('')}</section></p>
+        `:`$`;
+    
+        let typos = lspal.type!=="legendary" && lspal.type!=="utility"? `
+                <p class="abilAttribName">@</p>
+                <p class="abilAttripVal">${lspal.type}</p>`: '@';
+        let range = Number(lspal.range)>0?`
+                    <p class="abilAttribName"> <---></p>
+                    <p class="abilAttripVal">${lspal.range}"</p>` : '<-->';
+        let sused = lspal.type !== "legendary" && lspal.type !== "heroic" && lspal.type !== "trait" && lspal.type !=="utility"? `
+            <p class="abilAttribName">sus</p>
+            <p class="abilAttripVal">${lspal.sus>0?lspal.sus:false}</p>`:'sus';
+        let opted = lspal.type !== "legendary" && lspal.type !== "heroic" && lspal.type !== "trait" && lspal.type !=="utility"? `
+            <p class="abilAttribName">opt</p>
+            <p class="abilAttripVal">${lspal.opt>0?lspal.opt:false}</p>`:'opt';
+    return `
+    <div class="infoAbilBox">
+        <div class="abilHeader">
+            <div class="leftDecour">
+                <div class="leftDecourMiddleBit">
+                    <div class="leftDecourEndBit"></div>
+                </div>
+            </div>
+            <div class="abilTitle">
+                <div class="abilName">${lspal.name}</div>
+                <div class="abilType">${lspal.type}</div>
+            </div>
+            <div class="rightDecour">
+                <div class="rightDecourMiddleBit">
+                    <div class="rightDecourEndBit"></div>
+                </div>
+            </div>
+        </div>
+
+            <div class="statsAbilInfo">
+            <div>
+                ${cost}
+            </div>
+            <div>
+                ${typos}
+            </div>
+            <div>
+                ${range}
+            </div>
+                <div>
+                ${sused}
+                </div>
+                <div>
+                ${opted}
+                </div>
+            </div>
+
+        <div class="abilDescription">
+            ${lspal.desc}
+        </div>
+    </div>`};
+
+
+$("#gameScreen").on('mouseenter', '.skill', function() {
+        const that = this;
+        $("#gameScreen").append(infoAbilBox($(that).data()));
+});
+$("#gameScreen").on('mouseleave', '.skill', function() {
+    $(".infoAbilBox").remove();
+});

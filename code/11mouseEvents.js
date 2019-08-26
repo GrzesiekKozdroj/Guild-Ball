@@ -39,27 +39,46 @@ function turnTransition(event) {
                     actionButtons(m1, Gamer)
                     $('#app').append(appMaker(m1, Gamer));
                     /////////////////////////////////////////////////////////////
-                    $('#app').on('click', `.addInf` + m1.name, () => { //add influence
+                    $('#app').on('click', `#addInf` + m1.name, () => { //add influence
                         if (Gamer.active && Gamer.influence > 0 && m1.infMin < m1.infMax) {
                             Gamer.influence -= 1;
                             m1.infMin += 1;
+                            $(".infoAbilBox").remove();
                             $('#actionButtons').empty().off().append(actionButtons(m1, Gamer));
                         }
-                    })
+                    });
+
                     //////////////////////////////////////////////////////////////////////////////
-                    $('#app').on('click', `.minInf` + m1.name, () => { //remove influence
+                    $('#app').on('click', `#minInf` + m1.name, () => { //remove influence
                         if (Gamer.active && m1.infMin > 0) {
                             Gamer.influence += 1;
                             m1.infMin -= 1;
+                            $(".infoAbilBox").remove();
                             $('#actionButtons').empty().off().append(actionButtons(m1, Gamer));
                         }
-                    })
+                    });
+$("#gameScreen").on('mouseenter', `#addInf` + m1.name, function() {
+    $(".infoAbilBox").remove();
+    const that = {name:"Add Influence",type:"utility",desc:`Add influence to ${m1.nameDisplayed}, influence is used to fuel actions like attacking, chargin, kickin the ball or usin character plays`};
+    $("#gameScreen").append(infoAbilBox(that));
+});
+$("#gameScreen").on('mouseleave', `#addInf` + m1.name, function() {
+$(".infoAbilBox").remove();
+});
+                    $("#gameScreen").on('mouseenter', `#minInf` + m1.name, function() {
+                        $(".infoAbilBox").remove();
+                        const that = {name:"Remove Influence",type:"utility",desc:`remove Influence from ${m1.nameDisplayed}, influence is used to fuel actions like attacking, chargin, kickin the ball or usin character plays`};
+                        $("#gameScreen").append(infoAbilBox(that));
+                    });
+                    $("#gameScreen").on('mouseleave', `#minInf` + m1.name, function() {
+                    $(".infoAbilBox").remove();
+                    });
                     ///////////////////////////////////////////////////////////////////////////////
-                    $('#app').on('click', `.leaflet` + m1.name, () => {
+                    $('#app').on('click', `#leaflet` + m1.name, () => {
                         showLeaflet = showLeaflet ? false : true
                     });
 
-                    $('#app').on('click', `.passActivation` + m1.name, () => { //end activation
+                    $('#app').on('click', `#passActivation` + m1.name, () => { //end activation
 
                         if (Gamer.active && Gamer.influence === 0) {
                             counter = counter <= 7 ? 8 : 5;
@@ -79,6 +98,15 @@ function turnTransition(event) {
                             $('#app').empty().off();
                             $('#app').append(appMaker(m1, Gamer));
                         }
+                        $(".infoAbilBox").remove();
+                    });
+                    $("#gameScreen").on('mouseenter', `#passActivation` + m1.name, function() {
+                        $(".infoAbilBox").remove();
+                        const that = {name:"pass to opposing team",type:"utility",desc:`Allow opposing team to allocate their influence and return taken out squaddies.`};
+                        $("#gameScreen").append(infoAbilBox(that));
+                    });
+                    $("#gameScreen").on('mouseleave', `#passActivation` + m1.name, function() {
+                    $(".infoAbilBox").remove();
                     });
                     if (distance(m1.posX, m1.posY, ball.x, ball.y) <= (m1.baseRadius + inch + ball.ballSize) && //player-ball distance
                     distance(mouX, mouY, ball.x, ball.y) <= ball.ballSize                                   //klick on ball
@@ -250,11 +278,11 @@ switcher = (event) => {
                 const KDTip = activatingNow.isKnockedDown ? `And is knocked down, can't attack, hold the ball or move. <br>` : ``;
 
 
-                if(activatingNow.name !== teaMate.name){message = `${teaMate.nameDisplayed} can't activate in middle of ${activatingNow.nameDisplayed} activation. ${activatingNow.nameDisplayed} needs to end its activation.`} else if (activatingNow.name === teaMate.name){
-                            message =  `${teaMate.nameDisplayed} is activating now. 
+                if(activatingNow.name !== teaMate.name){sendMessage (`${teaMate.nameDisplayed} can't activate in middle of ${activatingNow.nameDisplayed} activation. ${activatingNow.nameDisplayed} needs to end its activation.`)} else if (activatingNow.name === teaMate.name){
+                            sendMessage(`${teaMate.nameDisplayed} is activating now. 
                         ${kickTip}
                         ${fightTip}
-                        ${KDTip}`
+                        ${KDTip}`)
                         }
                 $('#app').empty().append(appMaker(Gamer.squaddies.filter(el => el.isActivating)[0], Gamer));
             }
@@ -372,6 +400,18 @@ switcher = (event) => {
                     sendMessage(`${m1.nameDisplayed} can now charge in a straight line. Click one enemy in its threat range to declare a target.`);
                 }
             }) //CHHAARGE
+
+            $("#app").on('mouseenter', `#charge` + teaMate.name, function() {
+                $(".infoAbilBox").remove();
+                teaMate.hoverButtonAura = teaMate.remainingRun+teaMate.meleeRadius-teaMate.baseRadius;
+                const that = {name:"Charge",type:"utility",desc:`Spend 2 influence to charge in a straight line a opposing squaddie, can't run through walls or other players`};
+                $("#gameScreen").append(infoAbilBox(that));
+            });
+            $("#app").on('mouseleave', `#charge` + teaMate.name, function() {
+                teaMate.hoverButtonAura = 0;
+                $(".infoAbilBox").remove();
+            });
+
             $('#players').on('click',()=>{
                 if(m1.declaringAcharge && distance(mouX,mouY,m2.posX,m2.posY)<=m1.remainingRun+m1.meleeRadius
                     &&distance(mouX,mouY,m2.posX,m2.posY)<m2.baseRadius   ){
@@ -410,24 +450,44 @@ switcher = (event) => {
         //////////////////////////////////////////////////////////////////////////////////////////
         /////////////////////_____________HUD___EVENT___LISTENERS_______//////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////
-        $('#app').on('click', `.leaflet` + teaMate.name, () => {
+        $('#app').on('click', `#leaflet` + teaMate.name, () => {
             showLeaflet = showLeaflet ? false : true
         });
 
-        $('#app').on('click', `.passActivation` + teaMate.name, () => { //end activation
+        $('#app').on('click', `#passActivation` + teaMate.name, () => { //end activation
             if (Gamer.active && teaMate.isActivating) {
                 saveGameState();
                 endSquaddieActivation(teaMate, Gamer1, Gamer2, Gamer, switcher, teamz, turnTransition);
+                $(".infoAbilBox").remove();
             }else if(otherGamer.gp.hasBall){sendMessage(`click on ${otherGamer.guild.name} goal post.`)}
-        })
+        });
+        $("#app").on('mouseenter', `#passActivation` + teaMate.name, function() {
+            $(".infoAbilBox").remove();
+            const that = {name:"Pass Activation",type:"utility",desc:`End ${teaMate.nameDisplayed} activation and allow other team to do their turn`};
+            $("#gameScreen").append(infoAbilBox(that));
+        });
+        $("#app").on('mouseleave', `#passActivation` + teaMate.name, function() {
+            teaMate.hoverButtonAura = 0;
+            $(".infoAbilBox").remove();
+        });
         $('#app').on('click', `#bonusTime` + teaMate.name, () => {
             if (Gamer.momentum > 0 && !teaMate.bonusTime) {
             teaMate.pressedAbutton = true;
                 Gamer.momentum -= 1;
                 teaMate.bonusTime = true;
                 $('#actionButtons').empty().append(actionButtons(teaMate, Gamer));
+                $(".infoAbilBox").remove();
             }
-        })
+        });
+        $("#app").on('mouseenter', `#bonusTime` + teaMate.name, function() {
+            $(".infoAbilBox").remove();
+            const that = {name:"Bonus Time",type:"utility",desc:`Pay 1 momentum to add one extra dice to the next roll.`};
+            $("#gameScreen").append(infoAbilBox(that));
+        });
+        $("#app").on('mouseleave', `#bonusTime` + teaMate.name, function() {
+            teaMate.hoverButtonAura = 0;
+            $(".infoAbilBox").remove();
+        });
 
         $('#app').on('click', '#forfeitMove' + teaMate.name, () => {
             if (!teaMate.hasMoved && teaMate.isKnockedDown && !teaMate.isMoving) {
@@ -438,8 +498,18 @@ switcher = (event) => {
                 teaMate.def += 1;
                 $('#actionButtons').empty().append(actionButtons(teaMate, Gamer));
                 movementHistory = [];
+                $(".infoAbilBox").remove();
             }
-        })
+        });
+        $("#app").on('mouseenter', `#forfeitMove` + teaMate.name, function() {
+            $(".infoAbilBox").remove();
+            const that = {name:"Forfeit Movement",type:"utility",desc:`Sacrifice ability to move this turn in order to stand up.`};
+            $("#gameScreen").append(infoAbilBox(that));
+        });
+        $("#app").on('mouseleave', `#forfeitMove` + teaMate.name, function() {
+            teaMate.hoverButtonAura = 0;
+            $(".infoAbilBox").remove();
+        });
 
         $('#app').on('click', '#healSelf' + teaMate.name, () => {
             if (teaMate.heal < 1 && teaMate.removedConditions !== 1 && Gamer.momentum > teaMate.isDiseased ? 1 : 0) {
@@ -447,8 +517,18 @@ switcher = (event) => {
                 healFunction(teaMate, Gamer, 4, (teaMate.isDiseased ? 2 : 1), 1);
                 movementHistory = [];
                 $('#actionButtons').empty().append(actionButtons(teaMate, Gamer));
+                $(".infoAbilBox").remove();
             }
-        })
+        });
+        $("#app").on('mouseenter', `#healSelf` + teaMate.name, function() {
+            $(".infoAbilBox").remove();
+            const that = {name:"Heal",type:"utility",desc:`Spend one momentum to heal 4 wounds off ${teaMate.nameDisplayed}`};
+            $("#gameScreen").append(infoAbilBox(that));
+        });
+        $("#app").on('mouseleave', `#healSelf` + teaMate.name, function() {
+            teaMate.hoverButtonAura = 0;
+            $(".infoAbilBox").remove();
+        });
 
         $('#app').on('click', '#removeConditions' + teaMate.name, () => {
             if (teaMate.heal !== 1 && teaMate.removedConditions < 1 && Gamer.momentum > teaMate.isDiseased ? 1 : 0) {
@@ -456,8 +536,18 @@ switcher = (event) => {
                 removeConditionsFuncion(teaMate, Gamer, (teaMate.isDiseased ? 2 : 1), 1);
                 $('#actionButtons').empty().append(actionButtons(teaMate, Gamer));
                 movementHistory = [];
+                $(".infoAbilBox").remove();
             }
-        })
+        });
+        $("#app").on('mouseenter', `#removeConditions` + teaMate.name, function() {
+            $(".infoAbilBox").remove();
+            const that = {name:"Remove Conditions",type:"utility",desc:`Spend one momentum to remove all conditions off ${teaMate.nameDisplayed}`};
+            $("#gameScreen").append(infoAbilBox(that));
+        });
+        $("#app").on('mouseleave', `#removeConditions` + teaMate.name, function() {
+            teaMate.hoverButtonAura = 0;
+            $(".infoAbilBox").remove();
+        });
 
         $('#app').on('click', '#healAFriend' + teaMate.name, () => {
             healCursor = 1;
@@ -472,15 +562,25 @@ switcher = (event) => {
                         $('#actionButtons').empty().off().append(actionButtons(teaMate, Gamer));
                         healCursor = 0;
                         movementHistory = [];
+                        $(".infoAbilBox").remove();
                     }
                 }
             })
+        });
 
-        })
+        $("#app").on('mouseenter', `#healAFriend` + teaMate.name, function() {
+            teaMate.hoverButtonAura = teaMate.baseRadius+8*inch;
+            $(".infoAbilBox").remove();
+            const that = {name:"Heal Friend",type:"utility",desc:`Spend two momentum to heal 4 wounds on team mate within 8 inches`};
+            $("#gameScreen").append(infoAbilBox(that));
+        });
+        $("#app").on('mouseleave', `#healAFriend` + teaMate.name, function() {
+            teaMate.hoverButtonAura = 0;
+            $(".infoAbilBox").remove();
+        });
 
         $('#app').on('click', '#takeAbreather' + teaMate.name, () => {
             healCursor = 2
-
             for (let rc = 0; rc < Gamer.squaddies.length; rc++) {
                 let m2 = Gamer.squaddies[rc];
                 //cursor update
@@ -492,30 +592,62 @@ switcher = (event) => {
                         movementHistory = [];
                         $('#actionButtons').empty().off().append(actionButtons(teaMate, Gamer));
                         healCursor = 0;
+                        $(".infoAbilBox").remove();
                     }
                 })
             }
-        })
+        });
+        $("#app").on('mouseenter', `#takeAbreather` + teaMate.name, function() {
+            teaMate.hoverButtonAura = teaMate.baseRadius+8*inch;
+            $(".infoAbilBox").remove();
+            const that = {name:"Take A Breather",type:"utility",desc:`Spend two momentum to remove all conditions on team mate within 8 inches.`};
+            $("#gameScreen").append(infoAbilBox(that));
+        });
+        $("#app").on('mouseleave', `#takeAbreather` + teaMate.name, function() {
+            teaMate.hoverButtonAura = 0;
+            $(".infoAbilBox").remove();
+        });
 
 
         $("#app").on(`click`, '#cancel'+teaMate.name,() => {
             escapist(m1, otherGamer);
-        })
+            $(".infoAbilBox").remove();
+        });
+        $("#app").on('mouseenter', `#cancel` + teaMate.name, function() {
+            $(".infoAbilBox").remove();
+            const that = {name:"Cancel Action",type:"utility",desc:`Stops the intent of action like kick, run, charge or using an ability.`};
+            $("#gameScreen").append(infoAbilBox(that));
+        });
+        $("#app").on('mouseleave', `#cancel` + teaMate.name, function() {
+            teaMate.hoverButtonAura = 0;
+            $(".infoAbilBox").remove();
+        });
 
-        $('#app').on('click', `.glide` + m1.name, () => {
-            if (Gamer.momentum > 0 && !m1.isGliding) {
+        $('#app').on('click', `#glide` + m1.name, () => {
+            if (Gamer.momentum > 0 && !m1.isGliding && !hasPassive(m1,"Winters Blessing") && !hasPassive(m1,"Light Footed")) {
                 Gamer.momentum -= 1;
                 m1.isGliding = true;
                 if (m1.inRoughGround) {
                     m1.remainingRun += 2 * inch;
                     m1.remainingSprint += 2 * inch;
                 }
+                    $(".infoAbilBox").remove();
             }
-        })
+        });
+        $("#app").on('mouseenter', `#glide` + teaMate.name, function() {
+            $(".infoAbilBox").remove();
+            const that = {name:"Glide",type:"utility",desc:`Spend one momentum to remove rough ground movement penalty for ${teaMate.nameDisplayed} until next turn.`};
+            $("#gameScreen").append(infoAbilBox(that));
+        });
+        $("#app").on('mouseleave', `#glide` + teaMate.name, function() {
+            teaMate.hoverButtonAura = 0;
+            $(".infoAbilBox").remove();
+        });
 
         $('#app').on('click', `#ruler` + m1.name, () => {
             rulerDopplers = [];
             ruler = ruler ? false : true;
+            $(".infoAbilBox").remove();
             //let cX = mouX, cY = mouY
             $("#players").on('click', () => {
                 if (rulerDopplers.length > 0 && ruler) {
@@ -524,13 +656,22 @@ switcher = (event) => {
                     rulerDopplers.push([mouX, mouY, m1.posX, m1.posY]);
                 }
             })
-        })
+        });
+        $("#app").on('mouseenter', `#ruler` + teaMate.name, function() {
+            $(".infoAbilBox").remove();
+            const that = {name:"Ruler",type:"utility",desc:`Allows you to multiple check distances for active squaddie.`};
+            $("#gameScreen").append(infoAbilBox(that));
+        });
+        $("#app").on('mouseleave', `#ruler` + teaMate.name, function() {
+            teaMate.hoverButtonAura = 0;
+            $(".infoAbilBox").remove();
+        });
 
         teamz.forEach(el => {
             $('#app').on('click', `#snapBall` + el.name, () => {
                 if (!m1.isKnockedDown && m1.isActivating && distance(ball.x, ball.y, el.posX, el.posY) < ball.ballSize + el.baseRadius + 1 * inch && ball.isOnGround) {
                     if (!el.hasSnapped) {
-                        $('body').find('.snapBallButton').remove();
+                        $('body').find('#snapBallButton').remove();
                         teamz.forEach(el => {
                             if (el.hasBall) {
                                 el.hasBall = false
@@ -542,23 +683,32 @@ switcher = (event) => {
                         el.hasBall = true;
                         el.hasDropped = false;
                         el.hasSnapped = true;
-
-                        $('#actionButtons').empty().append(actionButtons(el, Gamer, color = Gamer.guild.color));
+                        $('#actionButtons').empty().off().append(actionButtons(teaMate, Gamer));
                     } else {
-                        message = `can't snap the ball now`;
-                        $('#app').find('.message').text(message);
+                        sendMessage(`can't snap the ball now`);
                     }
                 }
             })
         })
-        $('#app').on('click', '#undoMove' + teaMate.name, () => { movementActionReverse() })
+        $('#app').on('click', '#undoMove' + teaMate.name, () => { movementActionReverse(); 
+            $(".infoAbilBox").remove(); });
+
+        $("#app").on('mouseenter', `#undoMove` + teaMate.name, function() {
+            $(".infoAbilBox").remove();
+            const that = {name:"Undo Movement",type:"utility",desc:`Allows you reverse movement of a squaddie, helps fend off multitude of game glitches. Although this action is glitched itself.....`};
+            $("#gameScreen").append(infoAbilBox(that));
+        });
+        $("#app").on('mouseleave', `#undoMove` + teaMate.name, function() {
+            teaMate.hoverButtonAura = 0;
+            $(".infoAbilBox").remove();
+        });
 
         $('#app').on('click', '#dropBall' + teaMate.name, () => {
             ball.isInHand = true;
             ball.drawDropAura(teaMate.baseRadius);
             teaMate.moveAura = false;
-            $('#players').on('click', () => {
-                if (distance(teaMate.posX, teaMate.posY, mouX, mouY) <= (teaMate.baseRadius + 1 * inch + ball.ballSize) && ball.isInHand && teaMate.hasBall && !teaMate.hasSnapped && isEngaged(m1)<1) {
+            $('#players').on('click', () => {console.log(distance(teaMate.posX, teaMate.posY, mouX, mouY) <= (teaMate.baseRadius + 1 * inch + ball.ballSize) , ball.isInHand , teaMate.hasBall , !teaMate.hasSnapped , isEngaged(m1)<1)
+                if (distance(teaMate.posX, teaMate.posY, mouX, mouY) <= (teaMate.baseRadius + 1 * inch + ball.ballSize) && ball.isInHand && teaMate.hasBall /*&& !teaMate.hasSnapped*/ && isEngaged(m1)<1) {
                     movementHistory = [];
                     ball.isInHand = false;
                     teaMate.hasBall = false;
@@ -567,12 +717,27 @@ switcher = (event) => {
                     teaMate.hasSnapped = true;
                     ball.x = mouX;
                     ball.y = mouY;
-                    snapBallButtonCreator('end', teaMate.name)
+                    snapBallButtonCreator('end', teaMate.name);
+                    $(".infoAbilBox").remove();
                 }
             })
-        })
+        });
+        
+        $("#app").on('mouseenter', `#dropBall` + teaMate.name, function() {
+            teaMate.hoverButtonAura = teaMate.baseRadius+1*inch+smallBase;
+            $(".infoAbilBox").remove();
+            const that = {name:"Drop Ball",type:"utility",desc:`Allows unengaged squaddie in possession of the ball to drop it within 1 inch of its base`};
+            $("#gameScreen").append(infoAbilBox(that));
+        });
+        $("#app").on('mouseleave', `#dropBall` + teaMate.name, function() {
+            teaMate.hoverButtonAura = 0;
+            $(".infoAbilBox").remove();
+        });
 
         $('#app').on('click','#states'+teaMate.name,()=>{
+            commonAfterInstruction({ m1: teaMate });
+            idear = 0;
+            ruler = false;
             Gamer1 = cloneX(dummyState1); 
             Gamer2 = cloneX(dummyState2);
             Gamer.oponent = otherGamer;
@@ -589,12 +754,23 @@ switcher = (event) => {
             Gamer = Gamer2.active ? Gamer2 : Gamer1;
             otherGamer = Gamer2.active ? Gamer1 : Gamer2;
             switcher(false);
-        })
+            $(".infoAbilBox").remove();
+        });
+        $("#app").on('mouseenter', `#states` + teaMate.name, function() {
+            $(".infoAbilBox").remove();
+            const that = {name:"Undo whole activation",type:"utility",desc:`Allows you to completely undo current activation. Helps unscrew broken game state, altough its buggy itself.....`};
+            $("#gameScreen").append(infoAbilBox(that));
+        });
+        $("#app").on('mouseleave', `#states` + teaMate.name, function() {
+            teaMate.hoverButtonAura = 0;
+            $(".infoAbilBox").remove();
+        });
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////___BAAAL____GAAME___///////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //--kick--jQuery--button
         $('#app').on('click', '#kick' + teaMate.name, () => {
+            $(".infoAbilBox").remove();
             if (!teaMate.hasBall) {
                 message = `${teaMate.nameDisplayed} doesn't have a ball to be able to kick it.`;
                 $('#app').empty().append(appMaker(teaMate, Gamer));
@@ -610,6 +786,26 @@ switcher = (event) => {
                 $('#app').empty().append(appMaker(m1, Gamer));
             };
         })
+        $("#app").on('mouseenter', `#kick` + teaMate.name, function() {
+            teaMate.hoverButtonAura = teaMate.baseRadius+teaMate.kickDist*inch;
+            $(".infoAbilBox").remove();
+            const that = {name:"Kick the Ball",type:"utility",desc:`Allows ${teaMate.nameDisplayed} to kick the ball. After activatin this ability click a taret within kick aura to choose the balls destination and see if the kick is successful. You can target open field, opposing goal post or other team members.`};
+            $("#gameScreen").append(infoAbilBox(that));
+        });
+        $("#app").on('mouseleave', `#kick` + teaMate.name, function() {
+            teaMate.hoverButtonAura = 0;
+            $(".infoAbilBox").remove();
+        });
+        $("#app").on('mouseenter', `#kick` + teaMate.name + `not`, function() {
+            teaMate.hoverButtonAura = teaMate.baseRadius+teaMate.kickDist*inch;
+            $(".infoAbilBox").remove();
+            const that = {name:"Kick the Ball",type:"utility",desc:`Allows ${teaMate.nameDisplayed} to kick the ball. After activatin this ability click a taret within kick aura to choose the balls destination and see if the kick is successful. You can target open field, opposing goal post or other team members.`};
+            $("#gameScreen").append(infoAbilBox(that));
+        });
+        $("#app").on('mouseleave', `#kick` + teaMate.name + `not`, function() {
+            teaMate.hoverButtonAura = 0;
+            $(".infoAbilBox").remove();
+        });
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         $('#players').on('click', (e) => {//kick on the field
@@ -674,6 +870,7 @@ if (m1.isKicking && ball.beingKicked) {
                     Gamer.momentum += kickRoll.filter(el=>el>5).length > 1 ? 2 : 1;
                     $teamplays = [];
                     $('.playbookNodes').empty();
+                    $(".infoAbilBox").remove();
                     endSquaddieActivation(m1, Gamer1, Gamer2, Gamer, switcher, teamz, turnTransition);
                      });
                         $('#app').empty();
@@ -684,7 +881,7 @@ if (m1.isKicking && ball.beingKicked) {
                     $('#app').off();
                     $('#players').off();        
                     sendMessage(`now you can only dodge with ${m1.nameDisplayed} and/or end this activation.`)
-                    $('#app').on('click', `.passActivation` + teaMate.name, () => { //end activation
+                    $('#app').on('click', `#passActivation` + teaMate.name, () => { //end activation
                         if (Gamer.active && teaMate.isActivating) {
                             saveGameState();
                             endSquaddieActivation(teaMate, Gamer1, Gamer2, Gamer, switcher, teamz, turnTransition);
@@ -694,6 +891,26 @@ if (m1.isKicking && ball.beingKicked) {
                     otherGamer.gp.hasBall = true;
                     $teamplays = [];
                     $('.playbookNodes').empty();
+                    $(".infoAbilBox").remove();
+                    });
+                    $("#app").on('mouseenter', `#scorebankmomentum` + m1.name, function() {
+                        $(".infoAbilBox").remove();
+                        const that = {name:"Bank Momentum",type:"utility",desc:`Goal kick was succesful! Save just earned momentum and end ${m1.nameDisplayed} activation.`};
+                        $("#gameScreen").append(infoAbilBox(that));
+                    });
+                    $("#app").on('mouseleave', `#scorebankmomentum` + m1.name, function() {
+                        m1.hoverButtonAura = 0;
+                        $(".infoAbilBox").remove();
+                    });
+                    $("#app").on('mouseenter', `#scoreddodge` + teaMate.name, function() {
+                        teaMate.hoverButtonAura = teaMate.baseRadius+4*inch;
+                        $(".infoAbilBox").remove();
+                        const that = {name:"Run the Length",type:"utility",desc:`Goal kick was succesful! Now for the price of just earned one momentum ${teaMate.nameDisplayed} can dodge 4 inches and end activation.`};
+                        $("#gameScreen").append(infoAbilBox(that));
+                    });
+                    $("#app").on('mouseleave', `#scoreddodge` + teaMate.name, function() {
+                        teaMate.hoverButtonAura = 0;
+                        $(".infoAbilBox").remove();
                     });
                         //--resolve--goal--kick------------------------------------------
                         /*failed goal kick*/
@@ -739,11 +956,13 @@ if (m1.isKicking && ball.beingKicked) {
                         if (succesfulKickDice > 0) {
                                 Gamer.momentum += 1;
                             m2.hasBall = true;
-                            $teamplays.push(`<li class='teamPlays plajBookCell' id='recdo1${m1.name}'>kicker<br>dodges</li>
-                                <li class='teamPlays plajBookCell' id='recdo2${m1.name}'>bank<br>momentum</li>
-                                <li class='teamPlays plajBookCell' id='recdo3${m1.name}'>receiver<br>dodges</li>`);
+                            $teamplays.push(`<li class='teamPlays plajBookCell ' id='recdo1${m1.name}' style="${btilPicStictcher(0,60)};
+                            background-size:500%;width:4vw;height:4vw;">kicker<br>dodges</li>
+                                <li class='teamPlays plajBookCell' id='recdo2${m1.name}' style="${btilPicStictcher(25,0)};background-size:500%;width:4vw;height:4vw;">bank<br>momentum</li>
+                                <li class='teamPlays plajBookCell' id='recdo3${m1.name}' style="${btilPicStictcher(75,60)};background-size:500%;width:4vw;height:4vw;">receiver<br>dodges</li>`);
                             if (distance(m2.posX, m2.posY, otherGamer.gp.x, otherGamer.gp.y) <= (m2.kickDist * inch + m2.baseRadius + 2.5 * cm) && Gamer.momentum > 1) {
-                                $teamplays.push(`<li class='teamPlays plajBookCell' id='recdo4${m1.name}'>snap<br>shot</li>`)
+                                $teamplays.push(`<li class='teamPlays plajBookCell' id='recdo4${m1.name}' style="${btilPicStictcher(50,80)};background-size:500%;width:4vw;height:4vw;" 
+                                >snap<br>shot</li>`)
                             } //kicker dodges
                             $('#app').on('click', `#recdo1${m1.name}`, () => {
                                 m1.isDodging = true;
@@ -753,21 +972,58 @@ if (m1.isKicking && ball.beingKicked) {
                                 $('#app').empty();
                                 $('#app').append(appMaker(m1, Gamer));
                                 $(`.playbookNodes`).empty();
+                                m1.hoverButtonAura = 0;
                             }); //bank momentum
                             $('#app').on('click', `#recdo2${m1.name}`, () => {
                                 $teamplays = [];
                                 $('#app').empty();
                                 $('#app').append(appMaker(m1, Gamer))
                                 $('#app').find(`.playbookNodes`).empty();
+                                $(".infoAbilBox").remove();
+                                m1.hoverButtonAura = 0;
+                                $(".infoAbilBox").remove();
                             }); //receiver dodges
+
+        $("#app").on('mouseenter', `#recdo1` + m1.name, function() {
+            m1.hoverButtonAura = m1.baseRadius+4*inch;
+            $(".infoAbilBox").remove();
+            const that = {name:"Dodge the Kicker",type:"utility",desc:`Pass was succesful! Now for the price of just earned one momentum ${m1.nameDisplayed} can dodge 4 inches.`};
+            $("#gameScreen").append(infoAbilBox(that));
+        });
+        $("#app").on('mouseleave', `#recdo1` + m1.name, function() {
+            m1.hoverButtonAura = 0;
+            $(".infoAbilBox").remove();
+        });
+        $("#app").on('mouseenter', `#recdo2` + m1.name, function() {
+            m1.hoverButtonAura = m1.baseRadius+4*inch;
+            $(".infoAbilBox").remove();
+            const that = {name:"Bank Momentum",type:"utility",desc:`Pass was succesful! Save the momentum.`};
+            $("#gameScreen").append(infoAbilBox(that));
+        });
+        $("#app").on('mouseleave', `#recdo2` + m1.name, function() {
+            m1.hoverButtonAura = 0;
+            $(".infoAbilBox").remove();
+        });
                             $('#app').on('click', `#recdo3${m1.name}`, () => {
                                 m2.isDodging = true;
                                 m2.dodgeSquaddie(4);
                                 Gamer.momentum -= 1;
+                                m2.hoverButtonAura = 0;
                                 $teamplays = [];
                                 $('#app').append(appMaker(m1, Gamer))
                                 $(`.playbookNodes`).empty()
+                                $(".infoAbilBox").remove();
                             }); 
+                            $("#app").on('mouseenter', `#recdo3` + m1.name, function() {
+                                m2.hoverButtonAura = m2.baseRadius+4*inch;
+                                $(".infoAbilBox").remove();
+                                const that = {name:"Dodge the Receiver",type:"utility",desc:`Pass was succesful! Now for the price of just earned one momentum ${m2.nameDisplayed} can dodge 4 inches.`};
+                                $("#gameScreen").append(infoAbilBox(that));
+                            });
+                            $("#app").on('mouseleave', `#recdo3` + m1.name, function() {
+                                m2.hoverButtonAura = 0;
+                                $(".infoAbilBox").remove();
+                            });
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////  
 //<<--------===                 SNAP SHOT
                             $('#app').on('click', `#recdo4${m1.name}`, () => {
@@ -792,8 +1048,10 @@ if (m1.isKicking && ball.beingKicked) {
                                     message = `${m2.nameDisplayed} succesfully scored goal, so either dodge or bank a momentum.`;
                                     $teamplays = [];
 //<<---== OPTIONS ASSOCIATED WITH SUCCESFOUL SNPA SHOT
-                                    $teamplays.push(`<li class='teamPlays plajBookCell' id='scoreddodge${m2.name}'>dodge</li>
-                                            <li class='teamPlays plajBookCell' id='scorebankmomentum${m1.name}'>bank momentum</li>`);
+                                    $teamplays.push(`<li class='teamPlays plajBookCell' id='scoreddodge${m2.name}'  style="${btilPicStictcher(0,60)};
+                                    background-size:480%;width:4vw;height:4vw;">dodge</li>
+                                            <li class='teamPlays plajBookCell' id='scorebankmomentum${m1.name}'  style="${btilPicStictcher(25,0)};
+                                            background-size:480%;width:4vw;height:4vw;">bank momentum</li>`);
 //<<--==    BANK momentum
                                     $('#app').on('click.bankmomentum', `#scorebankmomentum${m1.name}`, () => {
                                         $teamplays = [];
@@ -805,10 +1063,11 @@ if (m1.isKicking && ball.beingKicked) {
 //<<--== dodge after succesfoul snpa shot
                                     $('#app').on('click', `#scoreddodge${m2.name}`, () => {
                                         m2.isDodging = true;
+                                        m2.hoverButtonAura = 0;
                                         $('#app').off();
                                         $('#players').off();        
                                         sendMessage(`now you can only dodge with ${m1.nameDisplayed} and/or end this activation.`)
-                                        $('#app').on('click', `.passActivation` + teaMate.name, () => { //end activation
+                                        $('#app').on('click', `#passActivation` + teaMate.name, () => { //end activation
                                             if (Gamer.active && teaMate.isActivating) {
                                                 saveGameState();
                                                 endSquaddieActivation(teaMate, Gamer1, Gamer2, Gamer, switcher, teamz, turnTransition);
@@ -817,9 +1076,29 @@ if (m1.isKicking && ball.beingKicked) {
                                         m2.dodgeSquaddie(4);
                                         Gamer.momentum-=1;
                                         $teamplays = [];
+                                        $(".infoAbilBox").remove();
                                     });
                                     $('#app').empty();
                                     $('#app').append(appMaker(m1, Gamer));
+                                    $("#app").on('mouseenter', `#scorebankmomentum` + m1.name, function() {
+                                        $(".infoAbilBox").remove();
+                                        const that = {name:"Bank Momentum",type:"utility",desc:`Goal kick was succesful! Save just earned momentum and end ${m1.nameDisplayed} activation.`};
+                                        $("#gameScreen").append(infoAbilBox(that));
+                                    });
+                                    $("#app").on('mouseleave', `#scorebankmomentum` + m1.name, function() {
+                                        m1.hoverButtonAura = 0;
+                                        $(".infoAbilBox").remove();
+                                    });
+                                    $("#app").on('mouseenter', `#scoreddodge` + m2.name, function() {
+                                        m2.hoverButtonAura = m2.baseRadius+4*inch;
+                                        $(".infoAbilBox").remove();
+                                        const that = {name:"Run the Length!",type:"utility",desc:`Goal kick was succesful! Now for the price of just earned one momentum ${m2.nameDisplayed} can dodge 4 inches and end activation of ${m1.nameDisplayed}`};
+                                        $("#gameScreen").append(infoAbilBox(that));
+                                    });
+                                    $("#app").on('mouseleave', `#scoreddodge` + m2.name, function() {
+                                        m2.hoverButtonAura = 0;
+                                        $(".infoAbilBox").remove();
+                                    });
                                     //--resolve--goal--kick------------------------------------------
                                     //--end of kick against goal post
                                     /*failed snap kick*/
@@ -839,9 +1118,20 @@ if (m1.isKicking && ball.beingKicked) {
                                     endSquaddieActivation(m1, Gamer1, Gamer2, Gamer, switcher, teamz, turnTransition);
                                     /*failed snap kick*/
 }
+$(".infoAbilBox").remove();
                             }) //end of snapshot options and instructions
                             movementHistory = [];
-                            message = `${m1.nameDisplayed} succesfully passed to ${m2.nameDisplayed}, now you can choose to either dodge or bank a momentum.`;
+
+                            $("#app").on('mouseenter', `#recdo4` + m1.name, function() {
+                                $(".infoAbilBox").remove();
+                                const that = {name:"Snap Shot!",type:"utility",desc:`${m2.nameDisplayed} could attempt shooting goal for the price of two momentum, this shot needs to be sucessful on at least two dies.`};
+                                $("#gameScreen").append(infoAbilBox(that));
+                            });
+                            $("#app").on('mouseleave', `#recdo4` + m1.name, function() {
+                                m2.hoverButtonAura = 0;
+                                $(".infoAbilBox").remove();
+                            });
+                            sendMessage(`${m1.nameDisplayed} succesfully passed to ${m2.nameDisplayed}, now you can choose to either dodge or bank a momentum.`);
                             $('#app').empty();
                             $('#app').append(appMaker(m1, Gamer));
                             //--pass is unsuccesfull--------------------------------------------------------------------------
@@ -1004,7 +1294,7 @@ function deploymentPhase(event) {
                     $('#app').empty().off();
                     $('#app').append(appMaker(m1, Gamer));
                     adminToolz(event, m1, Gamer, 'deployment');
-                    $('#app').on('click', `.leaflet` + m1.name, () => {
+                    $('#app').on('click', `#leaflet` + m1.name, () => {
                         showLeaflet = showLeaflet ? false : true
                     });
                     $("#app").on("click", "#generateTerrains", () => {
@@ -1014,28 +1304,48 @@ function deploymentPhase(event) {
                         terrainsGenerator();
                     });
 
-                    $('#app').on('click', `.passActivation` + m1.name, () => { //end activation
+                    $('#app').on('click', `#passActivation` + m1.name, () => { //end activation
                         if (Gamer.active && teamz.filter(m1 => m1.hasBall).length > 0) {
                             counter++;
                             deploymentPhase(event);
+                            $(".infoAbilBox").remove();
                         } else {
-                            message = 'you have to allocate ball to the initial kicker first';
-
-                            $('#app').find('.message').text(message);
+                            sendMessage('you have to allocate ball to the initial kicker first');
                         }
-                    })
+                    });
 
-                    $('#app').on('click', `.giveBallTo` + m1.name, () => {
+                    $("#app").on('mouseenter', `#passActivation` + m1.name, function() {
+                        $(".infoAbilBox").remove();
+                        const that = {name:"Finish Allocation",type:"utility",desc:`Finish deployment phase, and let other team to activate.`};
+                        $("#gameScreen").append(infoAbilBox(that));
+                    });
+                    $("#app").on('mouseleave', `#passActivation` + m1.name, function() {
+                        $(".infoAbilBox").remove();
+                    });
+
+                    $('#app').on('click', `#giveBallTo` + m1.name, () => {
                         teamz.forEach(el => {
                             if (el.hasBall) {
                                 el.hasBall = false
                             }
-                        })
+                        });
+                        $(".infoAbilBox").remove();
                         ball.x = undefined;
                         ball.y = undefined;
                         ball.isOnGround = false;
                         m1.hasBall = true;
                     })
+                    $("#app").on('mouseenter', `#giveBallTo` + m1.name, function() {
+                        m1.hoverButtonAura = m1.remainingSprint+m1.kickDist*inch;
+                        m1.drawAbilityAura = m1.remainingSprint+m1.kickDist*inch+6*inch;
+                        $(".infoAbilBox").remove();
+                        const that = {name:"Assign Kicker",type:"utility",desc:`Give ball to initial kicker to initiate the game, this movement and kick are for free.`};
+                        $("#gameScreen").append(infoAbilBox(that));
+                    });
+                    $("#app").on('mouseleave', `#giveBallTo` + m1.name, function() {
+                        m1.hoverButtonAura = 0;m1.drawAbilityAura = 0;
+                        $(".infoAbilBox").remove();
+                    });
                 }
 
             }
@@ -1056,10 +1366,10 @@ function deploymentPhase(event) {
                     $('#appDisplay').slideDown();
                     $('#app').empty().off();
                     $('#app').append(appMaker(m1, Gamer));
-                    $('#app').on('click', `.leaflet` + m1.name, () => {
+                    $('#app').on('click', `#leaflet` + m1.name, () => {
                         showLeaflet = showLeaflet ? false : true
                     });
-                    $('#app').on('click', `.passActivation` + m1.name, () => { //end activation
+                    $('#app').on('click', `#passActivation` + m1.name, () => { //end activation
 
                         if (Gamer.active && m1.hasBall) {
                             sendMessage('gotta kick off first');
@@ -1068,6 +1378,7 @@ function deploymentPhase(event) {
                             counter++;
                             deploymentPhase(event);
                         }
+                        $(".infoAbilBox").remove();
                     })
                     $("body").on(`keydown`, (e) => {
                         defaultPreventer(e);
@@ -1100,10 +1411,33 @@ function deploymentPhase(event) {
                             ball.beingKicked = true;
                             message = `the ball has to completely pass your half of the pitch, otherwise opponent will be allowed to assign ball to a squaddie of their choosing.`;
                             $('#app').empty().append(appMaker(m1, Gamer));
+                            $(".infoAbilBox").remove();
+                            m1.hoverButtonAura = 0;
                         };
                     });
+                    $("#app").on('mouseenter', `#kick` + m1.name, function() {
+                        $(".infoAbilBox").remove();
+                        m1.hoverButtonAura = m1.baseRadius + m1.kickDist * inch;
+                        const that = {name:"Kick Off!",type:"utility",desc:`Perform initial kick off, remember that ball has to be completeley over the middle line.`};
+                        $("#gameScreen").append(infoAbilBox(that));
+                    });
+                    $("#app").on('mouseleave', `#kick` + m1.name, function() {
+                        m1.hoverButtonAura = 0;
+                        $(".infoAbilBox").remove();
+                    });
+                    $('#app').on('click', '#undoMove' + m1.name, () => { movementActionReverse();$(".infoAbilBox").remove(); });
 
-                    $('#app').on('click', '#undoMove' + m1.name, () => { movementActionReverse() })
+
+                    $('#app').on('click', '#undoMove' + m1.name, () => { movementActionReverse();$(".infoAbilBox").remove(); });
+                    $("#app").on('mouseenter', `#undoMove` + m1.name, function() {
+                        $(".infoAbilBox").remove();
+                        const that = {name:"Undo Movement",type:"utility",desc:`Allows you reverse movement of a squaddie, helps fend off multitude of game glitches. Although this action is glitched itself.....`};
+                        $("#gameScreen").append(infoAbilBox(that));
+                    });
+                    $("#app").on('mouseleave', `#undoMove` + m1.name, function() {
+                        m1.hoverButtonAura = 0;
+                        $(".infoAbilBox").remove();
+                    });
 
                     $('#players').on('click', (e) => {
                         defaultPreventer(e);
@@ -1131,6 +1465,7 @@ function deploymentPhase(event) {
                                 $('#app').empty().off();
                                 $('#app').on('click', '#kickReRoll' + m1.name, () => {
                                     $('body').find('.snapBallButton').remove();
+                                    $(".infoAbilBox").remove();
                                     diceRolledForDisplay = []
                                     teamz.forEach(el => { el.hasBall = false; el.canSnap = false });
                                     ball.isOnGround = false;
@@ -1142,12 +1477,32 @@ function deploymentPhase(event) {
                                     counter++;
                                     m1.isActivating = false;
                                     deploymentPhase(event);
-                                })
-                                $('#app').on('click', `.passActivation` + m1.name, () => { //end activation
+                                });
+
+                    $("#app").on('mouseenter', `#kickReRoll` + m1.name, function() {
+                        $(".infoAbilBox").remove();
+                        const that = {name:"Re-roll ball scatter",type:"utility",desc:`The kick was successful so it is possible to re-roll unfavourable ball position. Second result stays.`};
+                        $("#gameScreen").append(infoAbilBox(that));
+                    });
+                    $("#app").on('mouseleave', `#kickReRoll` + m1.name, function() {
+                        m1.hoverButtonAura = 0;
+                        $(".infoAbilBox").remove();
+                    });
+                                $('#app').on('click', `#passActivation` + m1.name, () => { //end activation
                                     $('#app').empty().off();
                                     counter++;
                                     deploymentPhase(event);
-                                })
+                                    $(".infoAbilBox").remove();
+                                });
+                                $("#app").on('mouseenter', `#passActivation` + m1.name, function() {
+                                    $(".infoAbilBox").remove();
+                                    const that = {name:"Pass activation",type:"utility",desc:`The other team will now assign its influence.`};
+                                    $("#gameScreen").append(infoAbilBox(that));
+                                });
+                                $("#app").on('mouseleave', `#passActivation` + m1.name, function() {
+                                    m1.hoverButtonAura = 0;
+                                    $(".infoAbilBox").remove();
+                                });
                                 $('#app').append(appMaker(m1, Gamer));
                             } else {
                                 m1.isActivating = false;
@@ -1186,37 +1541,65 @@ function deploymentPhase(event) {
                     actionButtons(m1, Gamer)
                     $('#app').append(appMaker(m1, Gamer));
                     /////////////////////////////////////////////////////////////
-                    $('#app').on('click', `.addInf` + m1.name, () => { //add influence
+                    $('#app').on('click', `#addInf` + m1.name, () => { //add influence
                         if (Gamer.active && Gamer.influence > 0 && m1.infMin < m1.infMax) {
                             Gamer.influence -= 1;
                             m1.infMin += 1;
+                            $(".infoAbilBox").remove();
                             $('#actionButtons').empty().off().append(actionButtons(m1, Gamer));
                         }
                     })
                     //////////////////////////////////////////////////////////////////////////////
-                    $('#app').on('click', `.minInf` + m1.name, () => { //remove influence
+                    $('#app').on('click', `#minInf` + m1.name, () => { //remove influence
                         if (Gamer.active && m1.infMin > 0) {
                             Gamer.influence += 1;
                             m1.infMin -= 1;
+                            $(".infoAbilBox").remove();
                             $('#actionButtons').empty().off().append(actionButtons(m1, Gamer));
                         }
-                    })
+                    });
+                    $("#gameScreen").on('mouseenter', `#addInf` + m1.name, function() {
+                        $(".infoAbilBox").remove();
+                        const that = {name:"Add Influence",type:"utility",desc:`Add influence to ${m1.nameDisplayed}, influence is used to fuel actions like attacking, chargin, kickin the ball or usin character plays`};
+                        $("#gameScreen").append(infoAbilBox(that));
+                    });
+                    $("#gameScreen").on('mouseleave', `#addInf` + m1.name, function() {
+                    $(".infoAbilBox").remove();
+                    });
+                                        $("#gameScreen").on('mouseenter', `#minInf` + m1.name, function() {
+                                            $(".infoAbilBox").remove();
+                                            const that = {name:"Remove Influence",type:"utility",desc:`remove Influence from ${m1.nameDisplayed}, influence is used to fuel actions like attacking, chargin, kickin the ball or usin character plays`};
+                                            $("#gameScreen").append(infoAbilBox(that));
+                                        });
+                                        $("#gameScreen").on('mouseleave', `#minInf` + m1.name, function() {
+                                        $(".infoAbilBox").remove();
+                                        });
                     ///////////////////////////////////////////////////////////////////////////////
-                    $('#app').on('click', `.leaflet` + m1.name, () => {
+                    $('#app').on('click', `#leaflet` + m1.name, () => {
                         showLeaflet = showLeaflet ? false : true
                     });
 
-                    $('#app').on('click', `.passActivation` + m1.name, () => { //end activation
+                    $('#app').on('click', `#passActivation` + m1.name, () => { //end activation
                         if (Gamer.active && Gamer.influence === 0) {
                             counter++;
+                        $(".infoAbilBox").remove();
                             deploymentPhase(event);
                         } else {
                             message = 'allocate all influence first';
                             $('#app').empty().off();
                             $('#app').append(appMaker(m1, Gamer));
                         }
-                    })
-                    $('#app').on('click', `.giveBallTo` + m1.name, () => {
+                    });
+                    $("#app").on('mouseenter', `#passActivation` + m1.name, function() {
+                        $(".infoAbilBox").remove();
+                        const that = {name:"Pass activation",type:"utility",desc:`The other team will now assign its influence.`};
+                        $("#gameScreen").append(infoAbilBox(that));
+                    });
+                    $("#app").on('mouseleave', `#passActivation` + m1.name, function() {
+                        m1.hoverButtonAura = 0;
+                        $(".infoAbilBox").remove();
+                    });
+                    $('#app').on('click', `#giveBallTo` + m1.name, () => {
                         teamz.forEach(el => {
                             if (el.hasBall) {
                                 el.hasBall = false
@@ -1226,12 +1609,37 @@ function deploymentPhase(event) {
                         ball.y = undefined;
                         ball.isOnGround = false;
                         m1.hasBall = true;
-                    })
+                        $(".infoAbilBox").remove();
+                    });
+                    $("#app").on('mouseenter', `#giveBallTo` + m1.name, function() {
+                        $(".infoAbilBox").remove();
+                        const that = {name:"Give Ball",type:"utility",desc:`Kick Off wasn't succesful, you can assing ball to any of your squaddies.`};
+                        $("#gameScreen").append(infoAbilBox(that));
+                    });
+                    $("#app").on('mouseleave', `#giveBallTo` + m1.name, function() {
+                        m1.hoverButtonAura = 0;
+                        $(".infoAbilBox").remove();
+                    });
+
+                    // $("#gameScreen").on('mouseenter', `#minInf` + m1.name, function() {
+                    //     const that = {name:"Remove Influence",type:"utility",desc:`remove Influence from ${m1.nameDisplayed}, influence is used to fuel actions like attacking, chargin, kickin the ball or usin character plays`};
+                    //     $("#gameScreen").append(infoAbilBox($(that).data()));
+                    // });
+                    // $("#gameScreen").on('mouseleave', `#minInf` + m1.name, function() {
+                    // $(".infoAbilBox").remove();
+                    // });
 
 
                 }
             }
         })
+// $("#gameScreen").on('mouseenter', `#addInf` + m1.name, function() {
+//     const that = {name:"Add Influence",type:"utility",desc:`Add influence to ${m1.nameDisplayed}, influence is used to fuel actions like attacking, chargin, kickin the ball or usin character plays`};
+//     $("#gameScreen").append(infoAbilBox($(that).data()));
+// });
+// $("#gameScreen").on('mouseleave', `#addInf` + m1.name, function() {
+// $(".infoAbilBox").remove();
+// });
         couriere();
     } else if (counter > 4) {
         switcher(event)
