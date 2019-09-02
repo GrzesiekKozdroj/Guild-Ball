@@ -1,6 +1,5 @@
 "use strict";
 //used to smoothily identify and jump between unique abilities without triggering others, dirty workout
-//["Winter's Blessing", "Lunar Eclipse"], [], ["Skewered","Last Light"]
 
 
 function abilityButtons(teaMate, Gamer, color) {
@@ -9,26 +8,33 @@ function abilityButtons(teaMate, Gamer, color) {
 
 
     if (teaMate.abilities.activeOwned) {
-
+        // "Natures Chill", "Winters Night"
 
         let bigGameTraps = teaMate.abilities.activeOwned.some((el, i) => el.includes("Big Game Traps") && el[1] < 1) &&
             teaMate.isActivating ? makeActiveButton("bigGameTraps"+teaMate.name,"Big Game Traps",skillzLizt.bigGameTraps) : '';
+        let blessingOfTheMoonGoddess = hasActive(teaMate,"Blessing of the Moon Goddess") ? 
+            makeActiveButton("blessingOfTheMoonGoddess"+teaMate.name,"Blessing of the Moon Goddess",skillzLizt.blessingOfTheMoonGoddess):'';
         let chainBolas = hasActiveUnused(teaMate,"Chain Bolas") ? makeActiveButton("chainBolas"+teaMate.name,"Chain Bolas",skillzLizt.chainBolas):'';
+        let coldSnap = hasActiveUnused(teaMate,"Cold Snap") ? makeActiveButton("coldSnap"+teaMate.name,"Cold Snap",skillzLizt.coldSnap):'';
         let flurry = teaMate.abilities.activeOwned.some(el => el.includes("Flurry") && el[1] < 1) ? makeActiveButton("flurry"+teaMate.name,"Flurry",   
             skillzLizt.flurry) : '';
         let gutAndString = teaMate.abilities.activeOwned.some(el => el.includes("Gut and String") && el[1] === 0) ?
             makeActiveButton("gutAndString"+teaMate.name,"Gut & String",skillzLizt.gutAndString)  : '';
         let lastLight = hasActiveUnused(teaMate,"Last Light") ? makeActiveButton("lastLight"+teaMate.name,"Last Light",skillzLizt.lastLight):'';
         let linked = teaMate.abilities.activeOwned[0]&&teaMate.abilities.activeOwned[0][0].linked ?
-                     makeActiveButton("linked"+teaMate.name,`Linked[${teaMate.abilities.activeOwned[0][0].linked}]`,skillzLizt.linked):'';
+                     makeActiveButton("linked"+teaMate.name,`Linked [${teaMate.abilities.activeOwned[0][0].linked}]`,skillzLizt.linked):'';
+        let naturesChill = hasActiveUnused(teaMate,"Natures Chill")?
+            makeActiveButton("naturesChill"+teaMate.name,`Nature's Chill`, skillzLizt.naturesChill):'';
         let nimble = hasActiveUnused(teaMate,"Nimble")?makeActiveButton("nimble"+teaMate.name,"Nimble",skillzLizt.nimble):'';
         let powerOfVooDoo = hasActive(teaMate,"The Power of Voodoo")?
             makeActiveButton("powerOfVooDoo"+teaMate.name,"The Power of Voodoo",   skillzLizt.thePowerOfVoodoo):'';
         let skewered = hasActiveUnused(teaMate,"Skewered")?makeActiveButton("skewered"+teaMate.name,"Skewered",skillzLizt.skewered):'';
         let snapFire = teaMate.abilities.activeOwned.some(el => el.includes("Snap Fire")) ? 
             makeActiveButton("snapFire"+teaMate.name,"Snap Fire",skillzLizt.snapFire) : '';
-
-        abilities.push(bigGameTraps, chainBolas, flurry, gutAndString, lastLight, linked, nimble, powerOfVooDoo, skewered, snapFire );
+        let snowBall = hasActiveUnused(teaMate,"Snowball")?makeActiveButton("snowBall"+teaMate.name,"Snowball", skillzLizt.snowball):'';
+        let wintersNight = hasActive(teaMate,"Winters Night")?
+            makeActiveButton("wintersNight"+teaMate.name,`Winter's Night`,skillzLizt.wintersNight):'';
+        abilities.push(blessingOfTheMoonGoddess,bigGameTraps, chainBolas, coldSnap, flurry, gutAndString, lastLight, linked, naturesChill, nimble, powerOfVooDoo, skewered, snapFire, snowBall, wintersNight );
     }
 
     if (teaMate.abilities.passiveOwned) {
@@ -117,7 +123,7 @@ function abilitiesEvents(m1, Gamer, otherGamer) {
     ///////////////////////////_____HUNTERS_____///////////////////////////////////////////////////
     $('#app').on('click', '#bigGameTraps' + m1.name, () => {
         commonPreInstruction({ m1: m1 });
-        if (Gamer.tokens.length < 5 && counter === 5 && !m1.wasCharging && !m1.isDodging && $(".pW0").find(".plajBookCell").length === 0) {
+        if (Gamer.tokens.filter(el=>el.type==="trap").length < 5 && counter === 5 && !m1.wasCharging && !m1.isDodging && $(".pW0").find(".plajBookCell").length === 0) {
             const snaret = new Token(mouX, mouY, smallBase, "trap", Gamer.guild.color);
             snaret.isInHand = true;
             Gamer.tokens.push(snaret);
@@ -138,6 +144,7 @@ function abilitiesEvents(m1, Gamer, otherGamer) {
             })
         }
     });
+
     $('#app').on("click","#nimble"+m1.name,()=>{
         commonPreInstruction({ m1: m1 });
         m1.drawAbilityAura = 1;
@@ -170,6 +177,28 @@ function abilitiesEvents(m1, Gamer, otherGamer) {
                         makeActiveOpt(m1,"Chain Bolas");
                         commonAfterInstruction({ m1: m1 });
                     };
+            }
+        })
+    })
+    $("#app").on("click","#coldSnap"+m1.name,()=>{
+        commonPreInstruction({m1:m1});
+        idear = "coldSnap";
+        m1.drawAbilityAura = m1.baseRadius + 9 * inch;
+        mouseDrawTemplate = true;
+        $("#players").on("click.usingAbility",()=>{
+            if(idear==="coldSnap" && hasActiveUnused(m1,"Cold Snap") && distance(m1.posX,m1.posY,mouX,mouY)<=m1.baseRadius+7.5*inch &&
+            payPrice(2,m1) ){
+                teamz.forEach(el=>{
+                    if(distance(mouX,mouY,el.posX,el.posY)<=1.5*inch+el.baseRadius){
+                        if(abilitiesRoll(m1,el,2)>0){
+                            el.hpMin-=2;
+                            snare(el);
+                        }
+                    }
+                });
+                makeActiveOpt(m1,"Cold Snap");
+                commonAfterInstruction({ m1: m1 });
+                mouseDrawTemplate = false;
             }
         })
     })
@@ -248,6 +277,29 @@ function abilitiesEvents(m1, Gamer, otherGamer) {
     //////////////////////////////////////_____M2______///////////////////////////////////////////////////////
     for(let gh = 0; gh<Gamer.squaddies.length;gh++){
         let m3 = Gamer.squaddies[gh];
+
+
+    $('#app').on('click',"#blessingOfTheMoonGoddess"+m1.name,()=>{
+        idear = "blessingOfTheMoonGoddess";
+        commonPreInstruction({m1:m1});
+        m1.drawAbilityAura = m1.baseRadius + 4 * inch;
+        m1.pressedAbutton = true;
+        
+
+        $("#players").on("click.usingAbility",()=>{
+            if(idear==="blessingOfTheMoonGoddess" && 
+                distance(mouX, mouY, m3.posX, m3.posY) <=m3.baseRadius &&
+                distance(m1.posX, m1.posY, m3.posX, m3.posY) <= 4 * inch + m1.baseRadius + m3.baseRadius &&
+                !hasPassiveGiven(m3,"Blessing of the Moon Goddess") && payPrice(1,m1)  ){
+                    m3.abilities.passiveGiven.push("Blessing of the Moon Goddess");console.log(!hasPassiveGiven(m3,"Blessing of the Moon Goddess"))
+                    commonAfterInstruction({ m1: m1 });
+                }else if(hasPassiveGiven(m3,"Blessing of the Moon Goddess")&& 
+                distance(mouX, mouY, m3.posX, m3.posY) <=m3.baseRadius &&
+                distance(m1.posX, m1.posY, m3.posX, m3.posY) <= 4 * inch + m1.baseRadius + m3.baseRadius){
+                    commonAfterInstruction({ m1: m1 });
+                }
+        });
+    });
 
         $("#app").on("click","#lastLight"+m1.name,()=>{
             if(hasActiveUnused(m1,"Last Light")){

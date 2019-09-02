@@ -23,7 +23,7 @@ function anime(m1, teams, otherGamer, options) {
         endX = m1.posX; endY = m1.posY;
         endSquaddieActivation(m1, Gamer1, Gamer2, Gamer, switcher, teamz);
     } else if (Boolean(!m1.isDodging && !m1.isPushed) && m1.isKnockedDown) { endX = m1.posX; endY = m1.posY } else if (options.mode === 'charging') { m1.isCharging = true }
-    //below builds an array of engaging players
+//below builds an array of engaging players
 
     let startingEngagedBy = [];
     for (let sE = 0; sE < otherGamer.squaddies.length; sE++) {
@@ -37,7 +37,6 @@ function anime(m1, teams, otherGamer, options) {
 
 
     let anim = (time) => {
-        //if(!isNaN(m1.posX))
         if (!startTime) {
             startTime = time;
         }
@@ -50,8 +49,7 @@ function anime(m1, teams, otherGamer, options) {
             .some(el => distance(m1.posX, m1.posY, el.posX, el.posY) <= (m1.baseRadius + el.baseRadius) && el.name !== m1.name);
 //<<-------=========== conditions to stop movement combined into one list of instructions.
         if (deltaTime >= 1 || checkCollision || checkgoalcollision || m1.shouldntBeHere > 1 || (!m1.isPushed && !m1.isDodging && (distance(m1.posX,
-            m1.posY, endX, endY) >= m1.remainingRun) && m1.shouldntBeHere === 1) || m1.remainingRun < 5 || (m1.isCharging && m1.shouldntBeHere === 1))
-        {
+            m1.posY, endX, endY) >= m1.remainingRun) && m1.shouldntBeHere === 1) || m1.remainingRun < 5 || (m1.isCharging && m1.shouldntBeHere === 1)) {
 
 
             if (!checkCollision && !checkgoalcollision && deltaTime <= 1) {
@@ -62,19 +60,19 @@ function anime(m1, teams, otherGamer, options) {
                 collisionBouncer(m1, teamz);
             }
 
-            if (m1.isMoving && (m1.isActivating || options.mode ==="abilities") || m1.isMoving && counter > 5) {
+            if (m1.isMoving && (m1.isActivating || options.mode === "abilities") || m1.isMoving && counter > 5) {
                 if ((m1.remainingSprint < 26 && m1.infMin === 0) || m1.remainingRun < 26) {
                     m1.moveAura = false;
-                    otherGamer.squaddies.forEach(m2=>{ if(hasPassiveUnused(m2,"Unpredictable Movement")){unpredictableMovement(m2)} });
+                    otherGamer.squaddies.forEach(m2 => { if (hasPassiveUnused(m2, "Unpredictable Movement")) { unpredictableMovement(m2) } });
                     //if(m1.runPaid && teaMate.remainingRun === teaMate.remainingSprint)m1.infMin++
                 }
             } else if (m1.isPushed) {
                 if (m1.remainingPush < 0.22 * inch) {
                     m1.isPushed = false;
                     if ($('#app').find('.activeOptions').length < 1 && wrath.willCounter && !teamz.some(el => el.isDodging)) {
-                    distance(m1.posX, m1.posY, receiver.posX, receiver.posY) <= (wrath.meleeRadius + receiver.baseRadius) ?
-                        waaar(otherGamer, Gamer, wrath, receiver, 'counterattack') : ''; wrath.willCounter = false;
-                    } else{
+                        distance(m1.posX, m1.posY, receiver.posX, receiver.posY) <= (wrath.meleeRadius + receiver.baseRadius) ?
+                            waaar(otherGamer, Gamer, wrath, receiver, 'counterattack') : ''; wrath.willCounter = false;
+                    } else {
                         wrath.willCounter = false;
                     }
                 }
@@ -87,19 +85,19 @@ function anime(m1, teams, otherGamer, options) {
                         distance(m1.posX, m1.posY, receiver.posX, receiver.posY) <= (wrath.meleeRadius + receiver.baseRadius) ?
                             waaar(otherGamer, Gamer, wrath, receiver, 'counterattack') : '';
                         wrath.willCounter = false;
-                    } else if(wrath){
+                    } else if (wrath) {
                         wrath.willCounter = false;
                     }
                 }
-                if(!m1.isActivating) snapBallButtonCreator('end');
+                if (!m1.isActivating) snapBallButtonCreator('end');
             }
             if ((ball.isOnGround && distance(m1.posX, m1.posY, ball.x, ball.y) <= (m1.baseRadius + ball.ballSize)) ||
                 m1.shouldntBeHere > 0 ||
-                !Gamer1.tokens.every(el => distance(m1.posX, m1.posY, el.posX, el.posY) > m1.baseRadius + el.baseRadius) ||
-                !Gamer2.tokens.every(el => distance(m1.posX, m1.posY, el.posX, el.posY) > m1.baseRadius + el.baseRadius)) {//<<--------== can't stand on a ball, wall, or obstacle
+                !Gamer1.tokens.every(el =>distance(m1.posX, m1.posY, el.posX, el.posY) > m1.baseRadius + el.baseRadius) ||
+                !Gamer2.tokens.every(el =>distance(m1.posX, m1.posY, el.posX, el.posY) > m1.baseRadius + el.baseRadius)) {//<<--------== can't stand on a ball, wall, or obstacle
                 m1.posX = notOnTokenX;
                 m1.posY = notOnTokenY;
-                continueMovement = false;console.log("kickback investigation point");
+                continueMovement = false; console.log("kickback investigation point undefined");
             }
             startTime = null;
             if (checkCollision || checkgoalcollision) {
@@ -133,9 +131,8 @@ function anime(m1, teams, otherGamer, options) {
             if (!isNaN(m1.posX) && m1.posX > 0) {
                 safeX = m1.posX;
                 safeY = m1.posY;
-
-                if (Gamer1.tokens.every(el => distance(m1.posX, m1.posY, el.posX, el.posY) > m1.baseRadius + el.baseRadius) &&
-                    Gamer2.tokens.every(el => distance(m1.posX, m1.posY, el.posX, el.posY) > m1.baseRadius + el.baseRadius) &&
+                if (Gamer1.tokens.filter(el => el.type==="trap" && distance(m1.posX, m1.posY, el.posX, el.posY) < m1.baseRadius + el.baseRadius).length<1 &&
+                    Gamer2.tokens.filter(el => el.type==="trap" && distance(m1.posX, m1.posY, el.posX, el.posY) < m1.baseRadius + el.baseRadius).length<1 &&
                     (ball.isOnGround && distance(m1.posX, m1.posY, ball.x, ball.y) > (m1.baseRadius + ball.ballSize) &&
                         m1.shouldntBeHere < 1) || (!ball.isOnGround && m1.shouldntBeHere < 1)) {
                     notOnTokenX = m1.posX; notOnTokenY = m1.posY;
@@ -144,8 +141,8 @@ function anime(m1, teams, otherGamer, options) {
             m1.posX = x + ((endX - x) * deltaTime);
             m1.posY = y + ((endY - y) * deltaTime);
             if (m1.posX > 0) {
-                if (m1.isMoving && (m1.isActivating || options.mode ==="abilities") && !m1.isDodging) {
-                    m1.remainingSprint -= m1.remainingSprint>0?distance(m1.posX, m1.posY, safeX, safeY):0;
+                if (m1.isMoving && (m1.isActivating || options.mode === "abilities") && !m1.isDodging) {
+                    m1.remainingSprint -= m1.remainingSprint > 0 ? distance(m1.posX, m1.posY, safeX, safeY) : 0;
                     m1.remainingRun -= distance(m1.posX, m1.posY, safeX, safeY);
                 };
                 if (m1.isDodging) m1.remainingDodge -= distance(m1.posX, m1.posY, safeX, safeY);
@@ -156,7 +153,7 @@ function anime(m1, teams, otherGamer, options) {
                 }
             }
 
-            ///////////////////////////////////////////////__PARTING__BLOWS__///////////////////////////////////////////
+///////////////////////////////////////////////__PARTING__BLOWS__///////////////////////////////////////////
             if (m1.posX > 0 && (m1.isMoving || m1.isCharging)) {
                 let currentlyEngaging = []
                 for (let cE = 0; cE < otherGamer.squaddies.length; cE++) {
@@ -180,5 +177,5 @@ function anime(m1, teams, otherGamer, options) {
             !continueMovement ? requestAnimationFrame(anim) : false;
         }
     }
-    if(m1.remainingRun>0&&m1.isMoving||m1.isDodging||m1.isPushed){anim()};
+    if ((m1.remainingRun > 0 && m1.isMoving) || m1.isDodging || m1.isPushed) { anim() };
 };

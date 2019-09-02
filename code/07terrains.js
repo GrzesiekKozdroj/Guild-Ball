@@ -27,7 +27,7 @@ const sizeRandomiser = (objekt) =>  {
     }
 }
 
-function terrainsDetector(teaMate){    
+function terrainsDetector(teaMate){
     if(teaMate.posX >0 && filtered_td.length>0){ 
 //color needs to be an array of these parameters and if any has a property, i means it is actvating duye to terrains:
     let x = teaMate.posX; let y = teaMate.posY;
@@ -69,7 +69,6 @@ function terrainsDetector(teaMate){
             colorFar  .push(konvas.getImageData(...  farNodes[ui]).data[3]);
             colorClose.push(konvas.getImageData(...closeNodes[ui]).data[3]);
         }
-
         if(teaMate.classification === "squaddie"){
         //<<----==    WALL || OBSTACLE || FOREST || GOAL POST grants cover
         if( !teaMate.terrainsMovPenalised&&(colorFar.includes(255) && ( typesofTerrain.includes("wall") || typesofTerrain.includes("obstacle") )) || (colorClose.includes(255) && typesofTerrain.includes("forest") ) || (distance(teaMate.posX, teaMate.posY, otherGamer.gp.x,otherGamer.gp.y) <=(teaMate.baseRadius + inch + 2.5 * cm) || distance(teaMate.posX, teaMate.posY, Gamer.gp.x, Gamer.gp.y) <= (teaMate.baseRadius + inch + 2.5 * cm) ) ){
@@ -88,33 +87,40 @@ function terrainsDetector(teaMate){
             } else { teaMate.shouldntBeHere = 0 }
 
         //<<----==    ROUGH GROUND || FOREST grants movement hindrance
-        if( colorClose.includes(255) && !teaMate.inRoughGround /*&& (teaMate.isMoving || teaMate.wasCharging)*/ && ( typesofTerrain.includes("forest") || typesofTerrain.includes("roughGround") ) && !teaMate.isGliding ){
+        if( colorClose.includes(255) && !teaMate.inRoughGround && !teaMate.isDodging && !teaMate.isPushed/*(teaMate.isMoving || teaMate.wasCharging)*/ && ( typesofTerrain.includes("forest") || typesofTerrain.includes("roughGround") ) && !teaMate.isGliding  ){
+            console.log("Should be dodging")
             let hasLightFooted = hasPassiveUnused(teaMate,"Light Footed");
             let hasWinterBlessing = hasPassiveUnused(teaMate,"Winters Blessing");
             teaMate.inRoughGround = true; 
             teaMate.terrainsMovPenalised = true;
-            teaMate.remainingRun += ( (hasWinterBlessing ? 2 : hasLightFooted ? 0 : -2)* inch ); 
-            teaMate.remainingSprint += ( (hasWinterBlessing ? 2 : hasLightFooted ? 0 : -2) * inch );
+            if(teaMate.isMoving && !teaMate.isDodging && !teaMate.isPushed){
+                teaMate.remainingRun += ( (hasWinterBlessing ? 2 : hasLightFooted ? 0 : -2)* inch ); 
+                teaMate.remainingSprint += ( (hasWinterBlessing ? 2 : hasLightFooted ? 0 : -2) * inch );
+            };
             makePassiveOpt(teaMate,"Winters Blessing");
-            makePassiveOpt(teaMate,"Light Footed");
+            //makePassiveOpt(teaMate,"Light Footed");
             teaMate.inForest = typesofTerrain.includes("forest") ? true : false;
         } else if ( !colorClose.includes(255) ) { teaMate.inRoughGround = false }
 
         //<<----==    FAST GROUND grants movement bonus
         if( colorClose.includes(255) && !teaMate.inFastGround /*&& (teaMate.isMoving || teaMate.isCharging) */&& typesofTerrain.includes("fastGround") ){
             teaMate.inFastGround = true; teaMate.remainingRun += 2* inch; teaMate.remainingSprint += 2 * inch;
-        } else  if ( !colorClose.includes(255) ) {teaMate.inFastGround = false;}
-    } else {
+        } //else  if ( !colorClose.includes(255) ) {teaMate.inFastGround = false;}
+    } else if (teaMate.classification === "token" && teaMate.type === "Nature's Chill" && !colorClose.includes(255) &&
+    distance(Gamer.gp.x,Gamer.gp.y,teaMate.posX,teaMate.posY)>teaMate.baseRadius+2.5*cm &&
+    distance(otherGamer.gp.x,otherGamer.gp.y,teaMate.posX,teaMate.posY)>teaMate.baseRadius+2.5*cm && 
+    !otherGamer.tokens.some(el=>el.type==="Nature's Chill"&&distance(el.posX,el.posY,teaMate.posX,teaMate.posY)<=el.baseRadius+teaMate.baseRadius) ) //can place ability terrains on top of each other
+     {return true} else 
         if(colorClose.includes(255) && ( typesofTerrain.includes("wall") || typesofTerrain.includes("obstacle") ) ||
             teamz.some(el=>distance(el.posX,el.posY,teaMate.posX,teaMate.posY) <= el.baseRadius + teaMate.baseRadius ) ||
             distance(Gamer.gp.x,Gamer.gp.y,teaMate.posX,teaMate.posY)<=teaMate.baseRadius+2.5*cm ||
             distance(otherGamer.gp.x,otherGamer.gp.y,teaMate.posX,teaMate.posY)<=teaMate.baseRadius+2.5*cm ||
-            Gamer.tokens.some(el=>el.id!==teaMate.id && distance(el.posX,el.posY,teaMate.posX,teaMate.posY)<=el.baseRadius+teaMate.baseRadius) ||
-            otherGamer.tokens.some(el=>distance(el.posX,el.posY,teaMate.posX,teaMate.posY)<=el.baseRadius+teaMate.baseRadius) ||
-            distance(teaMate.posX,teaMate.posY,ball.x,ball.y)<=teaMate.baseRadius+ball.ballSize  ){
-                return false} else {return true}
-    }
-}}//end of terrians function with posX validator check
+            Gamer.tokens.some(el=>el.type==="trap"&&el.id!==teaMate.id && distance(el.posX,el.posY,teaMate.posX,teaMate.posY)<=el.baseRadius+teaMate.baseRadius) ||
+            otherGamer.tokens.some(el=>el.type==="trap"&&distance(el.posX,el.posY,teaMate.posX,teaMate.posY)<=el.baseRadius+teaMate.baseRadius) ||
+            distance(teaMate.posX,teaMate.posY,ball.x,ball.y)<=teaMate.baseRadius+ball.ballSize  ){return false} else {return true}
+    
+}
+}//end of terrians function with posX validator check
 
 
 

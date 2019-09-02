@@ -40,6 +40,7 @@ function makePassiveButton(id,text,picLink){
                 data-range="${picLink.rng?picLink.rng:-2}" 
                 data-sus="${picLink.sus?picLink.sus:-2}" 
                 data-opt="${picLink.opt?picLink.opt:-2}" 
+                data-aura="${picLink.aura?picLink.aura:-2}"
             >${text}</div>`
 }
 function hasActive (m1,name){
@@ -60,8 +61,7 @@ function makeActiveButton(id,text,picLink){
         class="activeSkill skill" 
         style='
             background:url(${picLink.icon}) ${picLink.picRatio[0]}% ${picLink.picRatio[1]}%;  
-            background-size:${picLink.picRatio[2]}%;
-            border-color:black;'
+            background-size:${picLink.picRatio[2]}%;'
             data-desc="${picLink.desc}" 
             data-type="${picLink.type}" 
             data-name="${picLink.name}" 
@@ -70,7 +70,11 @@ function makeActiveButton(id,text,picLink){
             data-range="${picLink.rng?picLink.rng:-2}" 
             data-sus="${picLink.sus?picLink.sus:-2}" 
             data-opt="${picLink.opt?picLink.opt:-2}" 
-    >${text}</div>`
+            data-aura="${picLink.aura?picLink.aura:-2}"
+    >
+        <p class="o1"></p>
+        ${text}
+    </div>`
 }
 function makeActiveOpt(m1,name){
     m1.abilities.activeOwned.forEach(el=>{if(el[0]===name){el[1]+=1}});
@@ -88,7 +92,7 @@ class Token {
         this.baseRadius = size;
         this.type = type;
         this.icon = new Image();
-        this.icon.src = this.type === "trap" ? "./icons/snared.png" : "";
+        this.icon.src = this.type === "trap" ? "./icons/snared.png" : this.type = "Nature's Chill" ? "./icons/Terrains/fastGround01.svg":"";
         this.isInHand = false;
         this.isPlacable;
         this.color = color;
@@ -96,7 +100,7 @@ class Token {
     drawToken(x = this.posX, y = this.posY){
         //letx =  ; 
         //let y = ;
-        if (this.type = "trap"){
+        if (this.type === "trap"){
             pcl.lineWidth = 1;
             ctx.lineWidth = 1;
             ctx.beginPath() 
@@ -119,6 +123,16 @@ class Token {
             pcl.lineWidth = 2;
             pcl.closePath();
             pcl.restore();
+        }else if (this.type = "Nature's Chill"){
+            pcl.save();
+            pcl.beginPath() 
+            pcl.globalAlpha = 1;
+            pcl.arc(x,y,this.baseRadius, 0, Math.PI * 2, true);
+            pcl.clip();
+            pcl.drawImage(this.icon, x- this.baseRadius-.5*inch, y - this.baseRadius-.5*inch, this.baseRadius*2.5, this.baseRadius*2.5);
+            pcl.stroke();
+            pcl.closePath();
+            pcl.restore();
         }
     }
     drawDoppler(){
@@ -127,6 +141,28 @@ class Token {
             this.posY = mouY;
             this.isPlacable = terrainsDetector(this);
         }
+    }
+}
+function cold_snap(m1) {
+    if(hasActiveUnused(m1,"Cold Snap")){
+        unpredictableMovement(m1);
+        m1.drawAbilityTargetAura = 0;
+        idear = "coldSnappB";
+        m1.drawAbilityAura = m1.baseRadius + 9 * inch;
+        mouseDrawTemplate = true;
+        $("#players").on("click.usingAbility",()=>{
+            if(idear==="coldSnappB" && distance(m1.posX,m1.posY,mouX,mouY)<=m1.baseRadius+6.5*inch){
+                teamz.forEach(el=>{
+                    if(distance(mouX,mouY,el.posX,el.posY)<=1.5*inch+el.baseRadius){
+                            el.hpMin-=2;
+                            snare(el);
+                    }
+                });
+                makeActiveOpt(m1,"Cold Snap");
+                commonAfterInstruction({ m1: m1 });
+                mouseDrawTemplate = false;
+            }
+        })
     }
 }
 function GutAndString (m1,m2){
@@ -174,8 +210,9 @@ function Skewered (m1,m2){
 
 function unpredictableMovement(m1){
     otherGamer.squaddies.forEach(m2=>{
-        if(hasPassiveUnused(m2,"Unpredictable Movement") && m1.isMoving 
-            && distance(m1.posX,m1.posY,m2.posX,m2.posY)<=m2.AmeleeZone*inch+m2.baseRadius+m1.baseRadius){
+        if(hasPassiveUnused(m2,"Unpredictable Movement") && m1.isMoving &&
+            m2.name!==m1.name &&
+            distance(m1.posX,m1.posY,m2.posX,m2.posY)<=m2.AmeleeZone*inch+m2.baseRadius+m1.baseRadius){
     $('body').append(`
     <div 
         id='unpredictableMovement${m2.name}' 

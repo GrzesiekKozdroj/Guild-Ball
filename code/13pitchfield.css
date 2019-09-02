@@ -13,7 +13,7 @@ body {
 }
 
 .tesdsfhkjlkjhgfdster {
-  color: #E0E0E0;
+  color: #da2100;
 }
 
 .background-Alchemist {
@@ -2507,6 +2507,16 @@ body {
   border: solid rgba(58, 55, 55, 0.712);
 }
 
+.activeSkill:hover {
+  box-shadow: inset 0px 0px 25px darkblue, inset 0 0 15px rgba(9, 8, 87, 0.897), 0 0 20px darkblue, 0 0 20px rgba(60, 60, 82, 0.932);
+  border: solid darkblue;
+}
+
+.activeSkill:active {
+  box-shadow: inset 0px 0px 25px darkblue, inset 0 0 15px rgba(9, 8, 87, 0.897), 0 0 20px darkblue, 0 0 20px rgba(60, 60, 82, 0.932);
+  border: solid darkblue;
+}
+
 .plajBookCell:hover, .plajBookTopCell:hover {
   box-shadow: inset 0px 0px 25px white, 0 0 15px black, 0 0 20px darkblue, 0 0 200px rgba(60, 60, 82, 0.932);
 }
@@ -2616,7 +2626,7 @@ button:hover {
 
 #app {
   position: fixed;
-  height: 100vh;
+  height: 98vh;
   border-radius: 2px;
   z-index: 7;
   background: linear-gradient(farthest-corner at 5% 5%, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.7) 10%, rgba(0, 0, 0, 0.7) 80%);
@@ -2763,6 +2773,7 @@ td {
   display: flex;
   flex-wrap: wrap;
   width: 99%;
+  height: fit-content;
 }
 
 .plajbooks ul {
@@ -2906,23 +2917,18 @@ td {
   padding-bottom: 19vw;
 }
 
-.domesticButtons #traitPlaysButtons {
-  width: 42%;
-  height: 13vw;
-}
-
 .domesticButtons #actionButtons, .domesticButtons #traitPlaysButtons {
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
   align-items: middle;
-  width: 66%;
+  width: 70%;
   padding: 1px;
   color: transparent;
 }
 
 .domesticButtons #actionButtons div, .domesticButtons #traitPlaysButtons div {
-  width: 4vw;
+  width: 4vw !important;
   height: 4vw;
   font-size: 1vw;
   display: flex;
@@ -2930,7 +2936,6 @@ td {
   justify-content: center;
   border-radius: 2.5px;
   align-items: center;
-  border: 3px solid black;
   font-weight: 700;
   margin: 1px;
   text-align: center;
@@ -2948,8 +2953,9 @@ td {
 }
 
 .domesticButtons #traitPlaysButtons {
-  width: 33%;
   max-height: 0;
+  width: 32%;
+  height: 13vw;
 }
 
 .domesticButtons #traitPlaysButtons div {
@@ -3046,7 +3052,7 @@ td {
 
 .teaMenu {
   max-height: 9vw;
-  min-height: 9vw;
+  min-height: 8vw;
   overflow-y: scroll;
   background-color: rgba(94, 93, 88, 0.31);
   border-radius: 2.0px;
@@ -3219,7 +3225,7 @@ td {
   justify-content: center;
   align-items: center;
   color: #fcfcfc;
-  height: 9vw;
+  height: 8vw;
   background-color: rgba(70, 69, 66, 0.31);
   border-radius: .03vw;
   width: 50%;
@@ -3696,7 +3702,7 @@ html {
 }
 
 #actionButtons {
-  height: 15vw;
+  height: 21vw;
 }
 
 #actionButtons [id^="snapBall"] {
@@ -3710,11 +3716,83 @@ html {
 .passiveSkill {
   background-color: rgba(187, 168, 168, 0.349);
   color: rgba(56, 56, 56, 0.938);
-  border-color: rgba(56, 56, 56, 0.938);
+  border: 0.2vw solid rgba(56, 56, 56, 0.938);
+}
+
+.activeSkill {
+  border: 0.2vw solid rgba(0, 0, 0, 0.938);
+}
+
+@keyframes circleGlow {
+  1% {
+    border-left: solid 0.5vw rgba(1, 157, 247, 0);
+    border-radius: 50%;
+  }
+  25% {
+    border: .1vw solid;
+    transform: translate(4vw, 0vw);
+    border-radius: 50%;
+  }
+  26% {
+    border-top: solid 0.5vw rgba(1, 157, 247, 0);
+    border-radius: 50%;
+  }
+  50% {
+    border: 0.1vw solid rgba(1, 157, 247, 0);
+    transform: translate(4vw, 4vw);
+    border-radius: 50%;
+  }
+  51% {
+    border-right: solid 0.5vw rgba(1, 157, 247, 0);
+    border-radius: 50%;
+  }
+  75% {
+    border: 0.1vw solid rgba(1, 157, 247, 0);
+    transform: translate(0, 4vw);
+    border-radius: 50%;
+  }
+  76% {
+    border-bottom: solid 0.5vw rgba(1, 157, 247, 0);
+    border-radius: 50%;
+  }
+  100% {
+    border: 0.1vw solid rgba(1, 157, 247, 0);
+    transform: translate(0, 0);
+    border-radius: 50%;
+  }
 }
 
 .skill {
   color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.skill .o1 {
+  position: relative;
+  left: 0vw;
+  top: -2vw;
+  background-color: rgba(158, 191, 253, 0.836);
+  border-radius: 50%;
+}
+
+.skill:hover {
+  border: 0.1vw solid rgba(0, 0, 138, 0.993);
+}
+
+.skill:hover .o1 {
+  box-shadow: 0 0 0.05vw 0.05vw rgba(189, 189, 255, 0.644), 0 0 0.1vw 0.1vw rgba(133, 133, 255, 0.4), 0 0 0.3vw 0.3vw rgba(0, 0, 255, 0.8);
+  left: -8%;
+  border: 0.03vw solid rgba(1, 157, 247, 0);
+  display: inline-block;
+  animation: 3s circleGlow infinite;
+  border-radius: 50%;
+}
+
+.skill:active {
+  box-shadow: 0 0 1vw darkblue, 0 0 0.8vw rgba(60, 60, 82, 0.932);
+  border: .1vw solid darkblue;
 }
 
 @keyframes infoBoxMove {

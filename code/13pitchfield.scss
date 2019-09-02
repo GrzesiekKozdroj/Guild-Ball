@@ -23,7 +23,7 @@ $rareGold:#F5FF6C;
     box-sizing:border-box;
 }
 .tesdsfhkjlkjhgfdster{
-    color:#E0E0E0;
+    color:rgb(218, 33, 0);
 }
 @mixin arrow($color,$direction,$size){
     @if $direction == top {
@@ -285,6 +285,16 @@ Union:hsla(286, 54%, 30%, 0.8)
         border: solid rgba(58, 55, 55, 0.712);
     }
 }
+%buttonAnimation2{
+    &:hover{
+        box-shadow: inset 0px 0px 25px darkblue, inset 0 0 15px rgba(9, 8, 87, 0.897), 0 0 20px darkblue, 0 0 20px rgba(60, 60, 82, 0.932);
+        border:solid darkblue;
+    }
+    &:active{
+        box-shadow: inset 0px 0px 25px darkblue, inset 0 0 15px rgba(9, 8, 87, 0.897), 0 0 20px darkblue, 0 0 20px rgba(60, 60, 82, 0.932); 
+        border: solid darkblue;
+    }
+}
 %plajBookAnimation{
     &:hover{
         box-shadow: inset 0px 0px 25px white, 0 0 15px black, 0 0 20px darkblue, 0 0 200px rgba(60, 60, 82, 0.932);
@@ -394,12 +404,12 @@ button:hover{
 
 #app {
     position: fixed;
-    height: 100vh;
+    height: 98vh;
     #appDisplay{
-    display: flex;
-    flex-flow: column;
-    align-items: center;
-    height: 100%
+        display: flex;
+        flex-flow: column;
+        align-items: center;
+        height: 100%
     }
     border-radius:2px;
     * {
@@ -536,6 +546,7 @@ td{
     display:flex;
     flex-wrap:wrap;
     width:99%;
+    height: fit-content;
 }
 .plajbooks{
     ul{
@@ -663,21 +674,17 @@ td{
     margin: 0;
     margin-bottom:2vw;
     padding-bottom: 19vw;
-    #traitPlaysButtons{
-        width:42%;
-        height: 13vw;
-    }
     #actionButtons, #traitPlaysButtons{
         display: flex;
         flex-wrap: wrap;
         flex-direction: row;
         //justify-content: space-evenly;
         align-items: middle;
-        width:66%;
+        width:70%;
         padding: 1px;
         color:rgba(0,0,0,0);
         div {
-            width:4vw;
+            width:4vw!important;
             height:4vw;
             font-size:1vw;
             display:flex;
@@ -686,7 +693,6 @@ td{
             //@include bajckground(47deg,43deg,222deg);
             border-radius: 2.5px;
             align-items: center;
-            border: 3px solid $borderColor;
             font-weight: 700;
             margin: 1px;
             text-align:center;
@@ -702,8 +708,9 @@ td{
         }
     }
     #traitPlaysButtons{
-        width:33%;
         max-height:0;
+        width:32%;
+        height: 13vw;
         div{
             width: 4vw;
             height:4vw;
@@ -794,7 +801,7 @@ td{
 }
 .teaMenu{
     max-height:9vw;
-    min-height:9vw;
+    min-height:8vw;
     overflow-y:scroll;
     background-color: rgba(94, 93, 88, 0.31);
     border-radius:2.0px;
@@ -889,7 +896,7 @@ td{
         justify-content: center;
         align-items: center;
         color:rgb(252, 252, 252);
-    height:9vw;
+    height:8vw;
     background-color: rgba(70, 69, 66, 0.31);
     border-radius:.03vw;
     width:50%;
@@ -1298,7 +1305,7 @@ cursor:none;
             background-color: white;
 }
 #actionButtons{
-    height:15vw;
+    height:21vw;
 }
 #actionButtons [id^="snapBall"]{
     transform:rotate(180deg);
@@ -1418,10 +1425,79 @@ cursor:none;
 .passiveSkill{
     background-color:rgba(187, 168, 168, 0.349);
     color:rgba(56, 56, 56, 0.938);
-    border-color:rgba(56, 56, 56, 0.938);
+    border: .2vw solid rgba(56, 56, 56, 0.938);
 }
+.activeSkill{
+    @extend %buttonAnimation2;
+    border: .2vw solid rgba(0, 0, 0, 0.938);
+}
+$blueOrbBorder:rgba(1, 157, 247, 0);
+@keyframes circleGlow{
+    1%{
+        border-left: solid .5vw $blueOrbBorder;
+        border-radius:50%;
+    }
+    25%{
+        border:.1vw solid ;
+        transform:translate(4vw,0vw);
+        border-radius:50%;
+    }
+    26%{
+        border-top: solid .5vw $blueOrbBorder;
+        border-radius:50%;
+    }
+    50%{
+        border:.1vw solid $blueOrbBorder;
+        transform:translate(4vw,4vw);
+        border-radius:50%;
+    }
+    51%{
+        border-right: solid .5vw $blueOrbBorder;
+        border-radius:50%;
+    }
+    75%{
+        border:.1vw solid $blueOrbBorder;
+        transform:translate(0,4vw);
+        border-radius:50%;
+    }
+    76%{
+        border-bottom: solid .5vw $blueOrbBorder;
+        border-radius:50%;
+    }
+    100%{
+        border:.1vw solid $blueOrbBorder;
+        transform:translate(0,0);
+        border-radius:50%;
+    }
+}
+
 .skill{
     color:rgba(0,0,0,0);
+	display: flex;
+	align-items: center;
+    justify-content: center;
+    .o1{
+        position:relative;
+        left:0vw;
+        top:-2vw;
+        background-color:rgba(158, 191, 253, 0.836);
+        border-radius:50%;
+    }
+    &:hover{
+        border: .1vw solid hsla(240, 100%, 27%, 0.993);
+        .o1{
+            box-shadow:0 0 .05vw .05vw hsla(240, 100%, 87%, 0.644) ,0 0 .1vw .1vw hsla(240, 100%, 76%, 0.4) ,0 0 .3vw .3vw hsla(240, 100%, 50%, 0.8);
+            left:-8%;
+            border:.03vw solid $blueOrbBorder;
+            display:inline-block;
+            animation: 3s circleGlow infinite;
+            border-radius:50%;
+        }
+    }
+    &:active{
+        box-shadow: 0 0 1vw darkblue, 0 0 .8vw rgba(60, 60, 82, 0.932);
+        border: .1vw solid darkblue;
+    }
 }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////

@@ -400,8 +400,12 @@ let infoAbilBox = (lspal)=>{
                 <p class="abilAttribName">@</p>
                 <p class="abilAttripVal">${lspal.type}</p>`: '@';
         let range = Number(lspal.range)>0?`
-                    <p class="abilAttribName"> <---></p>
-                    <p class="abilAttripVal">${lspal.range}"</p>` : '<-->';
+                        <p class="abilAttribName"> <---></p>
+                        <p class="abilAttripVal">${lspal.range}"</p>` : 
+                    Number(lspal.aura)>0?`
+                        <p class="abilAttribName"> aura </p>
+                        <p class="abilAttripVal">${lspal.aura}"</p>` : 
+                '<-->';
         let sused = lspal.type !== "legendary" && lspal.type !== "heroic" && lspal.type !== "trait" && lspal.type !=="utility"? `
             <p class="abilAttribName">sus</p>
             <p class="abilAttripVal">${lspal.sus>0?lspal.sus:false}</p>`:'sus';

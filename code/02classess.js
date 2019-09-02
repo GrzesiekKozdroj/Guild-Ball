@@ -384,8 +384,8 @@ class Player {
             distance(mouX,mouY,this.posX,this.posY)<=
                 (
                     this.moveAura||this.isCharging?this.remainingRun:
-                    this.isDodging?this.remainingDodge:
-                    this.isPushed?this.remainingPush:
+                    this.isDodging?this.remainingDodge+this.baseRadius:
+                    this.isPushed?this.remainingPush+this.baseRadius:
                     0
                 )
             )|| 
@@ -460,7 +460,7 @@ class Player {
         }
     }; //pushSquaddie
 
-    dodgeSquaddie(n, mode="default") {console.log("Should be dodging")
+    dodgeSquaddie(n, mode="default") {
         this.remainingDodge = n * inch;
         if (this.isDodging) {
             this.doppler(mouX, mouY, 0.5)
@@ -515,6 +515,11 @@ class Gajmer {
                             teaMate.hpMin-=1;
                             this.tokens.splice(i,1);
                         }
+                if(!el.isInHand && el.type==="Nature's Chill" && distance(teaMate.posX,teaMate.posY,el.posX,el.posY)<=1.5*inch+teaMate.baseRadius &&
+                    !teaMate.inFastGround)
+                        {
+                            teaMate.inFastGround = true;teaMate.remainingRun += 2* inch; teaMate.remainingSprint += 2 * inch;
+                        }
                     }
                   
             )
@@ -557,5 +562,29 @@ function aurora(x0 = 0,y0 = 0,r0 = 0,x1 = 0,y1 = 0,r1 = 0,color1 = "rgba(255,255
     ctx.arc(x0,y0,r1,0, 2 * Math.PI, false);
     ctx.fill();
     ctx.closePath();
+    }
+}
+
+function drawCircleOnSquaddie(x,y,r,color){
+    sctx.fillStyle=color;
+    sctx.globalAlpha = .6;
+    sctx.lineWidth=.1*wlem;
+    sctx.beginPath();
+    sctx.arc(x+7,y+7,r,0, Math.PI*2);
+    sctx.fill();
+    sctx.stroke();
+    sctx.closePath();
+}
+
+function drawTemplateOnMouse(){
+    if(mouseDrawTemplate){
+        ctx.beginPath();
+        ctx.arc(mouX,mouY,1.5*inch,0, Math.PI*2);
+        ctx.fill();
+        ctx.stroke();
+        ctx.closePath();
+        teamz.forEach(el=>{if (distance(mouX,mouY,el.posX,el.posY)<=1.5*inch+el.baseRadius){
+            drawCircleOnSquaddie(el.posX,el.posY,el.baseRadius,el.theGuild.color);
+        }});
     }
 }

@@ -92,6 +92,7 @@ let offsetX, offsetY;//used to realign mouse position
 let puddles = [];//when models suffer TO they leave bloodied puddle to remember what happened;
 let td = [];//<<<--------------===== generated terrains are stored here
 let filtered_td = [];
+let mouseDrawTemplate = false;
 
 fontz.load().then((font) => {document.fonts.add(font);});
 const tp = [//terrains initial generation package
@@ -301,7 +302,7 @@ const skillzLizt = {
 
     bigGameTraps:{who:["Chaska","Jaecar","vMinx"],name:"Big Game Traits",desc:`Once per turn during this model’s activation, it may place a friendly trap marker within 2ˮ.`,type:"trait",icon:"./icons/abil/hunt.png",picRatio:[6*hiX,0*hiY,huntersIcoSize]},
 
-    blessingOfTheMoonGoddess:{who:["Skata"],name:"Blessing of the Moon Goddess",cst:[1,-1],rng:4,sus:true,opt:false,desc:`The next time target friendly model makes a successful attack, the friendly model may add an additional << playbook result.`,type:"play"},
+    blessingOfTheMoonGoddess:{who:["Skata"],name:"Moon Goddess Blessing",cst:[1,-1],rng:4,sus:true,opt:false,desc:`The next time target friendly model makes a successful attack, the friendly model may add an additional << playbook result.`,type:"play",icon:"./icons/abil/hunt.png",picRatio:[0*hiX,1*hiY,huntersIcoSize]},
 
     blessingOfTheSunFather:{who:["Hearne","Theron","vMinx"],name:"Blessing Of The Sun Father",rng:6,sus:true,desc:`Once during its activation, target friendly model within 6ˮ may use a character play without spending influence.`,type:"heroic"},
 
@@ -315,7 +316,7 @@ const skillzLizt = {
 
     chemicalShower:{who:["Smoke"],name:"Chemical Shower",desc:`Enemy models within this pulse suffering the burning or poison condition suffer 3 condition DMG.`,type:"legendary",pulse:6},
 
-    closeControl:{who:["Edge","Egret"],name:"Close Control",desc:`This model may ignore the first tackle playbook result that it suffers each turn. `,type:"trait",icon:"./icons/abil/hunt.png",picRatio:[6*hiX,1*hiY,huntersIcoSize]},
+    closeControl:{who:["Edge","Egret"],name:"Close Control",desc:`This model may ignore the first tackle playbook result that it suffers each turn. `,type:"trait",icon:"./icons/abil/hunt.png",picRatio:[5*hiX,1*hiY,huntersIcoSize]},
 
     cloudJumper:{who:["Smoke"],name:"Cloud Jumper",desc:`Once per turn during this model\’s activation, it may choose an ongoing eff  ect AOE within 4ˮ and be placed anywhere within the chosen AOE.`,type:"trait"},
 
@@ -323,7 +324,7 @@ const skillzLizt = {
 
     disarm:{who:["Steeljaw"],name:"Disarm",cst:[-1,1],rng:P,sus:true,opt:false,desc:`Target enemy model suffers -2 TAC.`,type:"play"},
 
-    coldSnap:{who:["Skatha"],name:"Cold Snap",cst:[2,1],rng:6,sus:false,opt:true,desc:`Position an AOE within range. Models hit suffer 2 DMG and the snared condition.`,type:"play"},
+    coldSnap:{who:["Skatha"],name:"Cold Snap",cst:[2,1],rng:6,sus:false,opt:true,desc:`Position an AOE within range. Models hit suffer 2 DMG and the snared condition.`,type:"play",icon:"./icons/abil/hunt.png",picRatio:[6*hiX,1*hiY,huntersIcoSize]},
 
     commandingAura:{who:["Tapper"],name:"Commanding Aura",cst:[2,2],rng:S,sus:true,opt:true,desc:`4ˮ aura. While within this aura, friendly guild models gain +1 TAC and +1 DMG to playbook damage results.`,type:"trait"},
 
@@ -392,7 +393,7 @@ const skillzLizt = {
 
     naturesBlessing:{who:["Hearne"],name:"Nature\'s Blessing",desc:`Once per turn during its activation, this model may choose a piece of forest terrain within 4ˮ. This model may be placed anywhere within the chosen forest terrain.`,type:"trait"},
 
-    naturesChill:{who:["Skatha"],name:"Nature\'s Chill",rng:8,sus:true,opt:true,desc:`At the start of this model’s activation, it may position an AOE within 8ˮ and not in base contact with terrain. This AOE is fast terrain and is removed from the pitch in the End Phase.`,type:"trait"},
+    naturesChill:{who:["Skatha"],name:"Nature\'s Chill",rng:8,sus:true,opt:true,desc:`At the start of this model’s activation, it may position an AOE within 8ˮ and not in base contact with terrain. This AOE is fast terrain and is removed from the pitch in the End Phase.`,type:"trait",icon:"./icons/abil/hunt.png",picRatio:[3*hiX,4*hiY,huntersIcoSize]},
 
     naturesGrowth:{who:["Theron"],name:"Nature\'s Growth",desc:`At the start of this model\’s activation, it may position an AOE within 8ˮ and not in contact with terrain. The AOE is forest terrain and is removed in the End Phase`,type:"trait"},
 
@@ -426,7 +427,7 @@ const skillzLizt = {
 
     snapFire:{who:["Egret"],name:"Snap Fire",cst:[1,-1],rng:6,sus:false,opt:false,desc:`Taret enemy model suffers 1 DMG`,type:"play",icon:"./icons/abil/hunt.png",picRatio:[4*hiX,5*hiY,huntersIcoSize]},
 
-    snowball:{who:["Skatha"],name:"Snow Ball",cst:[1,-1],rng:S,sus:true,opt:true,desc:`Place an additional ball in this model's possession. When this ball is used to score a goal, the friendly team gains 1 VP instead of 4 VP. At the end of this model’s activation, remove this ball from the pitch.`,type:"play"},
+    snowball:{who:["Skatha"],name:"Snow Ball",cst:[1,-1],rng:S,sus:true,opt:true,desc:`Place an additional ball in this model's possession. When this ball is used to score a goal, the friendly team gains 1 VP instead of 4 VP. At the end of this model’s activation, remove this ball from the pitch.`,type:"play",icon:"./icons/abil/hunt.png",picRatio:[5*hiX,5*hiY,huntersIcoSize]},
 
     soothingVoice:{who:["Esters"],name:"Soothing Voice",desc:`Friendly models within this pulse remove all conditions they’re suffering`,type:"heroic",pulse:3},
 
@@ -464,9 +465,9 @@ const skillzLizt = {
 
     whiskyChaser:{who:["Corker"],name:"Whisky Chaser",cst:[1,-1],rng:4,sus:true,opt:false,desc:`The next time target friendly guild model makes a successful attack, the friendly model may add an additional KD playbook result`,type:"play"},
 
-    wintersBlessing:{who:["vHearne"],name:"Winter's Blessing",desc:`When this model makes an advance, it ignores the MOV penalty for rough terrain. When this model moves within one or more pieces of rough terrain during an advance, it gains +2ˮ/+2ˮ MOV for the remainder of the advance.`,type:"trait",icon:"./icons/abil/hunt.png",picRatio:[3*hiX,6*hiX,huntersIcoSize]},
+    wintersBlessing:{who:["vHearne"],name:"Winter's Blessing",desc:`When this model makes an advance, it ignores the MOV penalty for rough terrain. When this model moves within one or more pieces of rough terrain during an advance, it gains +2ˮ/+2ˮ MOV for the remainder of the advance.`,type:"trait",icon:"./icons/abil/hunt.png",picRatio:[2*hiX,7*hiY,huntersIcoSize]},
 
-    wintersNight:{who:["Skatha"],name:"Winter\'s Night",desc:`When a friendly model within this aura makes a successful attack, the friendly model may add an additional < playbook result.`,type:"legendary",aura:6},
+    wintersNight:{who:["Skatha"],name:"Winter\'s Night",desc:`When a friendly model within this aura makes a successful attack, the friendly model may add an additional < playbook result.`,type:"legendary",aura:6,icon:"./icons/abil/hunt.png",picRatio:[3*hiX,7*hiY,huntersIcoSize]},
 
 }
 

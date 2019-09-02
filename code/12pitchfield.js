@@ -240,7 +240,6 @@ let bigBang = (e)=>{//document.addEventListener('DOMContentLoaded', function (e)
                 m1.isPushed = false;
                 m1.isDodging = false;
                 m1.isTakenOut = true;
-                plajBookWraz();
                 m1.isBurning = false;m1.isBleeding = false;m1.isDiseased= false;m1.isKnockedDown=false;m1.isPoisoned=false;m1.isSnared=false;
             }
             }
@@ -280,7 +279,6 @@ let bigBang = (e)=>{//document.addEventListener('DOMContentLoaded', function (e)
                 //m1.hasMoved = true;
                 m1.isPushed = false;
                 m1.isDodging = false;
-                plajBookWraz();
                 m1.posX = undefined;
                 m1.posY = undefined;
             }
@@ -335,19 +333,22 @@ let bigBang = (e)=>{//document.addEventListener('DOMContentLoaded', function (e)
         konvas.clearRect(0,0,konvas.width,konvas.height);
         terrainsGenerator();
         drawDeploymentZones(counter);
-        ball.doppler();
         Gamer1.gp.drawGoalPost(Gamer1.momentum,Gamer1.score,Gamer1.influence);
         Gamer2.gp.drawGoalPost(Gamer2.momentum,Gamer2.score,Gamer2.influence);
 //tokens display
-        Gamer1.tokens.forEach(el=>{
-            el.drawToken();
-            el.drawDoppler();
-        })
-        Gamer2.tokens.forEach(el=>{
-            el.drawToken();
-            el.drawDoppler();
-        })
-
+        [...Gamer1.tokens,...Gamer2.tokens].forEach(el=>{
+            if(el.type!=="trap"){
+                el.drawToken();
+                el.drawDoppler();
+            }
+        });
+        [...Gamer1.tokens,...Gamer2.tokens].forEach(el=>{
+            if(el.type==="trap"){
+                el.drawToken();
+                el.drawDoppler();
+            }
+        });
+        ball.doppler();
         ball.draw_ball();
         ball.drawDropAura();
         drawTimeLeft (Gamer);
@@ -417,9 +418,9 @@ function moseDraw () {
 }
 moseDraw();
 const cheetah = (n) => {
-    if (!n) {
-        let bookOfLife1 = [];[Benediction,Anvil,Fahad,Zarola,Jaecar,Egret,vetHearne].forEach(el=>bookOfLife1.push(new Player(...el) ));
-        let bookOfLife2 = [];[Midas,Ox,Zarola,Egret,Jaecar,vetHearne,Fahad].forEach(el=>bookOfLife2.push(new Player(...el) ));
+    if (n) {
+        let bookOfLife1 = [];[Anvil,Skatha,Fahad,Zarola,Jaecar,Egret,vetHearne].forEach(el=>bookOfLife1.push(new Player(...el) ));
+        let bookOfLife2 = [];[Skatha,Ox,Zarola,Egret,Jaecar,vetHearne,Fahad,vetMinx].forEach(el=>bookOfLife2.push(new Player(...el) ));
         Gamer1 = new Gajmer(
             0,0,0,
             bookOfLife1,
@@ -451,7 +452,7 @@ const cheetah = (n) => {
         counter = 5;
         //Gamer1.squaddies.forEach(el => el.posY = 16*inch);
         //Gamer2.squaddies.forEach(el => el.posY = 17*inch);
-        teamz.forEach(el => {el.infMin += 6; el.hpMin-=5;el.isBleeding=true});
+        teamz.forEach(el => {el.infMin += 6; el.hpMin-=4;el.isBleeding=true;});
         Gamer1.momentum += 2; Gamer2.momentum += 2;
 
         Gamer1.oponent = Gamer2;

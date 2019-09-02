@@ -81,13 +81,13 @@ function bleeding() { };
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-function playbookStitcher(m1, i, wrap, mode) {
+function playbookStitcher(m1,m2, i, wrap, mode) {
     //const playbookMAP = {damage,momentum,dodges,pushes,tackle};
     //----top--of--playbook-------------------------------------
     if (m1.playBook[i][0].length === 0) {
         wrap[0].push(`<li class='playBookNull activeOptions'></li>`)
     } else if (m1.playBook[i][0].length !== 0) {
-        let dmg = m1.playBook[i][0][0];
+        let dmg = m1.playBook[i][0][0]===0?0:m1.playBook[i][0][0] + (m2.isSnared && hasPassive(m1,"Isolated Target") ? 1 : 0);
         let mom = mode === 'attack' ? m1.playBook[i][0][1] : 0;
         let ddge = mode !== 'parting blow' ? m1.playBook[i][0][2] : 0;
         let psh = mode !== 'parting blow' ? m1.playBook[i][0][3] : 0;
@@ -111,7 +111,7 @@ function playbookStitcher(m1, i, wrap, mode) {
         // }//sitching plajbook FOR
     }
     //--------bottom--of--playbook-------------------------------------
-    let dmg = m1.playBook[i][1][0];
+    let dmg = m1.playBook[i][1][0]===0?0: m1.playBook[i][1][0] + (m2.isSnared && hasPassive(m1,"Isolated Target") ? 1 : 0);
     let mom = mode === 'attack' ? m1.playBook[i][1][1] : 0;
     let ddge = mode !== 'parting blow' ? m1.playBook[i][1][2] : 0;
     let psh = mode !== 'parting blow' ? m1.playBook[i][1][3] : 0;
@@ -158,7 +158,13 @@ function buttonStitching(wrap, m1, m2, ball, Gamer, mode, continueMovement) {
                     m1.abilities.passiveOwned.some(el=>el.includes("Swift Strikes") ) && m1.isActivating) ) {
                         //<<---== this needs to be passed to anime function through m1.dodgeSquaddie and m2.pushSquaddie
                             wrath = m2; receiver = m1;
-                        if (ddge > 0) {console.log("Should be dodging")
+                            if(hasPassiveGiven(m1,"Blessing of the Moon Goddess"))
+                            {
+                                ddge +=2; 
+                                m1.abilities.passiveGiven.forEach(
+                                    (el,i)=>{ if(el==="Blessing of the Moon Goddess") m1.abilities.passiveGiven.splice(i,1) });
+                            }
+                        if (ddge > 0) {
                             m1.isDodging = true;
                             m1.dodgeSquaddie(ddge, teamz, m2);
                         };
@@ -167,7 +173,6 @@ function buttonStitching(wrap, m1, m2, ball, Gamer, mode, continueMovement) {
                             m2.pushSquaddie(psh, teamz, m2);
                         };
                         if (dmg > 0) {
-                            dmg += m2.isSnared && hasPassive(m1,"Isolated Target") ? 1 : 0;
                             if(ddge === 0 && m1.abilities.passiveOwned.some(el=>el.includes("Swift Strikes") ) && m1.isActivating) 
                             {
                                 m1.isDodging = true; 
@@ -227,6 +232,7 @@ function buttonStitching(wrap, m1, m2, ball, Gamer, mode, continueMovement) {
                     }
                     m1.hoverButtonAura = 0;
                     m2.hoverButtonAura = 0;
+                    if(m2.hpMin<1){plajBookWraz();}
                 }
     if(momentum>0)$(".momentumShow").text(`${Gamer.momentum}`).addClass("momentumGrow");
 
@@ -247,6 +253,7 @@ function buttonStitching(wrap, m1, m2, ball, Gamer, mode, continueMovement) {
 function waaar(Gamer, otherGamer, m1, victim, mode = 'attack', continueMovement) {console.log("Fahad Charge")
     m1.moveAura = false;
     let m2 = victim;
+    mouseDrawTemplate = false;
     m2.drawAbilityAura = 0;
     m1.drawAbilityAura = 0;
     m1.drawAbilityTargetAura = 0;
@@ -314,29 +321,29 @@ function waaar(Gamer, otherGamer, m1, victim, mode = 'attack', continueMovement)
 
 
             for (let pkb = 0; pkb < wrapsRest; pkb++) {
-                playbookStitcher(m1, pkb, playBookWrap.noWrap, mode);
+                playbookStitcher(m1,m2, pkb, playBookWrap.noWrap, mode);
             }
             for (let i = 0; i < m1.playBook.length; i++) {
                 if (wraps >= 1) {
-                    playbookStitcher(m1, i, playBookWrap.firstWrap, mode);
+                    playbookStitcher(m1,m2, i, playBookWrap.firstWrap, mode);
                 }
                 if (wraps >= 2) {
-                    playbookStitcher(m1, i, playBookWrap.secondWrap, mode);
+                    playbookStitcher(m1,m2, i, playBookWrap.secondWrap, mode);
                 }
                 if (wraps >= 3) {
-                    playbookStitcher(m1, i, playBookWrap.thirdWrap, mode);
+                    playbookStitcher(m1,m2, i, playBookWrap.thirdWrap, mode);
                 }
                 if (wraps >= 4) {
-                    playbookStitcher(m1, i, playBookWrap.fourthWrap, mode);
+                    playbookStitcher(m1,m2, i, playBookWrap.fourthWrap, mode);
                 }
                 if (wraps >= 5) {
-                    playbookStitcher(m1, i, playBookWrap.fifthWrap, mode);
+                    playbookStitcher(m1,m2, i, playBookWrap.fifthWrap, mode);
                 }
                 if (wraps >= 6) {
-                    playbookStitcher(m1, i, playBookWrap.sixthWrap, mode);
+                    playbookStitcher(m1,m2, i, playBookWrap.sixthWrap, mode);
                 }
                 if (wraps >= 7) {
-                    playbookStitcher(m1, i, playBookWrap.seventhWrap, mode);
+                    playbookStitcher(m1,m2, i, playBookWrap.seventhWrap, mode);
                 }
             }
             buttonStitching(playBookWrap.noWrap, m1, m2, ball, Gamer, mode, continueMovement);
@@ -529,6 +536,8 @@ function legalPlacementDetector(m1) {
 
 function mouse(Gamer = dummy, otherGamer = dummy, ball) {
     //if (teamz.filter(el => el.moveAura || el.isDodging || el.isPushed).length > 0 || ball.isInHand) {} else {
+    drawTemplateOnMouse();
+    sctx.globalAplha = 1;
     sctx.strokeStyle = 'white';
     sctx.fillStyle = Gamer.guild.color;
     sctx.save();
@@ -632,6 +641,48 @@ function mouse(Gamer = dummy, otherGamer = dummy, ball) {
             }
         }
     }
+    if(counter > -1 && showLeaflet && mouX > 0){
+        Gamer.tokens.forEach((el,i)=>{
+            if(distance(mouX,mouY,el.posX,el.posY)<=el.baseRadius&&!el.isInHand){
+                sctx.beginPath();
+                sctx.lineWidth = 15;
+                sctx.globalAlpha = 1;
+                sctx.font = "900 21px IM Fell English ";
+                sctx.fillStyle = Gamer.guild.color;
+                sctx.strokeStyle = 'rgba(79, 82, 78, 0.753)';
+                sctx.textAlign = "center";
+                sctx.globalAlpha=.3;
+                sctx.strokeText(el.type,0, 24 - 52);
+                sctx.lineWidth = 5;
+                sctx.globalAlpha=.5;
+                sctx.strokeStyle = 'rgba(99, 122, 108, 0.753)';
+                sctx.strokeText(el.type,0, 24 - 52);
+                sctx.globalAlpha=.9;
+                sctx.fillText(el.type,0, 24 - 52);
+                sctx.closePath();
+            }
+        });
+        otherGamer.tokens.forEach((el,i)=>{
+            if(distance(mouX,mouY,el.posX,el.posY)<=el.baseRadius&&!el.isInHand){
+                sctx.beginPath();
+                sctx.lineWidth = 15;
+                sctx.globalAlpha = 1;
+                sctx.font = "900 21px IM Fell English ";
+                sctx.fillStyle = otherGamer.guild.color;
+                sctx.strokeStyle = 'rgba(79, 82, 78, 0.753)';
+                sctx.textAlign = "center";
+                sctx.globalAlpha=.3;
+                sctx.strokeText(el.type,0, 24 - 52);
+                sctx.lineWidth = 5;
+                sctx.globalAlpha=.5;
+                sctx.strokeStyle = 'rgba(99, 122, 108, 0.753)';
+                sctx.strokeText(el.type,0, 24 - 52);
+                sctx.globalAlpha=.9;
+                sctx.fillText(el.type,0, 24 - 52);
+                sctx.closePath();
+            }
+        });
+    }
     if(mouX>36*inch+2 && mouX<36.25*inch+2&&Gamer.time){//display time left       
         let timeLeft = Math.floor(Gamer.time/60)+':'+Gamer.time%60;
         sctx.beginPath();
@@ -665,7 +716,7 @@ function mouse(Gamer = dummy, otherGamer = dummy, ball) {
 
 function modelInfo(m1) {
     sctx.save();
-    sctx.globalAlpha = 0.5;
+    sctx.globalAlpha = 0.7;
     sctx.lineWidth = 1;
     sctx.translate(mouX < 100 ? mouX : mouX > canvas.width - 120 ? mouX - 225 : mouX - 113, (mouY < canvas.height / 2) ? mouY + 60 : mouY - 350);
     sctx.beginPath();
@@ -676,7 +727,19 @@ function modelInfo(m1) {
     sctx.fillText(m1.nameDisplayed, 125, 35);
     sctx.font = "800 12px IM Fell English";
     const terrainAffecting = m1.inCover && m1.inRoughGround ? "in forest" : m1.inCover ? "in cover" : m1.inFastGround ? "on fast ground" : m1.inRoughGround ? "on rough terrain" : ``;
-    sctx.fillText(terrainAffecting, 25, 50)
+    sctx.fillText(terrainAffecting, 125, 170);
+    const aG = [], aO = [], pG = [], pO = [];
+        m1.abilities.activeGiven.forEach(el=>aG.push(typeof(el)==="string" ?el : el[0]));
+        m1.abilities.activeOwned.forEach(el=>aO.push(el[0]));
+        m1.abilities.passiveGiven.forEach(el=>pG.push(typeof(el)==="string" ?el : el[0]));
+        m1.abilities.passiveOwned.forEach(el=>pO.push(el[0]));
+    let abilities = [...aG,...aO,...pG,...pO];
+    for(let hblts = 0; hblts < abilities.length; hblts++){
+        let lowerLevel = hblts*20;
+        sctx.fillStyle = hblts<aG.length?'red':hblts<aG.length+aO.length?'blue':hblts<aG.length+aO.length+pG.length?'purple':'green';
+        sctx.fillText(JSON.stringify(abilities[hblts]), 125, 190+lowerLevel);
+    }
+
     for (let i = 0; i < 6; i++) { //draw stats
         sctx.save();
         let attributes = ['MOV', 'TAC', 'KICK', 'DEF', 'ARM', 'INF'];
@@ -855,13 +918,13 @@ function modelInfo(m1) {
     }
     sctx.stroke();
     sctx.beginPath(); //hp displayed
-    sctx.lineWidth = 19;
-    sctx.font = "900 38px IM Fell English ";
-    sctx.fillStyle = m1.hpMin === m1.hp ? "rgb(133, 176, 233)" : m1.hpMin > m1.icySponge ? "rgb(247, 201, 0)" : "rgb(204, 75, 1)";
+    sctx.lineWidth = 12;
+    sctx.font = "900 30px IM Fell English ";
+    sctx.fillStyle = m1.hpMin === m1.hp ? "rgb(133, 176, 233)" : m1.hpMin > m1.icySponge ? "rgb(247, 201, 0)" : "rgb(218, 33, 0)";
     sctx.strokeStyle = 'rgba(79, 82, 78, 0.753)';
     sctx.textAlign = "center";
-    sctx.strokeText(m1.hpMin, 220, 40);
-    sctx.fillText(m1.hpMin, 220, 40);
+    sctx.strokeText(m1.hpMin===m1.hp?m1.hpMin:m1.hpMin+` / `+m1.hp, 205, 40);
+    sctx.fillText(m1.hpMin===m1.hp?m1.hpMin:m1.hpMin+` / `+m1.hp, 205, 40);
     sctx.closePath();
     sctx.restore();
 }
@@ -869,7 +932,7 @@ function modelInfo(m1) {
 function escapist(m1, otherGamer, m2 = m1) {
             idear = 0;//used to identify abilities and smoothly jump between them
             rulerDopplers = [];
-            ruler = false;
+            ruler = false;mouseDrawTemplate = false;
             $('body').find('.snapBallButton').remove();
             $('body').find('.counterbox').off().remove();
             $(".infoAbilBox").remove();
@@ -1171,6 +1234,7 @@ function squadz(objx){
             		xXx.isGliding = obj.isGliding;
                     xXx.shouldntBeHere = obj.shouldntBeHere;
                     xXx.picRatio = obj.picRatio;
+                    xXx.nameSpec = obj.nameSpec;
                         if(obj.abilities.passiveGiven){
         let skila = []; obj.abilities.passiveGiven.forEach(el=>skila.push(el[0]));
         let skilb = []; obj.abilities.passiveOwned.forEach(el=>skilb.push(el[0]));
@@ -1372,6 +1436,7 @@ function endSquaddieActivation(m1, Gamer1, Gamer2, Gamer, switcher, teamz, turnT
                     m1.counterForAttack = [];
                 }
             }
+            m1.inFastGround = false;
         })
         counter++
     } //if everybody has activated

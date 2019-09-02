@@ -35,7 +35,7 @@ class Ball_marker {
             ctx.arc(this.x - 2 / this.ballSize, this.y - 2 / this.ballSize, this.ballSize, 0, Math.PI * 2, false);
             ctx.fillStyle = 'rgba(31, 30, 22, 0.5)';
             ctx.fill();
-            ctx.drawImage(this.ballPic, this.x - 0.9 * cm, this.y - 0.9 * cm, 1.8 * cm, 1.8 * cm)
+            pcl.drawImage(this.ballPic, this.x - 0.9 * cm, this.y - 0.9 * cm, 1.8 * cm, 1.8 * cm)
             ctx.save();
             ctx.clip();
             ctx.closePath();
@@ -66,7 +66,7 @@ class Ball_marker {
             ctx.arc(mouX - 2 / this.ballSize, mouY - 2 / this.ballSize, this.ballSize, 0, Math.PI * 2, false);
             ctx.fillStyle = 'rgba(31, 30, 22, 0.5)';
             ctx.fill();
-            ctx.drawImage(this.ballPic, mouX - 0.9 * cm, mouY - 0.9 * cm, 1.8 * cm, 1.8 * cm)
+            pcl.drawImage(this.ballPic, mouX - 0.9 * cm, mouY - 0.9 * cm, 1.8 * cm, 1.8 * cm)
             ctx.save();
             ctx.clip();
             ctx.closePath();

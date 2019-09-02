@@ -210,7 +210,7 @@ switcher = (event) => {
 
         $('#players').on(contextmenuEv, (event) => {
             defaultPreventer(event);
-            if (!teaMate.hasMoved && Gamer.active && distance(teaMate.posX, teaMate.posY, mouX, mouY) < (teaMate.baseRadius) &&
+         if (!teaMate.hasMoved && Gamer.active && distance(teaMate.posX, teaMate.posY, mouX, mouY) < (teaMate.baseRadius) &&
                 !teaMate.moveAura && teaMate.drawAbilityAura === 0 &&
                 //event.button == 2 &&
                  teaMate.isActivating && !teaMate.isKnockedDown) {
@@ -260,7 +260,25 @@ switcher = (event) => {
                 }
                 teaMate.isActivating = true;
                // $('#app').css('background', 'url(./icons/cursor/wood.jpg) 0 0 / 390px');
-                // //--the other guy reverting his state
+                // //--the other guy reverting his state;
+
+
+            if(hasActiveUnused(teaMate,"Natures Chill") )
+            {
+                teaMate.moveAura = false;
+                commonPreInstruction({ m1: teaMate });
+                const snaret = new Token(mouX, mouY, 1.5 * inch, "Natures Chill", Gamer.guild.color);
+                snaret.isInHand = true;
+                Gamer.tokens.push(snaret);
+                m1.drawAbilityAura = m1.baseRadius + 9.5 * inch;
+                $("#players").on('click.usingAbility',  () => {
+                    if (distance(m1.posX, m1.posY, mouX, mouY) <= m1.baseRadius + 9.5 * inch && snaret.isPlacable) {
+                        commonAfterInstruction({ m1: m1 })
+                    snaret.isInHand = false;
+                    makeActiveOpt(teaMate,"Natures Chill");
+                    }
+                })
+            }
 
                 let otherSquaddie = Gamer.squaddies.filter(el => el.isActivating === true).filter(el => el.name !== teaMate.name);
                 otherSquaddie.forEach(el => {el.isActivating = false;el.moveAura = false;});
@@ -973,6 +991,7 @@ if (m1.isKicking && ball.beingKicked) {
                                 $('#app').append(appMaker(m1, Gamer));
                                 $(`.playbookNodes`).empty();
                                 m1.hoverButtonAura = 0;
+                                $(".infoAbilBox").remove();
                             }); //bank momentum
                             $('#app').on('click', `#recdo2${m1.name}`, () => {
                                 $teamplays = [];
