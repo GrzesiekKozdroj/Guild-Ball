@@ -1362,6 +1362,8 @@ function endSquaddieActivation(m1, Gamer1, Gamer2, Gamer, switcher, teamz, turnT
     if (teamz.filter(el => !el.hasActivated).length === 0) { ////////resets turn
         teamz.forEach(m1 => {
             abilitiesCleaner(m1);
+                 Gamer.tokens.forEach((el,i)=>{if(el.type!=="trap")     Gamer.tokens.splice(i,1)});
+            otherGamer.tokens.forEach((el,i)=>{if(el.type!=="trap")otherGamer.tokens.splice(i,1)});
             m1.inRoughGround = false;
             m1.inFastGround = false;
             m1.terrainsMovPenalised = false;

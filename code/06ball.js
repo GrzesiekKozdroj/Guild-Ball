@@ -1,10 +1,11 @@
 "use strict";
 class Ball_marker {
-    constructor(x, y) {
+    constructor(x, y, type) {
         this.x = x;
         this.y = y;
         this.posX = this.x;
         this.posY = this.y;
+        this.type = type;
         this.baseRadius = smallBase;
         this.newX = 540;
         this.newY = 340;
@@ -31,15 +32,15 @@ class Ball_marker {
             ctx.lineWidth = 1;
             ctx.stroke();
             //ball background and image
-            ctx.beginPath();
-            ctx.arc(this.x - 2 / this.ballSize, this.y - 2 / this.ballSize, this.ballSize, 0, Math.PI * 2, false);
-            ctx.fillStyle = 'rgba(31, 30, 22, 0.5)';
-            ctx.fill();
+            pcl.beginPath();
+            pcl.arc(this.x - 2 / this.ballSize, this.y - 2 / this.ballSize, this.ballSize, 0, Math.PI * 2, false);
+            pcl.fillStyle = 'rgba(31, 30, 22, 0.5)';
+            pcl.fill();
             pcl.drawImage(this.ballPic, this.x - 0.9 * cm, this.y - 0.9 * cm, 1.8 * cm, 1.8 * cm)
-            ctx.save();
-            ctx.clip();
-            ctx.closePath();
-            ctx.restore();
+            pcl.save();
+            pcl.clip();
+            pcl.closePath();
+            pcl.restore();
         }
         if (distance(mouX, mouY, this.x, this.y) < this.ballSize) {
             ctx.save();
@@ -101,7 +102,8 @@ class Ball_marker {
         if (ball.isInHand) { drawCircle(ball.x, ball.y, this.teaMate + 1 * inch + ball.ballSize * 2, kickColor); }
     }
 }
-let ball = new Ball_marker(18 * inch, 18 * inch);
+let ball = new Ball_marker(18 * inch, 18 * inch,"theBall");
+let snowBall = new Ball_marker(undefined,undefined,"snowBall");
 
 function scatterRandomiser(x = mouX, y = mouY, mode, m1) {
     if(m1)m1.hasBall = false; ball.isOnGround = true;

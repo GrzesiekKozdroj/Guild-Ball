@@ -115,7 +115,7 @@ function payPrice (n,m1){
     }else{
         return false
     }
-}
+}else{console.log("no draw abil aura??")}
 
 }
 
@@ -274,7 +274,7 @@ function abilitiesEvents(m1, Gamer, otherGamer) {
         })//snap fire
 
     }//for m2
-    //////////////////////////////////////_____M2______///////////////////////////////////////////////////////
+    //////////////////////////////////////_____M3______///////////////////////////////////////////////////////
     for(let gh = 0; gh<Gamer.squaddies.length;gh++){
         let m3 = Gamer.squaddies[gh];
 
@@ -284,8 +284,6 @@ function abilitiesEvents(m1, Gamer, otherGamer) {
         commonPreInstruction({m1:m1});
         m1.drawAbilityAura = m1.baseRadius + 4 * inch;
         m1.pressedAbutton = true;
-        
-
         $("#players").on("click.usingAbility",()=>{
             if(idear==="blessingOfTheMoonGoddess" && 
                 distance(mouX, mouY, m3.posX, m3.posY) <=m3.baseRadius &&
@@ -375,6 +373,12 @@ function abilitiesEvents(m1, Gamer, otherGamer) {
                 }
             })
         });
-        
+        $("#app").on("click","#snowBall"+m1.name,()=>{console.log(hasActiveUnused(m1,"Snowball") , payPrice(1,m1))
+            if(hasActiveUnused(m1,"Snowball") && (m1.drawAbilityAura = 1) && payPrice(1,m1)){
+                m1.hasSnowBall = true;
+                makeActiveOpt(m1,"Snowball");
+                commonAfterInstruction({ m1: m1 });
+            }
+        })
     }
 }

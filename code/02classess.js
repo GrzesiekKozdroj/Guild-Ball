@@ -29,6 +29,7 @@ class Player {
         this.kickDist = kickDist;
         this.AkickDist = kickDist;
         this.hasBall = false;
+        this.hasSnowBall = false;
         this.isKicking = false;
         this.kickReRoll = 0;
 
@@ -191,14 +192,14 @@ class Player {
             if (v % 2 === 0) {
                 pcl.beginPath(); //circle around image
                 pcl.lineWidth = 3;
-                pcl.strokeStyle = this.hasBall ? 'black' : this.theGuild.color;
+                pcl.strokeStyle = this.hasBall ? 'black' : this.hasSnowBall? 'darkblue' : this.theGuild.color;
                 pcl.arc(x, y, bsc, v, v + 1, false);
                 pcl.stroke();
             } else {
                 pcl.beginPath(); //circle around image
                 pcl.arc(x, y, bsc, v, v + 1, false);
                 pcl.lineWidth = 3;
-                pcl.strokeStyle = this.hasBall ? 'white' : this.theGuild.color;
+                pcl.strokeStyle = this.hasBall || this.hasSnowBall? 'white' : this.theGuild.color;
                 pcl.stroke();
             }
         }
