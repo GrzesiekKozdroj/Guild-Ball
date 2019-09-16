@@ -729,9 +729,9 @@ function modelInfo(m1) {
     const terrainAffecting = m1.inCover && m1.inRoughGround ? "in forest" : m1.inCover ? "in cover" : m1.inFastGround ? "on fast ground" : m1.inRoughGround ? "on rough terrain" : ``;
     sctx.fillText(terrainAffecting, 125, 170);
     const aG = [], aO = [], pG = [], pO = [];
-        m1.abilities.activeGiven.forEach(el=>aG.push(typeof(el)==="string" ?el : el[0]));
+        m1.abilities.activeGiven.forEach(el=>aG.push(typeof el==="string" ?el : el[0]));
         m1.abilities.activeOwned.forEach(el=>aO.push(el[0]));
-        m1.abilities.passiveGiven.forEach(el=>pG.push(typeof(el)==="string" ?el : el[0]));
+        m1.abilities.passiveGiven.forEach(el=>pG.push(el[0]));
         m1.abilities.passiveOwned.forEach(el=>pO.push(el[0]));
     let abilities = [...aG,...aO,...pG,...pO];
     for(let hblts = 0; hblts < abilities.length; hblts++){

@@ -63,6 +63,7 @@ function abilityButtons(teaMate, Gamer, color) {
         abilities.push(anatomicalPrecision, backToShadows, closeControl, furious, isolatedTarget, lightFooted, lunarEclipse, swiftStrikes, 
             unpredictableMovement, wintersBlessing, venomousStrike);
     }
+
     return abilities.join('');
 }
 

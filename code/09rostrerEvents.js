@@ -9,9 +9,9 @@ let
     Solthecian = new Guild(...solthecian), Ratcatchers = new Guild(...ratcatchers), Union = new Guild(...union);
 
     function displayPlaybook(m1){//used to display playbook while making a roster
-        plajBookWraz()
-            for(let i = 0;i< m1.playBook.length;i++){
-                playbookStitcher(m1, i, playBookWrap.noWrap, "attack")
+        plajBookWraz();
+        for(let i = 0;i< m1.playBook.length;i++){
+                playbookStitcher(m1,m1, i, playBookWrap.noWrap, "attack");
             }
     }
 let buildGuildsVar;
@@ -149,7 +149,7 @@ function chooseTeam(sTD,guild) {//builds and displays an array of players for ea
             let squaddieName = $(this).data("name");
             let chosenSquaddie = new Player(...allPlayersAsArray.filter(el => el[16] === squaddieName)[0] );
             $(this).on("mouseenter swipe", () => {
-                displayPlaybook(chosenSquaddie)
+                displayPlaybook(chosenSquaddie);
                 $("#app").empty().append(appMaker(chosenSquaddie));
                 sendMessage(`${chosenSquaddie.identity.status}`)
             })

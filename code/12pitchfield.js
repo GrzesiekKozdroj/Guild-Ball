@@ -33,10 +33,6 @@ let bigBang = (e)=>{//document.addEventListener('DOMContentLoaded', function (e)
  document.addEventListener('keydown', (e) => {
     console.log(e.key);
 })
-
-
-
-
     plajBookWraz();
     //_____________________ON_GAME_PREPARATION_____________________________\\
     //\\_________________________________________________________________//\\

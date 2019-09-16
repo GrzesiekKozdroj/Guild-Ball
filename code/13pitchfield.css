@@ -2507,12 +2507,12 @@ body {
   border: solid rgba(58, 55, 55, 0.712);
 }
 
-.activeSkill:hover {
+.passiveSkill:hover, .activeSkill:hover {
   box-shadow: inset 0px 0px 25px darkblue, inset 0 0 15px rgba(9, 8, 87, 0.897), 0 0 20px darkblue, 0 0 20px rgba(60, 60, 82, 0.932);
   border: solid darkblue;
 }
 
-.activeSkill:active {
+.passiveSkill:active, .activeSkill:active {
   box-shadow: inset 0px 0px 25px darkblue, inset 0 0 15px rgba(9, 8, 87, 0.897), 0 0 20px darkblue, 0 0 20px rgba(60, 60, 82, 0.932);
   border: solid darkblue;
 }
@@ -3713,16 +3713,6 @@ html {
   border-radius: 50% !important;
 }
 
-.passiveSkill {
-  background-color: rgba(187, 168, 168, 0.349);
-  color: rgba(56, 56, 56, 0.938);
-  border: 0.2vw solid rgba(56, 56, 56, 0.938);
-}
-
-.activeSkill {
-  border: 0.2vw solid rgba(0, 0, 0, 0.938);
-}
-
 @keyframes circleGlow {
   1% {
     border-left: solid 0.5vw rgba(1, 157, 247, 0);
@@ -3762,6 +3752,45 @@ html {
   }
 }
 
+@keyframes UcircleGlow {
+  1% {
+    border-left: solid 0.5vw rgba(97, 64, 4, 0.95);
+    border-radius: 50%;
+  }
+  25% {
+    border: .1vw solid;
+    transform: translate(4vw, 0vw);
+    border-radius: 50%;
+  }
+  26% {
+    border-top: solid 0.5vw rgba(97, 64, 4, 0.95);
+    border-radius: 50%;
+  }
+  50% {
+    border: 0.1vw solid rgba(97, 64, 4, 0.95);
+    transform: translate(4vw, 4vw);
+    border-radius: 50%;
+  }
+  51% {
+    border-right: solid 0.5vw rgba(97, 64, 4, 0.95);
+    border-radius: 50%;
+  }
+  75% {
+    border: 0.1vw solid rgba(97, 64, 4, 0.95);
+    transform: translate(0, 4vw);
+    border-radius: 50%;
+  }
+  76% {
+    border-bottom: solid 0.5vw rgba(97, 64, 4, 0.95);
+    border-radius: 50%;
+  }
+  100% {
+    border: 0.1vw solid rgba(97, 64, 4, 0.95);
+    transform: translate(0, 0);
+    border-radius: 50%;
+  }
+}
+
 .skill {
   color: transparent;
   display: flex;
@@ -3771,28 +3800,10 @@ html {
 
 .skill .o1 {
   position: relative;
-  left: 0vw;
+  left: -2vw;
   top: -2vw;
   background-color: rgba(158, 191, 253, 0.836);
   border-radius: 50%;
-}
-
-.skill:hover {
-  border: 0.1vw solid rgba(0, 0, 138, 0.993);
-}
-
-.skill:hover .o1 {
-  box-shadow: 0 0 0.05vw 0.05vw rgba(189, 189, 255, 0.644), 0 0 0.1vw 0.1vw rgba(133, 133, 255, 0.4), 0 0 0.3vw 0.3vw rgba(0, 0, 255, 0.8);
-  left: -8%;
-  border: 0.03vw solid rgba(1, 157, 247, 0);
-  display: inline-block;
-  animation: 3s circleGlow infinite;
-  border-radius: 50%;
-}
-
-.skill:active {
-  box-shadow: 0 0 1vw darkblue, 0 0 0.8vw rgba(60, 60, 82, 0.932);
-  border: .1vw solid darkblue;
 }
 
 @keyframes infoBoxMove {
@@ -4038,4 +4049,78 @@ footer {
   width: .7vw;
   height: .7vw;
   animation: coinRotate 1s infinite alternate;
+}
+
+.passiveSkill {
+  background-color: rgba(187, 168, 168, 0.349);
+  color: transparent;
+  border: 0.2vw solid rgba(56, 56, 56, 0.938);
+  font-size: .1vw;
+}
+
+.passiveSkill:hover {
+  border: 0.1vw solid #af6025;
+}
+
+.passiveSkill:hover .o2 {
+  box-shadow: 0 0 0.05vw 0.05vw rgba(255, 234, 189, 0.644), 0 0 0.1vw 0.1vw rgba(255, 212, 133, 0.4), 0 0 0.3vw 0.3vw rgba(255, 145, 0, 0.8);
+  position: relative;
+  left: -2vw;
+  top: -2vw;
+  border: 0.03vw solid rgba(167, 116, 21, 0.95);
+  display: inline-block;
+  animation: 4s UcircleGlow infinite reverse;
+  border-radius: 50%;
+}
+
+.passiveSkill:active {
+  box-shadow: 0 0 1vw #8b5f00, 0 0 0.8vw rgba(82, 73, 60, 0.932);
+  border: 0.1vw solid #8b4f00;
+}
+
+.activeSkill {
+  border: 0.2vw solid rgba(0, 0, 0, 0.938);
+  font-size: .1vw;
+}
+
+.activeSkill:hover {
+  border: 0.1vw solid rgba(0, 0, 138, 0.993);
+}
+
+.activeSkill:hover .o1 {
+  box-shadow: 0 0 0.05vw 0.05vw rgba(189, 189, 255, 0.644), 0 0 0.1vw 0.1vw rgba(133, 133, 255, 0.4), 0 0 0.3vw 0.3vw rgba(0, 0, 255, 0.8);
+  position: relative;
+  left: -2vw;
+  top: -2vw;
+  border: 0.03vw solid rgba(1, 157, 247, 0);
+  display: inline-block;
+  animation: 3s circleGlow infinite;
+  border-radius: 50%;
+}
+
+.activeSkill:active {
+  box-shadow: 0 0 1vw darkblue, 0 0 0.8vw rgba(60, 60, 82, 0.932);
+  border: .1vw solid darkblue;
+}
+
+.activatingPassiveSkill .o2 {
+  position: relative;
+  box-shadow: 0 0 0.05vw 0.05vw rgba(255, 234, 189, 0.644), 0 0 0.1vw 0.1vw rgba(255, 212, 133, 0.4), 0 0 0.3vw 0.3vw rgba(255, 145, 0, 0.8);
+  left: -8%;
+  top: -2vw;
+  border: 0.03vw solid rgba(167, 116, 21, 0.95);
+  display: inline-block;
+  animation: 4s UcircleGlow infinite reverse;
+  border-radius: 50%;
+}
+
+.activatingPassiveSkillo1 .o1 {
+  position: relative;
+  box-shadow: 0 0 0.05vw 0.05vw rgba(255, 234, 189, 0.644), 0 0 0.1vw 0.1vw rgba(255, 212, 133, 0.4), 0 0 0.3vw 0.3vw rgba(255, 145, 0, 0.8);
+  left: -8%;
+  top: -2vw;
+  border: 0.03vw solid rgba(167, 116, 21, 0.95);
+  display: inline-block;
+  animation: 4s UcircleGlow infinite reverse;
+  border-radius: 50%;
 }

@@ -1422,16 +1422,8 @@ cursor:none;
 //     }
 // }
 
-.passiveSkill{
-    background-color:rgba(187, 168, 168, 0.349);
-    color:rgba(56, 56, 56, 0.938);
-    border: .2vw solid rgba(56, 56, 56, 0.938);
-}
-.activeSkill{
-    @extend %buttonAnimation2;
-    border: .2vw solid rgba(0, 0, 0, 0.938);
-}
 $blueOrbBorder:rgba(1, 157, 247, 0);
+
 @keyframes circleGlow{
     1%{
         border-left: solid .5vw $blueOrbBorder;
@@ -1470,7 +1462,44 @@ $blueOrbBorder:rgba(1, 157, 247, 0);
         border-radius:50%;
     }
 }
-
+@keyframes UcircleGlow{
+    1%{
+        border-left: solid .5vw $uniq;
+        border-radius:50%;
+    }
+    25%{
+        border:.1vw solid ;
+        transform:translate(4vw,0vw);
+        border-radius:50%;
+    }
+    26%{
+        border-top: solid .5vw $uniq;
+        border-radius:50%;
+    }
+    50%{
+        border:.1vw solid $uniq;
+        transform:translate(4vw,4vw);
+        border-radius:50%;
+    }
+    51%{
+        border-right: solid .5vw $uniq;
+        border-radius:50%;
+    }
+    75%{
+        border:.1vw solid $uniq;
+        transform:translate(0,4vw);
+        border-radius:50%;
+    }
+    76%{
+        border-bottom: solid .5vw $uniq;
+        border-radius:50%;
+    }
+    100%{
+        border:.1vw solid $uniq;
+        transform:translate(0,0);
+        border-radius:50%;
+    }
+}
 .skill{
     color:rgba(0,0,0,0);
 	display: flex;
@@ -1478,27 +1507,14 @@ $blueOrbBorder:rgba(1, 157, 247, 0);
     justify-content: center;
     .o1{
         position:relative;
-        left:0vw;
+        left:-2vw;
         top:-2vw;
         background-color:rgba(158, 191, 253, 0.836);
         border-radius:50%;
     }
-    &:hover{
-        border: .1vw solid hsla(240, 100%, 27%, 0.993);
-        .o1{
-            box-shadow:0 0 .05vw .05vw hsla(240, 100%, 87%, 0.644) ,0 0 .1vw .1vw hsla(240, 100%, 76%, 0.4) ,0 0 .3vw .3vw hsla(240, 100%, 50%, 0.8);
-            left:-8%;
-            border:.03vw solid $blueOrbBorder;
-            display:inline-block;
-            animation: 3s circleGlow infinite;
-            border-radius:50%;
-        }
-    }
-    &:active{
-        box-shadow: 0 0 1vw darkblue, 0 0 .8vw rgba(60, 60, 82, 0.932);
-        border: .1vw solid darkblue;
-    }
 }
+
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////
 @keyframes infoBoxMove{
@@ -1708,4 +1724,75 @@ footer{
     height:.7vw;
     animation:coinRotate 1s infinite alternate;
 }
+}
+
+.passiveSkill{
+    @extend %buttonAnimation2;
+    background-color:rgba(187, 168, 168, 0.349);
+    color:rgba(0,0,0,0);
+    border: .2vw solid rgba(56, 56, 56, 0.938);
+    font-size:.1vw;
+    &:hover{
+        border: .1vw solid $uniqText;
+        .o2{
+            box-shadow:0 0 .05vw .05vw hsla(41, 100%, 87%, 0.644) ,0 0 .1vw .1vw hsla(39, 100%, 76%, 0.4) ,0 0 .3vw .3vw hsla(34, 100%, 50%, 0.8);
+            position:relative;
+            left:-2vw;
+            top:-2vw;
+            border:.03vw solid $uniqBordr;
+            display:inline-block;
+            animation: 4s UcircleGlow infinite reverse;
+            border-radius:50%;
+        }
+    }
+    &:active{
+        box-shadow: 0 0 1vw rgb(139, 95, 0), 0 0 .8vw rgba(82, 73, 60, 0.932);
+        border: .1vw solid rgb(139, 79, 0);
+    }
+}
+.activeSkill{
+    @extend %buttonAnimation2;
+    border: .2vw solid rgba(0, 0, 0, 0.938);
+    font-size:.1vw;
+    &:hover{
+        border: .1vw solid hsla(240, 100%, 27%, 0.993);
+        .o1{
+            box-shadow:0 0 .05vw .05vw hsla(240, 100%, 87%, 0.644) ,0 0 .1vw .1vw hsla(240, 100%, 76%, 0.4) ,0 0 .3vw .3vw hsla(240, 100%, 50%, 0.8);
+            position:relative;
+            left:-2vw;
+            top:-2vw;
+            border:.03vw solid $blueOrbBorder;
+            display:inline-block;
+            animation: 3s circleGlow infinite;
+            border-radius:50%;
+        }
+    }
+    &:active{
+        box-shadow: 0 0 1vw darkblue, 0 0 .8vw rgba(60, 60, 82, 0.932);
+        border: .1vw solid darkblue;
+    }
+}
+.activatingPassiveSkill{
+    .o2{
+        position:relative;
+        box-shadow:0 0 .05vw .05vw hsla(41, 100%, 87%, 0.644) ,0 0 .1vw .1vw hsla(39, 100%, 76%, 0.4) ,0 0 .3vw .3vw hsla(34, 100%, 50%, 0.8);
+        left:-8%;
+        top:-2vw;
+        border:.03vw solid $uniqBordr;
+        display:inline-block;
+        animation: 4s UcircleGlow infinite reverse;
+        border-radius:50%;
+    }
+}
+.activatingPassiveSkillo1{
+    .o1{
+        position:relative;
+        box-shadow:0 0 .05vw .05vw hsla(41, 100%, 87%, 0.644) ,0 0 .1vw .1vw hsla(39, 100%, 76%, 0.4) ,0 0 .3vw .3vw hsla(34, 100%, 50%, 0.8);
+        left:-8%;
+        top:-2vw;
+        border:.03vw solid $uniqBordr;
+        display:inline-block;
+        animation: 4s UcircleGlow infinite reverse;
+        border-radius:50%;
+    }
 }

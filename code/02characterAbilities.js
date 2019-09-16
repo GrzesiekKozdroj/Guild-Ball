@@ -31,7 +31,8 @@ function makePassiveButton(id,text,picLink){
                 style='
                     background:url(${picLink.icon}) ${picLink.picRatio[0]}% ${picLink.picRatio[1]}%;  
                     background-size:${picLink.picRatio[2]}%;
-                    border-color:black;'
+                    border-color:black;
+                    font-size:0;'
                 data-desc="${picLink.desc}" 
                 data-type="${picLink.type}" 
                 data-name="${picLink.name}" 
@@ -41,7 +42,10 @@ function makePassiveButton(id,text,picLink){
                 data-sus="${picLink.sus?picLink.sus:-2}" 
                 data-opt="${picLink.opt?picLink.opt:-2}" 
                 data-aura="${picLink.aura?picLink.aura:-2}"
-            >${text}</div>`
+            >
+            <p class="o2"></p>
+            ${text}
+        </div>`
 }
 function hasActive (m1,name){
     return m1.abilities.activeOwned.some(el => el.includes(name)) || m1.abilities.passiveGiven.some(el => el.includes(name));
@@ -56,12 +60,14 @@ function hasActiveUnused(m1,name){
     return m1.abilities.activeOwned.some(el => el.includes(name) && el[1]<1)
 }
 function makeActiveButton(id,text,picLink){
+
     return `<div 
         id="${id}" 
         class="activeSkill skill" 
         style='
             background:url(${picLink.icon}) ${picLink.picRatio[0]}% ${picLink.picRatio[1]}%;  
-            background-size:${picLink.picRatio[2]}%;'
+            background-size:${picLink.picRatio[2]}%;
+            font-size:0;'
             data-desc="${picLink.desc}" 
             data-type="${picLink.type}" 
             data-name="${picLink.name}" 
@@ -92,7 +98,7 @@ class Token {
         this.baseRadius = size;
         this.type = type;
         this.icon = new Image();
-        this.icon.src = this.type === "trap" ? "./icons/snared.png" : this.type = "Nature's Chill" ? "./icons/Terrains/fastGround01.svg":"";
+        this.icon.src = this.type === "trap" ? "./icons/snared.png" : this.type === "Nature's Chill" ? "./icons/Terrains/fastGround01.svg":"";
         this.isInHand = false;
         this.isPlacable;
         this.color = color;
@@ -123,7 +129,7 @@ class Token {
             pcl.lineWidth = 2;
             pcl.closePath();
             pcl.restore();
-        }else if (this.type = "Nature's Chill"){
+        }else if (this.type === "Nature's Chill"){
             pcl.save();
             pcl.beginPath() 
             pcl.globalAlpha = 1;
