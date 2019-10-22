@@ -160,15 +160,6 @@ $(".infoAbilBox").remove();
 
 
 
-
-
-
-
-
-
-
-
-
 switcher = (event) => {
     $("#pitchfield").off();$("#players").off();
     Gamer1.active = Gamer1.active ? false : true;
@@ -198,59 +189,44 @@ switcher = (event) => {
                     }
                 })
         }
-    //$('#app').css('background', `url(${Gamer.guild.icon}) 0 -1px / ${26.8 * wlem}px no-repeat, url(./icons/cursor/wood.jpg) 0 0 / 390px`);
     for (let all = 0; all < Gamer.squaddies.length; all++) {
         let teaMate = Gamer.squaddies[all];
         let m1 = teaMate;
         m1.oldX = m1.posX; m1.oldY = m1.posY;
-        //adminToolz(event,teaMate,Gamer,'d')
-                //////////////////////////////////////////////////////////////////////////////////////////////
-        /////////////////////____MOVEMENT___EVENT___LISTENERS__________///////////////////////////////
-        //////////////////////////////////////////////////////////////////////////////////////////////
 
-        $('#players').on(contextmenuEv, (event) => {
-            defaultPreventer(event);
-         if (!teaMate.hasMoved && Gamer.active && distance(teaMate.posX, teaMate.posY, mouX, mouY) < (teaMate.baseRadius) &&
-                !teaMate.moveAura && teaMate.drawAbilityAura === 0 &&
-                //event.button == 2 &&
-                 teaMate.isActivating && !teaMate.isKnockedDown) {
-                teaMate.moveAura = true;
-                if(teaMate.isDodging)teaMate.isDodging = false;
-                teamz.forEach(el=>!el.isActivating || el.wasCharging?el.moveAura=false:el.moveAura=true)
-                // teaMate.isMoving = true;
-                sendMessage(`if ${teaMate.nameDisplayed} has influence, ${teaMate.nameDisplayed} could sprint, left-click to move. You can cancel by pressing escape, hovering beyond movement zone or on other player.`)
-                // message = `if ${teaMate.nameDisplayed} has influence, ${teaMate.nameDisplayed} could sprint, left-click to move. You can cancel by pressing escape, hovering beyond movement zone or on other player.`
-                // $('#app').empty();
-                // $('#app').append(appMaker(teaMate, Gamer));
-        $('#players').on('click', function (e) { //drops a guy down after movement if possible
-            if (teaMate.moveAura && distance (mouX,mouY,teaMate.posX,teaMate.posY)>teaMate.baseRadius*.42 &&
-                distance(teaMate.posX, teaMate.posY, mouX, mouY) <= ((teaMate.infMin > 0 ? teaMate.remainingRun : teaMate.remainingSprint) - teaMate.baseRadius
-                )) {
-                    defaultPreventer(e);
-                    teaMate.dropper(teamz);
-            }; //if
-        } //if
-        ); //mouseDown
-            } else if (Gamer.active && distance(teaMate.posX, teaMate.posY, mouX, mouY) < (teaMate.baseRadius) && 
-            //event.button == 2 && 
-            teaMate.isActivating) {
-                sendMessage(`${teaMate.nameDisplayed} has already moved this turn.`);
-                // $('#app').empty();
-                // $('#app').append(appMaker(teaMate, Gamer));
-            }
-        })
-        //##########################____MOVEMENT__ENDS___##########################################//
-
-        ////////////////////////////////////////////////////////////////////////////////////////////////
-        ////////////////////////__________DISPLAY__MODEL__PROPERTIES_______________//////////////////
-        //////////////////////////////////////////////////////////////////////////////////////////////
 
         $('#players').on(`click ${contextmenuEv}`, function (event) {
             defaultPreventer(event);
             //--01-S---activate a squaddie and display him
-            if (!Gamer.gp.hasBall && !teaMate.hasActivated && Gamer.squaddies.filter(el => el.isActivating).filter(el => el.name !== teaMate.name)
-                .filter(el => el.hasMoved || el.hasAttacked || el.hasDropped || el.isKicking || el.hasKicked || el.isMoving || el.pressedAbutton || el.hasSnapped).length < 1 && Gamer.active && distance(teaMate.posX, teaMate.posY, mouX, mouY) < (teaMate.baseRadius) && $('#app').find('.plajBookCell').length < 1 //&& !teaMate.isActivating
-            ) {
+            
+        //////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////____MOVEMENT___EVENT___LISTENERS__________///////////////////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////
+
+         if (__canMove(teaMate)) {
+         teaMate.moveAura = true;
+         if(teaMate.isDodging)teaMate.isDodging = false;
+         teamz.forEach(el=>!el.isActivating || el.wasCharging?el.moveAura=false:el.moveAura=true)
+         sendMessage(`if ${teaMate.nameDisplayed} has influence, ${teaMate.nameDisplayed} could sprint, left-click to move. You can cancel by pressing escape, hovering beyond movement zone or on other player.`);
+        $('#players').on('click', function (e) { //drops a guy down after movement if possible
+            if (__validMoveDeclaration(teaMate)) {
+             defaultPreventer(e);
+             teaMate.dropper(teamz);
+     }; //if
+ } //if
+ ); //mouseDown
+             } else if (Gamer.active && distance(teaMate.posX, teaMate.posY, mouX, mouY) < (teaMate.baseRadius) && 
+                teaMate.isActivating) {
+                    sendMessage(`${teaMate.nameDisplayed} has already moved this turn.`);
+             }
+ //##########################____MOVEMENT__ENDS___##########################################//
+
+ 
+        ////////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////__________DISPLAY__MODEL__PROPERTIES_______________//////////////////
+        //////////////////////////////////////////////////////////////////////////////////////////////
+
+            if (__chooseModelToActivate(teaMate)) {
                 Gamer.squaddies.forEach(elm=>{
                     elm.declaringAcharge = false;
                 });
@@ -258,48 +234,18 @@ switcher = (event) => {
                     teaMate.hasMoved = false;
                 }
                 teaMate.isActivating = true;
-               // $('#app').css('background', 'url(./icons/cursor/wood.jpg) 0 0 / 390px');
-                // //--the other guy reverting his state;
-
-
-            if(hasActiveUnused(teaMate,"Natures Chill") )
-            {
-                teaMate.moveAura = false;
-                idear = "Nature's Chill";
-                commonPreInstruction({ m1: teaMate });
-                const snaret = new Token(mouX, mouY, 1.5 * inch, "Nature's Chill", Gamer.guild.color);
-                snaret.isInHand = true;
-                Gamer.tokens.push(snaret);
-                m1.drawAbilityAura = m1.baseRadius + 9.5 * inch;
-                $("#players").on('click.usingAbility',  () => {
-                    if (distance(m1.posX, m1.posY, mouX, mouY) <= m1.baseRadius + 9.5 * inch && snaret.isPlacable) {
-                        commonAfterInstruction({ m1: m1 });
-                        teaMate.moveAura = true;
-                    snaret.isInHand = false;
-                    Gamer.tokens.forEach(el=>el.isInHand=false);
-                    makeActiveOpt(teaMate,"Natures Chill");
-                    $('#players').on('click', function (e) { //drops a guy down after movement if possible
-                        if (teaMate.moveAura && distance (mouX,mouY,teaMate.posX,teaMate.posY)>teaMate.baseRadius*.42 &&
-                            distance(teaMate.posX, teaMate.posY, mouX, mouY) <= ((teaMate.infMin > 0 ? teaMate.remainingRun : teaMate.remainingSprint) - teaMate.baseRadius
-                            )) {
-                                defaultPreventer(e);
-                                teaMate.dropper(teamz);
-                        }; //if
-                    } //if
-                    ); //mouseDown
-                    }
-                });
-            }
-
+                atTheStartOfActivation(teaMate);
+                terrainsDetector(m1)
                 let otherSquaddie = Gamer.squaddies.filter(el => el.isActivating === true).filter(el => el.name !== teaMate.name);
                 otherSquaddie.forEach(el => {el.isActivating = false;el.moveAura = false;});
+
                 message = `left-click on a ${Gamer.guild.name} squaddie model to activate it, or click on model to activate it and display movement zone.`;
                 $('#appDisplay').slideDown();
                 $('#app').empty().append(appMaker(Gamer.squaddies.filter(el => el.isActivating)[0], Gamer));
-            } else if (Gamer.active && distance(teaMate.posX, teaMate.posY, mouX, mouY) < (teaMate.baseRadius) && teaMate.hasActivated) {
-                sendMessage(`${teaMate.nameDisplayed} has already activated this turn.`)
-            }
-            if ($('#app').find('.activeOptions').length < 1 && Gamer.active && distance(teaMate.posX, teaMate.posY, mouX, mouY) < (teaMate.baseRadius) && !teaMate.hasActivated && Gamer.squaddies.filter(el => el.isActivating).length > 0) {
+            } else if ( __hasLareadyActivated(teaMate)) {sendMessage(`${teaMate.nameDisplayed} has already activated this turn.`)     }
+//tips giver:
+            if ($('#app').find('.activeOptions').length < 1 && Gamer.active && distance(teaMate.posX, teaMate.posY, mouX, mouY) < (teaMate.baseRadius) && 
+            !teaMate.hasActivated && Gamer.squaddies.filter(el => el.isActivating).length > 0) {
 
                 let activatingNow = Gamer.squaddies.filter(el => el.isActivating)[0];
                 const kickTip = activatingNow.hasBall ? `Kick the ball by pressing kick button, then either choosing teamate, goal post or pitch within the kick zone.<br>` : ``;
@@ -307,7 +253,8 @@ switcher = (event) => {
                 const KDTip = activatingNow.isKnockedDown ? `And is knocked down, can't attack, hold the ball or move. <br>` : ``;
 
 
-                if(activatingNow.name !== teaMate.name){sendMessage (`${teaMate.nameDisplayed} can't activate in middle of ${activatingNow.nameDisplayed} activation. ${activatingNow.nameDisplayed} needs to end its activation.`)} else if (activatingNow.name === teaMate.name){
+                if(activatingNow.name !== teaMate.name){sendMessage (`${teaMate.nameDisplayed} can't activate in middle of ${activatingNow.nameDisplayed} activation. ${activatingNow.nameDisplayed} 
+                needs to end its activation.`)} else if (activatingNow.name === teaMate.name){
                             sendMessage(`${teaMate.nameDisplayed} is activating now. 
                         ${kickTip}
                         ${fightTip}
@@ -316,34 +263,18 @@ switcher = (event) => {
                 $('#app').empty().append(appMaker(Gamer.squaddies.filter(el => el.isActivating)[0], Gamer));
                 $(`[id^="naturesChill"]`).addClass("activatingPassiveSkillo1");
             }
-        }) //--01-E--
-        //------X*X*X*X###X##X*X*X*X*X*--------------- does NOT work:
 
-        if (Gamer.isActive && distance(teaMate.posX, teaMate.posY, m2.posX, m2.posY) <= (teaMate.meleeRadius + m2.baseRadius)) {
-            message = `${teaMate.nameDisplayed} can attack enemies in its melee zone with click on their icon.`;
-            $('#app').empty();
-            $('#app').append(appMaker(teaMate, Gamer));
-        }
+
         //////////////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////_________________WAAAAR _______________/////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-
-
-
-        $('#players').on(contextmenuAtt, (event) => {
             for (let p = 0; p < otherGamer.squaddies.length; p++) {
                 let m2 = otherGamer.squaddies[p];
                 defaultPreventer(event);
                 //<<------== counteratttacks:
                 //<<---=== here counter attack buttons
                 //counteratttacks <<-------==
-                if ( m1.drawAbilityAura === 0 && m1.isActivating && 
-                    (distance(m1.posX, m1.posY, m2.posX, m2.posY) <= (m1.meleeRadius + m2.baseRadius) &&
-                    distance(mouX, mouY, m2.posX, m2.posY) < m2.baseRadius
-                )) {
+                if ( m1.drawAbilityAura === 0 && m1.isActivating && __isInMelee(m1, m2) ) {
                         if(m1.isMoving)unpredictableMovement(m1);
                     let inMelee = (distance(m1.posX, m1.posY, m2.posX, m2.posY) <= m2.meleeRadius + m1.baseRadius) ? true : false;
                     if ( (inMelee && !m2.counterForAttack.includes(m1.name) && !m2.knockedDown && otherGamer.momentum>0)
@@ -415,14 +346,40 @@ switcher = (event) => {
                     }else{
                         waaar(Gamer, otherGamer, m1, m2);
                     }; //counterattacks
-                }
-            }
-        }) //WAAR
+                }//WAAR
+
+                    if(m1.declaringAcharge && distance(mouX,mouY,m2.posX,m2.posY)<=m1.remainingRun+m1.meleeRadius//charge
+                        &&distance(mouX,mouY,m2.posX,m2.posY)<m2.baseRadius   ){
+                        m1.isCharging = true;
+                        m1.isMoving = true;
+                        m1.isPushed = false;
+                        m1.isDodging = false;
+                        m1.declaringAcharge = false;
+                        m1.chargeTarget = m2;
+                        sendMessage(`${m1.nameDisplayed} now must land within circle around chosen charge target and withing charge range.`)
+                $('#players').on('click.sprintCharge', () => {
+                    if (!m1.declaringAcharge && m1.isCharging && distance(m1.posX, m1.posY, mouX, mouY) <= m1.remainingRun && !m1.hasMoved
+                    && distance(mouX,mouY,m1.chargeTarget.posX,m1.chargeTarget.posY)<=m1.meleeRadius+m1.chargeTarget.baseRadius+m1.baseRadius    ) {
+                        $('#players').off('click.sprintCharge');
+                        teaMate.dropper();
+                        m1.wasCharging = true;
+                        movementHistory = [];
+                    }else{
+                        sendMessage(`place ${m1.nameDisplayed} comletely within red circle of the chosen charge target.`)
+                    }
+                })
+    
+                    }
+
+
+
+            }//m2 loop
+            
+            
+        }) //--01-E--
         //////////////////////////////////////////////////////////////////////////////////////////
         ///////////////////_____________CHAAAAARGEEEE_________________////////////////////////////
         //////////////////////////////////////////////////////////////////////////////////////////
-        for(let bvcm = 0; bvcm < otherGamer.squaddies.length; bvcm++){
-                let m2 = otherGamer.squaddies[bvcm];
             $('#app').on('click', `#charge` + teaMate.name, () => {
                 if ((m1.infMin > 1 || hasPassive(m1,"Furious")) && !m1.isMoving && !m1.hasMoved && !m1.isCharging && !m1.isKnockedDown && m1.isActivating && isEngaged(m1)<1) {
                     teaMate.declaringAcharge = true;
@@ -442,39 +399,6 @@ switcher = (event) => {
                 $(".infoAbilBox").remove();
             });
 
-            $('#players').on('click',()=>{
-                if(m1.declaringAcharge && distance(mouX,mouY,m2.posX,m2.posY)<=m1.remainingRun+m1.meleeRadius
-                    &&distance(mouX,mouY,m2.posX,m2.posY)<m2.baseRadius   ){
-                    //drawCircle(teaMate.posX, teaMate.posY, teaMate.remainingRun, chargeColor);
-                    m1.isCharging = true;
-                    m1.isMoving = true;
-                    m1.isPushed = false;
-                    m1.isDodging = false;
-                    m1.declaringAcharge = false;
-                    m1.chargeTarget = m2;
-                    sendMessage(`${m1.nameDisplayed} now must land within circle around chosen charge target and withing charge range.`)
-            $('#players').on('click.sprintCharge', () => {
-                if (!m1.declaringAcharge && m1.isCharging && distance(m1.posX, m1.posY, mouX, mouY) <= m1.remainingRun && !m1.hasMoved
-                && distance(mouX,mouY,m1.chargeTarget.posX,m1.chargeTarget.posY)<=m1.meleeRadius+m1.chargeTarget.baseRadius+m1.baseRadius    ) {
-                    $('#players').off('click.sprintCharge');
-                    teaMate.dropper();
-                    //m1.isMoving = false;
-                    //m1.hasMoved = true;
-                    m1.wasCharging = true;
-                    movementHistory = [];
-                    //endsquadieactivvariable = 
-                    //invalid charge declaration ends activation--------------------------------
-                    // if(m1.wasCharging&&otherGamer.squaddies.filter(el=>distance(teaMate.posX,teaMate.posY,el.posX,el.posY)<=(el.baseRadius+teaMate.meleeRadius)).length<1){
-                    //     endSquaddieActivation(teaMate,Gamer1,Gamer2,Gamer, switcher,teamz,turnTransition)
-                    // }
-                }else{
-                    sendMessage(`place ${m1.nameDisplayed} comletely within red circle of the chosen charge target.`)
-                }
-            })
-
-                }
-            })
-        }
 
 
         //////////////////////////////////////////////////////////////////////////////////////////
@@ -775,8 +699,16 @@ switcher = (event) => {
         $('#app').append(`<div class="guildSymbol" style="width:100%;height:27vw;background:url(${Gamer.guild.icon}) 0 -1px / ${26.8 * wlem}px no-repeat;"></div><div class='the-first-info' style="margin-top:${1 * hlem}px">${Gamer.guild.name} Guild must now resolve goal kick with left-click. Then proceed with normal activation.</div>`);
     }
 
-} //----------------Main events teaMate m1 loop
-//switcher ends
+} //switcher ends
+
+
+
+
+
+
+
+
+
 
 
 

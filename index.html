@@ -1,23 +1,11 @@
 <!DOCTYPE html>
 <html>
     <head >
-
         <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1" />
         <title>Pitchfield</title>
-        <!-- <script>document.documentElement.setAttribute("data-browser", navigator.userAgent);</script> -->
-        <link rel="stylesheet" type="text/css" href="./code/13pitchfield.css" />
-        <!-- <script src="/socket.io/socket.io.js">       </script> -->
+        <link rel="stylesheet" type="text/css" href="./code/13pitchfield.min.css" />
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
-        <!-- <style>
-                body { font: 13px Helvetica, Arial; }
-                form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
-                form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
-                form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
-                #messages { list-style-type: none; margin: 0; padding: 0; }
-                #messages li { padding: 5px 10px; }
-                #messages li:nth-child(odd) { background: #eee; }
-              </style> -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
     </head>
 
     <body>
@@ -25,43 +13,22 @@
         <section id="gameScreen">                   </section>
 
 
-        <script type="text/javascript" src='./code/01globalVariables.js'>   </script>
-        <script type="text/javascript" src='./code/02classess.js'>          </script>
-        <script type="text/javascript" src='./code/02characterAbilities.js'></script>
-        <script type="text/javascript" src='./code/03diceRoll.js'>          </script>
-        <script type="text/javascript" src='./code/03abilitiesButtons.js'>  </script>
-        <script type="text/javascript" src='./code/04toolsFunctions.js'>    </script>
-        <script type="text/javascript" src='./code/05animation.js'>         </script>
-        <script type="text/javascript" src='./code/06ball.js'>              </script>
-        <script type="text/javascript" src='./code/07terrains.js'>          </script>
-        <script type="text/javascript" src='./code/08guilds.js'>            </script>
-        <script type="text/javascript" src='./code/09rostrerEvents.js'>     </script>
-        <script type="text/javascript" src='./code/10playerTemplateFile.js'></script>
-        <script type="text/javascript" src='./code/11ballsEvents.js'>       </script>
-        <script type="text/javascript" src='./code/11mouseEvents.js'>       </script>
-        <script type="text/javascript" src='./code/12pitchfield.js'>        </script>
-        <!-- <script src ='./code/gimball.js'>            </script> -->
-        <!-- <section>
-                <ul id="messages"></ul>
-                <form action="">
-                  <input id="m" autocomplete="off" /><button>Send</button>
-                </form>
-            <script>
-              var socket = io();
-              $( () => {
-                var socket = io();
-                $('form').submit(function(e){
-                  e.preventDefault(); // prevents page reloading
-                  socket.emit('chat message', $('#m').val());
-                  //$('#m').val('');
-                  return false;
-                });
-                socket.on('chat message', function(msg){
-                  $('#messages').append($('<li>').text(msg));
-                });
-              });
-            </script>
-  </section> -->
-
+        <script src='./code/01globalVariables.js'>   </script>
+        <script src='./code/02classess.js'>          </script>
+        <script src='./code/02characterAbilities.js'></script>
+        <script src='./code/03diceRoll.js'>          </script>
+        <script src='./code/03abilitiesButtons.js'>  </script>
+        <script src='./code/04toolsFunctions.js'>    </script>
+        <script src='./code/05animation.js'>         </script>
+        <script src='./code/06ball.js'>              </script>
+        <script src='./code/07terrains.js'>          </script>
+        <script src='./code/08guilds.js'>            </script>
+        <script src='./code/09rostrerEvents.js'>     </script>
+        <script src='./code/10playerTemplateFile.js'></script>
+        <script src='./code/11conditionals.js'>      </script>
+        <script src='./code/11ballsEvents.js'>       </script>
+        <script src='./code/11mouseEvents.js'>       </script>
+        <script src='./code/12pitchfield.js'>        </script>
+ <!--   <script src ='./code/gimball.js'>                                   </script> -->
     </body>
 </html>

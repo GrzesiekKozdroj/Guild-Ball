@@ -114,53 +114,53 @@ function actionButtons(teaMate, Gamer, color = Gamer.guild.color) {
     let $assignBallButton = counter === 0 || Boolean(counter === 3 && Boolean(
         Boolean(Gamer.deployment[0] < canvas.height / 2 && ball.y > canvas.height / 2 - ball.ballSize) ||
         Boolean(Gamer.deployment[0] > canvas.height / 2 && ball.y < canvas.height / 2 + ball.ballSize))) ? 
-        makeActiveActionButton(teaMate,'giveBallTo',"a${guildName}"  ,color,"Give Ball",100,40) 
+        makeActiveActionButton(teaMate,'giveBallTo',"a"+guildName  ,color,"Give Ball",100,40) 
     :
         (distance(ball.x, ball.y, teaMate.posX, teaMate.posY) < ball.ballSize + teaMate.baseRadius + 1 * inch &&
-        ball.isOnGround) ?makeActiveActionButton(teaMate,'snapBall',"a${guildName}"  ,color,"Snap Ball",50,20) 
+        ball.isOnGround) ?makeActiveActionButton(teaMate,'snapBall', "a"+guildName ,color,"Snap Ball",50,20) 
     : 
-        teaMate.hasBall && counter > 4 ? makeActiveActionButton(teaMate,"dropBall","a${guildName}",color,"drop ball",50,20) : makeInactiveActionButton(teaMate,"snapBall","a${guildName}",color,"Snap Ball",50,20);
+        teaMate.hasBall && counter > 4 ? makeActiveActionButton(teaMate,"dropBall","a"+guildName,color,"drop ball",50,20) : makeInactiveActionButton(teaMate,"snapBall","a"+guildName,color,"Snap Ball",50,20);
     //kick
-    let $kickButton = (teaMate.hasBall && teaMate.infMin > 0 && counter === 5 || counter === 2) ? makeActiveActionButton(teaMate,'kick',"a${guildName}"  ,color,"Kick",100,40) : makeInactiveActionButton(teaMate,'kick',"a${guildName}"  ,color,"Kick",100,40);
+    let $kickButton = (teaMate.hasBall && teaMate.infMin > 0 && counter === 5 || counter === 2) ? makeActiveActionButton(teaMate,'kick',"a"+guildName ,color,"Kick",100,40) : makeInactiveActionButton(teaMate,'kick',"a"+guildName ,color,"Kick",100,40);
     //charge
-    let $chargeButton = ((teaMate.infMin > 1 || hasPassive(teaMate,"Furious"))&& !teaMate.isMoving && !teaMate.hasMoved && !teaMate.isEngaged && counter > 4) ? makeActiveActionButton(teaMate,'charge',"a${guildName}"  ,color,"Charge",100,0) : makeInactiveActionButton(teaMate,'charge',"a${guildName}"  ,color,"Charge",100,0);
+    let $chargeButton = ((teaMate.infMin > 1 || hasPassive(teaMate,"Furious"))&& !teaMate.isMoving && !teaMate.hasMoved && !teaMate.isEngaged && counter > 4) ? makeActiveActionButton(teaMate,'charge',"a"+guildName ,color,"Charge",100,0) : makeInactiveActionButton(teaMate,'charge',"a"+guildName ,color,"Charge",100,0);
     //bonus time
-    let $bonusTimeButton = (Gamer.momentum > 0 && !teaMate.bonusTime) ? makeActiveActionButton(teaMate,'bonusTime',"a${guildName}"  ,color,"Bonus Time",50,0) : makeInactiveActionButton(teaMate,'bonusTime',"a${guildName}"  ,color,"Bonus Time",50,0);
+    let $bonusTimeButton = (Gamer.momentum > 0 && !teaMate.bonusTime) ? makeActiveActionButton(teaMate,'bonusTime',"a"+guildName  ,color,"Bonus Time",50,0) : makeInactiveActionButton(teaMate,'bonusTime',"a"+guildName ,color,"Bonus Time",50,0);
     //heal self
-    let $healSelfButton = (Gamer.momentum > (!teaMate.isDiseased ? 0 : 1) && teaMate.hpMin < teaMate.hp && teaMate.heal < 1 && teaMate.removedConditions !== 1) ? makeActiveActionButton(teaMate,'healSelf',"a${guildName}"  ,color,"Heal",50,40) : makeInactiveActionButton(teaMate,'healSelf',"a${guildName}"  ,color,"Heal",50,40);
+    let $healSelfButton = (Gamer.momentum > (!teaMate.isDiseased ? 0 : 1) && teaMate.hpMin < teaMate.hp && teaMate.heal < 1 && teaMate.removedConditions !== 1) ? makeActiveActionButton(teaMate,'healSelf',"a"+guildName,color,"Heal",50,40) : makeInactiveActionButton(teaMate,'healSelf',"a"+guildName ,color,"Heal",50,40);
     //forfeit move
-    let $forfeitMove = (teaMate.isKnockedDown) ? makeActiveActionButton(teaMate,'forfeitMove',"a${guildName}"  ,color,"Forfeit Move",75,80) : makeInactiveActionButton(teaMate,'forfeitMove',"a${guildName}"  ,color,"Forfeit Move",75,80);
+    let $forfeitMove = (teaMate.isKnockedDown) ? makeActiveActionButton(teaMate,'forfeitMove',"a"+guildName,color,"Forfeit Move",75,80) : makeInactiveActionButton(teaMate,'forfeitMove',"a"+guildName,color,"Forfeit Move",75,80);
     //remove conditions self
     let $removeConditionsButton = (teaMate.removedConditions < 1 && teaMate.heal !== 1 && Gamer.momentum > (!teaMate.isDiseased ? 0 : 1) &&
         (teaMate.isPoisoned || teaMate.isBleeding || teaMate.isKnockedDown || teaMate.isSnared || teaMate.isBurning || teaMate.isDiseased)) ? 
-        makeActiveActionButton(teaMate,'removeConditions',"a${guildName}"  ,color,"Remove Conditions",100,80) : makeInactiveActionButton(teaMate,'removeConditions',"a${guildName}"  ,color,"Remove Conditions",100,80);
+        makeActiveActionButton(teaMate,'removeConditions',"a"+guildName,color,"Remove Conditions",100,80) : makeInactiveActionButton(teaMate,'removeConditions',"a"+guildName,color,"Remove Conditions",100,80);
     //heal friend
     let $healAFriend = (Gamer.momentum > 1 && Gamer.squaddies
             .filter(el => el.hpMin < el.hp)
             .filter(el => el.name !== teaMate.name)
             .filter(el => distance(el.posX, el.posY, teaMate.posX, teaMate.posY) <= (teaMate.baseRadius + el.baseRadius + 8 * inch))
-            .filter(el => el.heal < 1).length > 0) ? makeActiveActionButton(teaMate,'healAFriend',"a${guildName}"  ,color,"Heal a Friend",50,100) : makeInactiveActionButton(teaMate,'healAFriend',"a${guildName}"  ,color,"Heal a Friend",50,100);
+            .filter(el => el.heal < 1).length > 0) ? makeActiveActionButton(teaMate,'healAFriend',"a"+guildName,color,"Heal a Friend",50,100) : makeInactiveActionButton(teaMate,'healAFriend',"a"+guildName  ,color,"Heal a Friend",50,100);
     //remove conditions friend
     let $takeAbreather = (Gamer.momentum > 1 && Gamer.squaddies
             .filter(el => el.isBleeding || el.isBurning || el.isDiseased || el.isKnockedDown || el.isPoisoned || el.isSnared)
             .filter(el => el.name !== teaMate.name)
             .filter(el => distance(el.posX, el.posY, teaMate.posX, teaMate.posY) <= (teaMate.baseRadius + el.baseRadius + 8 * inch))
             .filter(el => el.removedConditions < 1)
-            .filter(el => el.heal < 1).length > 0) ? makeActiveActionButton(teaMate,'takeAbreather',"a${guildName}"  ,color,"Take a Breather",25,100)
-         :  makeInactiveActionButton(teaMate,'takeAbreather',"a${guildName}"  ,color,"Take a Breather",25,100);
-    let $glidingButton = Gamer.momentum > 0 && !hasPassive(teaMate,"Light Footed")?  makeActiveActionButton(teaMate,'glide',"a${guildName}"  ,color,"Glide",25,40) : makeInactiveActionButton(teaMate,'glide',"a${guildName}"  ,color,"Glide",25,40);
+            .filter(el => el.heal < 1).length > 0) ? makeActiveActionButton(teaMate,'takeAbreather',"a"+guildName,color,"Take a Breather",25,100)
+         :  makeInactiveActionButton(teaMate,'takeAbreather',"a"+guildName,color,"Take a Breather",25,100);
+    let $glidingButton = Gamer.momentum > 0 && !hasPassive(teaMate,"Light Footed")?  makeActiveActionButton(teaMate,'glide',"a"+guildName,color,"Glide",25,40) : makeInactiveActionButton(teaMate,'glide',"a"+guildName,color,"Glide",25,40);
 
-    let $influenceButtons = counter > 6 || counter > 2 && counter < 5 ? [makeActiveActionButton(teaMate,'addInf',"a${guildName}"  ,color,"+inf+",0,0),
-    makeActiveActionButton(teaMate,'minInf',"a${guildName}"  ,color,"-inf-",100,60)] : [makeInactiveActionButton(teaMate,'addInf',"a${guildName}"  ,color,"+inf+",0,0),
-    makeInactiveActionButton(teaMate,'minInf',"a${guildName}"  ,color,"-inf-",100,60)];
+    let $influenceButtons = counter > 6 || counter > 2 && counter < 5 ? [makeActiveActionButton(teaMate,'addInf',"a"+guildName,color,"+inf+",0,0),
+    makeActiveActionButton(teaMate,'minInf',"a"+guildName,color,"-inf-",100,60)] : [makeInactiveActionButton(teaMate,'addInf',"a"+guildName,color,"+inf+",0,0),
+    makeInactiveActionButton(teaMate,'minInf',"a"+guildName,color,"-inf-",100,60)];
     
 
-    let $kickReRoll = teaMate.kickReRoll===1? makeActiveActionButton(teaMate,'kickReRoll',"a${guildName}"  ,color,"Re-roll Kick",50,60):makeInactiveActionButton(teaMate,'kickReRoll',"a${guildName}"  ,color,"Re-roll Kick",50,60);
-    let $rulerButton = makeActiveActionButton(teaMate,'ruler',"a${guildName}"  ,color,"Ruler",0,80);
-    let $passActivationButton = counter < 2 ? makeActiveActionButton(teaMate,'passActivation',"a${guildName}"  ,color,"End Deployment",100,20) :
-        counter < 3 ? makeActiveActionButton(teaMate,'passActivation',"a${guildName}"  ,color,"End Kick Off!",75,20) :
-        counter < 5 || counter > 6 ? makeActiveActionButton(teaMate,'passActivation',"a${guildName}"  ,color,"End Allocation",75,20) :
-        makeActiveActionButton(teaMate,'passActivation',"a${guildName}"  ,color,"End Activation",75,20);
+    let $kickReRoll = teaMate.kickReRoll===1? makeActiveActionButton(teaMate,'kickReRoll',"a"+guildName,color,"Re-roll Kick",50,60):makeInactiveActionButton(teaMate,'kickReRoll',"a"+guildName,color,"Re-roll Kick",50,60);
+    let $rulerButton = makeActiveActionButton(teaMate,'ruler',"a"+guildName,color,"Ruler",0,80);
+    let $passActivationButton = counter < 2 ? makeActiveActionButton(teaMate,'passActivation',"a"+guildName,color,"End Deployment",100,20) :
+        counter < 3 ? makeActiveActionButton(teaMate,'passActivation',"a"+guildName,color,"End Kick Off!",75,20) :
+        counter < 5 || counter > 6 ? makeActiveActionButton(teaMate,'passActivation',"a"+guildName,color,"End Allocation",75,20) :
+        makeActiveActionButton(teaMate,'passActivation',"a"+guildName,color,"End Activation",75,20);
     let bod = [
         $bonusTimeButton,
         $chargeButton,

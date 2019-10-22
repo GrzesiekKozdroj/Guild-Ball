@@ -37,6 +37,7 @@ function anime(m1, teams, otherGamer, options) {
 
 
     let anim = (time) => {
+        terrainsDetector(m1);
         if (!startTime) {
             startTime = time;
         }
@@ -177,5 +178,5 @@ function anime(m1, teams, otherGamer, options) {
             !continueMovement ? requestAnimationFrame(anim) : false;
         }
     }
-    if ((m1.remainingRun > 0 && m1.isMoving) || m1.isDodging || m1.isPushed) { anim() };
+    if ((m1.remainingRun > 0 && m1.isMoving) || m1.isDodging || m1.isPushed ) { anim() };
 };

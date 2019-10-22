@@ -535,7 +535,6 @@ function legalPlacementDetector(m1) {
 
 
 function mouse(Gamer = dummy, otherGamer = dummy, ball) {
-    //if (teamz.filter(el => el.moveAura || el.isDodging || el.isPushed).length > 0 || ball.isInHand) {} else {
     drawTemplateOnMouse();
     sctx.globalAplha = 1;
     sctx.strokeStyle = 'white';
