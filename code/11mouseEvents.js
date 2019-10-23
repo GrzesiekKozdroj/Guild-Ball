@@ -193,9 +193,9 @@ switcher = (event) => {
         let teaMate = Gamer.squaddies[all];
         let m1 = teaMate;
         m1.oldX = m1.posX; m1.oldY = m1.posY;
+        console.log(m1.nameDisplayed)
 
-
-        $('#players').on(`click ${contextmenuEv}`, function (event) {
+        $('#players').on(`click`, function (event) {
             defaultPreventer(event);
             //--01-S---activate a squaddie and display him
             
@@ -483,7 +483,6 @@ switcher = (event) => {
             teaMate.hoverButtonAura = 0;
             $(".infoAbilBox").remove();
         });
-
         $('#app').on('click', '#removeConditions' + teaMate.name, () => {
             if (teaMate.heal !== 1 && teaMate.removedConditions < 1 && Gamer.momentum > teaMate.isDiseased ? 1 : 0) {
                 teaMate.pressedAbutton = true;
@@ -502,7 +501,6 @@ switcher = (event) => {
             teaMate.hoverButtonAura = 0;
             $(".infoAbilBox").remove();
         });
-
         $('#app').on('click', '#healAFriend' + teaMate.name, () => {
             healCursor = 1;
             //cursor update
@@ -521,7 +519,6 @@ switcher = (event) => {
                 }
             })
         });
-
         $("#app").on('mouseenter', `#healAFriend` + teaMate.name, function() {
             teaMate.hoverButtonAura = teaMate.baseRadius+8*inch;
             $(".infoAbilBox").remove();
