@@ -250,7 +250,7 @@ function buttonStitching(wrap, m1, m2, ball, Gamer, mode, continueMovement) {
 } //buttons loop
 
 
-function waaar(Gamer, otherGamer, m1, victim, mode = 'attack', continueMovement) {console.log("Fahad Charge")
+function waaar(Gamer, otherGamer, m1, victim, mode = 'attack', continueMovement) {
     m1.moveAura = false;
     let m2 = victim;
     mouseDrawTemplate = false;
@@ -279,7 +279,8 @@ function waaar(Gamer, otherGamer, m1, victim, mode = 'attack', continueMovement)
         if (mode === 'attack' || mode === 'charge') {
             plajBookWraz();//clears playbook container template
             m1.hasAttacked = true;
-            m1.infMin -= m1.wasCharging && hasPassive(m1,"Furious")? 0 : m1.wasCharging? 2 : 1;
+            let attackPrice = m1.wasCharging && hasPassive(m1,"Furious") ? 0 : m1.wasCharging ? 2 : 1;
+            m1.infMin -= attackPrice;
             $playBookCircle = [];
             $playBookTop = [];
         }//if mode=attack
