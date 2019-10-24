@@ -2922,14 +2922,14 @@ td {
   flex-wrap: wrap;
   flex-direction: row;
   align-items: middle;
-  width: 70%;
+  width: 47%;
   padding: 1px;
   color: transparent;
 }
 
 .domesticButtons #actionButtons div, .domesticButtons #traitPlaysButtons div {
-  width: 4vw !important;
-  height: 4vw;
+  width: 3vw !important;
+  height: 3vw;
   font-size: 1vw;
   display: flex;
   flex-direction: row;
@@ -2959,8 +2959,8 @@ td {
 }
 
 .domesticButtons #traitPlaysButtons div {
-  width: 4vw;
-  height: 4vw;
+  width: 3vw;
+  height: 3vw;
   margin: .06vw;
   max-height: 4vw;
 }
@@ -3702,7 +3702,7 @@ html {
 }
 
 #actionButtons {
-  height: 21vw;
+  height: 13vw;
 }
 
 #actionButtons [id^="snapBall"] {
@@ -3720,7 +3720,7 @@ html {
   }
   25% {
     border: .1vw solid;
-    transform: translate(4vw, 0vw);
+    transform: translate(3vw, 0vw);
     border-radius: 50%;
   }
   26% {
@@ -3729,7 +3729,7 @@ html {
   }
   50% {
     border: 0.1vw solid rgba(1, 157, 247, 0);
-    transform: translate(4vw, 4vw);
+    transform: translate(3vw, 3vw);
     border-radius: 50%;
   }
   51% {
@@ -3738,7 +3738,7 @@ html {
   }
   75% {
     border: 0.1vw solid rgba(1, 157, 247, 0);
-    transform: translate(0, 4vw);
+    transform: translate(0, 3vw);
     border-radius: 50%;
   }
   76% {
@@ -3759,7 +3759,7 @@ html {
   }
   25% {
     border: .1vw solid;
-    transform: translate(4vw, 0vw);
+    transform: translate(3vw, 0vw);
     border-radius: 50%;
   }
   26% {
@@ -3768,7 +3768,7 @@ html {
   }
   50% {
     border: 0.1vw solid rgba(97, 64, 4, 0.95);
-    transform: translate(4vw, 4vw);
+    transform: translate(3vw, 3vw);
     border-radius: 50%;
   }
   51% {
@@ -3777,7 +3777,7 @@ html {
   }
   75% {
     border: 0.1vw solid rgba(97, 64, 4, 0.95);
-    transform: translate(0, 4vw);
+    transform: translate(0, 3vw);
     border-radius: 50%;
   }
   76% {
@@ -4065,8 +4065,8 @@ footer {
 .passiveSkill:hover .o2 {
   box-shadow: 0 0 0.05vw 0.05vw rgba(255, 234, 189, 0.644), 0 0 0.1vw 0.1vw rgba(255, 212, 133, 0.4), 0 0 0.3vw 0.3vw rgba(255, 145, 0, 0.8);
   position: relative;
-  left: -2vw;
-  top: -2vw;
+  left: -50%;
+  top: -50%;
   border: 0.03vw solid rgba(167, 116, 21, 0.95);
   display: inline-block;
   animation: 4s UcircleGlow infinite reverse;
@@ -4090,8 +4090,8 @@ footer {
 .activeSkill:hover .o1 {
   box-shadow: 0 0 0.05vw 0.05vw rgba(189, 189, 255, 0.644), 0 0 0.1vw 0.1vw rgba(133, 133, 255, 0.4), 0 0 0.3vw 0.3vw rgba(0, 0, 255, 0.8);
   position: relative;
-  left: -2vw;
-  top: -2vw;
+  left: -50%;
+  top: -50%;
   border: 0.03vw solid rgba(1, 157, 247, 0);
   display: inline-block;
   animation: 3s circleGlow infinite;
@@ -4106,8 +4106,8 @@ footer {
 .activatingPassiveSkill .o2 {
   position: relative;
   box-shadow: 0 0 0.05vw 0.05vw rgba(255, 234, 189, 0.644), 0 0 0.1vw 0.1vw rgba(255, 212, 133, 0.4), 0 0 0.3vw 0.3vw rgba(255, 145, 0, 0.8);
-  left: -8%;
-  top: -2vw;
+  left: -50%;
+  top: -50%;
   border: 0.03vw solid rgba(167, 116, 21, 0.95);
   display: inline-block;
   animation: 4s UcircleGlow infinite reverse;
@@ -4117,10 +4117,119 @@ footer {
 .activatingPassiveSkillo1 .o1 {
   position: relative;
   box-shadow: 0 0 0.05vw 0.05vw rgba(255, 234, 189, 0.644), 0 0 0.1vw 0.1vw rgba(255, 212, 133, 0.4), 0 0 0.3vw 0.3vw rgba(255, 145, 0, 0.8);
-  left: -8%;
-  top: -2vw;
+  left: -50%;
+  top: -50%;
   border: 0.03vw solid rgba(167, 116, 21, 0.95);
   display: inline-block;
   animation: 4s UcircleGlow infinite reverse;
   border-radius: 50%;
+}
+
+#gameTypeForm {
+  background: darkolivegreen;
+  color: white;
+  margin: auto;
+  max-width: 41vw;
+  min-width: 500px;
+  height: 97vh;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
+}
+
+#quickGamePic {
+  margin-left: 20%;
+  display: block;
+  width: 10vw;
+  height: 10vw;
+  position: relative;
+  left: 0vw;
+  top: -0vw;
+  background: url("../icons/backgrounds/quickGame.jpg");
+  background-size: cover;
+  border: 0.3vw solid #866511;
+  border-radius: 47%;
+}
+
+#ownGamePic {
+  margin-right: 20%;
+  display: block;
+  width: 10vw;
+  height: 10vw;
+  position: relative;
+  left: 0vw;
+  top: -0vw;
+  background: url("../icons/backgrounds/ownGame.jpg");
+  background-size: cover;
+  border: 0.3vw solid #866511;
+  border-radius: 47%;
+}
+
+.modeHover:hover {
+  box-shadow: inset 0px 0px 55px darkblue, inset 0 0 45px rgba(9, 8, 87, 0.897), 0 0 20px darkblue, 0 0 20px rgba(60, 60, 82, 0.932);
+  border: solid darkblue;
+}
+
+.introductionInfo {
+  margin: 3% 20% 3% 20%;
+  width: 33%;
+  height: 10%;
+  color: white;
+  background: linear-gradient(0.25turn, darkolivegreen, #636044 20%, #636044 80%, darkolivegreen);
+  border-top: 0.2vw solid #866511;
+  border-bottom: 0.2vw solid #866511;
+  border-left: 0;
+  border-right: 0;
+  border-radius: 5%;
+  text-align: center;
+  font-size: 1vw;
+}
+
+.introductionInfo:required {
+  box-shadow: none;
+}
+
+#whotsIts {
+  padding: 1vw 2vw;
+  margin: -10% 25% 5vh 25%;
+  width: 50%;
+  height: 13vh;
+  background: linear-gradient(0.25turn, darkolivegreen, #636044 20%, #636044 80%, darkolivegreen);
+  border-top: 0.2vw solid #866511;
+  border-bottom: 0.2vw solid #866511;
+  border-left: 0;
+  border-right: 0;
+  border-radius: .3vw;
+  text-align: center;
+  font-size: 1vw;
+}
+
+.modeChosen {
+  box-shadow: inset 0px 0px 25px #b0b0c5, inset 0 0 15px rgba(91, 90, 102, 0.897), 0 0 20px #61618d, 0 0 20px rgba(147, 147, 167, 0.932);
+  border: 0.3vw solid #8f7d4b !important;
+}
+
+#wronCharWarning {
+  color: red;
+  width: 100%;
+  height: 2vh;
+  text-align: center;
+}
+
+#beginGameButton {
+  color: white;
+  background: black;
+  margin: 0 30% 0 30%;
+  width: 6vw;
+  height: 6vw;
+  border-radius: 50%;
+  border-top: 1.5vw solid black;
+  border-bottom: 1.5vw solid black;
+  border-left: 1.5vw solid white;
+  border-right: 1.5vw solid white;
+}
+
+#beginGameButton:hover {
+  box-shadow: 0;
 }

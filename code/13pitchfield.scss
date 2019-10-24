@@ -680,12 +680,12 @@ td{
         flex-direction: row;
         //justify-content: space-evenly;
         align-items: middle;
-        width:70%;
+        width:47%;
         padding: 1px;
         color:rgba(0,0,0,0);
         div {
-            width:4vw!important;
-            height:4vw;
+            width:3vw!important;
+            height:3vw;
             font-size:1vw;
             display:flex;
             flex-direction: row;
@@ -712,8 +712,8 @@ td{
         width:32%;
         height: 13vw;
         div{
-            width: 4vw;
-            height:4vw;
+            width: 3vw;
+            height:3vw;
             margin:.06vw;
             max-height: 4vw;
             &:active{
@@ -1305,7 +1305,7 @@ cursor:none;
             background-color: white;
 }
 #actionButtons{
-    height:21vw;
+    height:13vw;
 }
 #actionButtons [id^="snapBall"]{
     transform:rotate(180deg);
@@ -1431,7 +1431,7 @@ $blueOrbBorder:rgba(1, 157, 247, 0);
     }
     25%{
         border:.1vw solid ;
-        transform:translate(4vw,0vw);
+        transform:translate(3vw,0vw);
         border-radius:50%;
     }
     26%{
@@ -1440,7 +1440,7 @@ $blueOrbBorder:rgba(1, 157, 247, 0);
     }
     50%{
         border:.1vw solid $blueOrbBorder;
-        transform:translate(4vw,4vw);
+        transform:translate(3vw,3vw);
         border-radius:50%;
     }
     51%{
@@ -1449,7 +1449,7 @@ $blueOrbBorder:rgba(1, 157, 247, 0);
     }
     75%{
         border:.1vw solid $blueOrbBorder;
-        transform:translate(0,4vw);
+        transform:translate(0,3vw);
         border-radius:50%;
     }
     76%{
@@ -1469,7 +1469,7 @@ $blueOrbBorder:rgba(1, 157, 247, 0);
     }
     25%{
         border:.1vw solid ;
-        transform:translate(4vw,0vw);
+        transform:translate(3vw,0vw);
         border-radius:50%;
     }
     26%{
@@ -1478,7 +1478,7 @@ $blueOrbBorder:rgba(1, 157, 247, 0);
     }
     50%{
         border:.1vw solid $uniq;
-        transform:translate(4vw,4vw);
+        transform:translate(3vw,3vw);
         border-radius:50%;
     }
     51%{
@@ -1487,7 +1487,7 @@ $blueOrbBorder:rgba(1, 157, 247, 0);
     }
     75%{
         border:.1vw solid $uniq;
-        transform:translate(0,4vw);
+        transform:translate(0,3vw);
         border-radius:50%;
     }
     76%{
@@ -1725,7 +1725,7 @@ footer{
     animation:coinRotate 1s infinite alternate;
 }
 }
-
+$o2offset : -50%;
 .passiveSkill{
     @extend %buttonAnimation2;
     background-color:rgba(187, 168, 168, 0.349);
@@ -1737,8 +1737,8 @@ footer{
         .o2{
             box-shadow:0 0 .05vw .05vw hsla(41, 100%, 87%, 0.644) ,0 0 .1vw .1vw hsla(39, 100%, 76%, 0.4) ,0 0 .3vw .3vw hsla(34, 100%, 50%, 0.8);
             position:relative;
-            left:-2vw;
-            top:-2vw;
+            left:$o2offset;
+            top:$o2offset;
             border:.03vw solid $uniqBordr;
             display:inline-block;
             animation: 4s UcircleGlow infinite reverse;
@@ -1759,8 +1759,8 @@ footer{
         .o1{
             box-shadow:0 0 .05vw .05vw hsla(240, 100%, 87%, 0.644) ,0 0 .1vw .1vw hsla(240, 100%, 76%, 0.4) ,0 0 .3vw .3vw hsla(240, 100%, 50%, 0.8);
             position:relative;
-            left:-2vw;
-            top:-2vw;
+            left:$o2offset;
+            top:$o2offset;
             border:.03vw solid $blueOrbBorder;
             display:inline-block;
             animation: 3s circleGlow infinite;
@@ -1776,8 +1776,8 @@ footer{
     .o2{
         position:relative;
         box-shadow:0 0 .05vw .05vw hsla(41, 100%, 87%, 0.644) ,0 0 .1vw .1vw hsla(39, 100%, 76%, 0.4) ,0 0 .3vw .3vw hsla(34, 100%, 50%, 0.8);
-        left:-8%;
-        top:-2vw;
+        left:$o2offset;
+        top:$o2offset;
         border:.03vw solid $uniqBordr;
         display:inline-block;
         animation: 4s UcircleGlow infinite reverse;
@@ -1788,11 +1788,114 @@ footer{
     .o1{
         position:relative;
         box-shadow:0 0 .05vw .05vw hsla(41, 100%, 87%, 0.644) ,0 0 .1vw .1vw hsla(39, 100%, 76%, 0.4) ,0 0 .3vw .3vw hsla(34, 100%, 50%, 0.8);
-        left:-8%;
-        top:-2vw;
+        left:$o2offset;
+        top:$o2offset;
         border:.03vw solid $uniqBordr;
         display:inline-block;
         animation: 4s UcircleGlow infinite reverse;
         border-radius:50%;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#gameTypeForm{
+    background:darkolivegreen; 
+    color:white; 
+    margin: auto; 
+    max-width:41vw; 
+    min-width:500px; 
+    height:97vh; 
+    display:flex; 
+    flex-wrap:wrap; justify-content: center; align-content: center;
+}
+#quickGamePic{
+    margin-left:20%;
+    display:block; 
+    width:10vw;height:10vw;position:relative;left:0vw;top:-0vw;background:url("../icons/backgrounds/quickGame.jpg"); ;background-size:cover;
+    border:.3vw solid rgb(134, 101, 17); 
+    border-radius: 47%;    
+}
+#ownGamePic{
+    margin-right:20%;
+    display:block; 
+    width:10vw;height:10vw;position:relative;left:0vw;top:-0vw;background:url("../icons/backgrounds/ownGame.jpg"); ;background-size:cover;
+    border:.3vw solid rgb(134, 101, 17); border-radius: 47%;
+}
+.modeHover{
+    &:hover{
+        box-shadow: inset 0px 0px 55px darkblue, inset 0 0 45px rgba(9, 8, 87, 0.897), 0 0 20px darkblue, 0 0 20px rgba(60, 60, 82, 0.932);
+        border:solid darkblue;
+    }
+}
+.introductionInfo{
+    margin:3% 20% 3% 20%; 
+    width: 33%; height: 10%; 
+    color:white; background: linear-gradient(0.25turn, darkolivegreen, rgb(99, 96, 68) 20%, rgb(99, 96, 68) 80%, darkolivegreen);
+    border-top:.2vw solid rgb(134, 101, 17);
+    border-bottom:.2vw solid rgb(134, 101, 17); 
+    border-left:0; 
+    border-right:0;
+    border-radius:5%; 
+    text-align: 
+    center; 
+    font-size:1vw;
+    &:required {
+        box-shadow:none;
+    }    
+}
+#whotsIts{padding:1vw 2vw; margin:-10% 25% 5vh 25%; width:50%; height:13vh; background: linear-gradient(0.25turn, darkolivegreen, rgb(99, 96, 68) 20%, rgb(99, 96, 68) 80%, darkolivegreen);
+    border-top:.2vw solid rgb(134, 101, 17);
+    border-bottom:.2vw solid rgb(134, 101, 17); border-left:0; border-right:0;
+    border-radius:.3vw; text-align: center; font-size:1vw}
+.modeChosen{
+        box-shadow: inset 0px 0px 25px rgb(176, 176, 197), inset 0 0 15px rgba(91, 90, 102, 0.897), 0 0 20px rgb(97, 97, 141), 0 0 20px rgba(147, 147, 167, 0.932); 
+        border: .3vw solid rgb(143, 125, 75)!important;
+}
+#wronCharWarning{
+    color:red;
+    width:100%;
+    height:2vh;
+    text-align: center;
+}
+#beginGameButton{
+    color:white; 
+    background: black; 
+    margin:0 30% 0 30%; 
+    width: 6vw;height:6vw; 
+    border-radius:50%;
+    border-top:1.5vw solid black; 
+    border-bottom:1.5vw solid black; 
+    border-left:1.5vw solid white; 
+    border-right:1.5vw solid white;
+    &:hover{
+        box-shadow: 0;
     }
 }

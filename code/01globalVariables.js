@@ -6,7 +6,7 @@ window.addEventListener('resize', function(e){
     wlem = window.innerWidth / 100; 
 })//windowEvent
 var canvaSqr = 70 * wlem;
-$("body").append(`<section id="teaMenuScreen" width='${canvaSqr}px'></section>`)
+//$("body").append(`<section id="teaMenuScreen" width='${canvaSqr}px'></section>`);
 $("#gameScreen").append(`<div id='app' style="z-index:6;  left:${(canvaSqr+1.5*wlem)}px; width:${27 * wlem}px;"></div>`);
 $("#gameScreen").append(`<canvas id='screentint' width='${100 * wlem}px' height='${canvaSqr}px'>I'm sorry but Your browser needs an update to enjoy this game</canvas>`);
 var canvases = `

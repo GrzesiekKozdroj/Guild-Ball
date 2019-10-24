@@ -70,7 +70,6 @@ let buildGuildsVar;
                     bigBang();
        }
     }
-
     function buildGuilds(){//creates menu where I choose my guild
     $("#teaMenuScreen").css("background", `url(./icons/cursor/${Math.floor(Math.floor(Math.random() * (3 - 1 + 1)) + 1)}.jpg)`);
 
@@ -78,7 +77,7 @@ let buildGuildsVar;
         let guildButton = `<div class="guildIco" id="${el[1]}Ico" data-title="${el[1]}" data-img=${el[2]} data-desc="${el[5]}" 
         data-footer="${el[6]}" data-mercenaries=${el[7]} style="background:url(${el[2]});    background-size:contain;    background-repeat:no-repeat;"/>`;
         $("#teaMenuScreen").append(guildButton);
-    })}buildGuilds();
+    })};
 
     function buildGuildsEvents(){
     $(".guildIco").each(
@@ -107,7 +106,7 @@ let buildGuildsVar;
                 chooseTeam(squaddiesToDisplay,title);
             });
         })//each
-    };buildGuildsEvents();
+    };
 
     buildGuildsVar =()=>{ $("#teaMenuScreen").empty();buildGuilds();buildGuildsEvents();}
 //})//dom
@@ -203,3 +202,10 @@ function chooseTeam(sTD,guild) {//builds and displays an array of players for ea
         
 }//chooseTeam()
 //    })//DOM
+
+const alfa = ()=>{
+    $("#gameScreen").find("form").remove();
+    $("body").append(`<section id="teaMenuScreen" width='${canvaSqr}px'></section>`);
+    buildGuilds();
+    buildGuildsEvents();
+}

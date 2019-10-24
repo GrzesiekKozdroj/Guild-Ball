@@ -87,7 +87,8 @@ function terrainsDetector(teaMate){
             } else { teaMate.shouldntBeHere = 0 }
 
         //<<----==    ROUGH GROUND || FOREST grants movement hindrance
-        if( colorClose.includes(255) && !teaMate.inRoughGround && !teaMate.isDodging && !teaMate.isPushed/*(teaMate.isMoving || teaMate.wasCharging)*/ && ( typesofTerrain.includes("forest") || typesofTerrain.includes("roughGround") ) && !teaMate.isGliding  ){
+        if( colorClose.includes(255) && !teaMate.inRoughGround && !teaMate.isDodging && !teaMate.isPushed && ( typesofTerrain.includes("forest") || typesofTerrain.includes("roughGround") ) 
+        && !teaMate.isGliding  ){
             console.log("Should be dodging")
             let hasLightFooted = hasPassiveUnused(teaMate,"Light Footed");
             let hasWinterBlessing = hasPassiveUnused(teaMate,"Winters Blessing");
@@ -103,7 +104,7 @@ function terrainsDetector(teaMate){
         } else if ( !colorClose.includes(255) ) { teaMate.inRoughGround = false }
 
         //<<----==    FAST GROUND grants movement bonus
-        if( colorClose.includes(255) && !teaMate.inFastGround /*&& (teaMate.isMoving || teaMate.isCharging) */&& typesofTerrain.includes("fastGround") ){
+        if( colorClose.includes(255) && !teaMate.inFastGround && typesofTerrain.includes("fastGround") ){console.log('hi from fast')
             teaMate.inFastGround = true; teaMate.remainingRun += 2* inch; teaMate.remainingSprint += 2 * inch;
         } //else  if ( !colorClose.includes(255) ) {teaMate.inFastGround = false;}
     } else if (teaMate.classification === "token" && teaMate.type === "Nature's Chill" && !colorClose.includes(255) &&
@@ -180,7 +181,7 @@ const terrainsGenerator = () => {//draws images of said terrains
             kanwa.save();
             kanwa.translate(el[1][0], el[1][1]);
             kanwa.rotate(2 * el[0].rotation);
-            kanwa.drawImage(el[0].img, 0-el[0].size[0]/2, 0-el[0].size[1]/2, el[0].size[0], el[0].size[1] );
+            if(el)kanwa.drawImage(el[0].img, 0-el[0].size[0]/2, 0-el[0].size[1]/2, el[0].size[0], el[0].size[1] );
             kanwa.rect(el[1][0], el[1][1], el[0].size[0], el[0].size[1]);
             kanwa.restore();
             //kanwa.addHitRegion({id:img.src.toString()});
