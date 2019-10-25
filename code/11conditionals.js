@@ -1,5 +1,6 @@
-function __canMove(teaMate){
-    return Boolean(!teaMate.hasMoved && Gamer.active && distance(teaMate.posX, teaMate.posY, mouX, mouY) < (teaMate.baseRadius) &&
+function __canMove(teaMate,{options} = false){
+    return Boolean(!teaMate.hasMoved && Gamer.active && 
+        options === true ? true : distance(teaMate.posX, teaMate.posY, mouX, mouY) < (teaMate.baseRadius) &&
          !teaMate.moveAura && teaMate.drawAbilityAura === 0 &&
           teaMate.isActivating && !teaMate.isKnockedDown);
 }
@@ -62,9 +63,15 @@ function atTheStartOfActivation(teaMate){
             snaret.isInHand = false;
             Gamer.tokens.forEach(el=>el.isInHand=false);
             makeActiveOpt(teaMate,"Natures Chill");
+            teaMate.drawAbilityAura = 0;
+            teaMate.hasMoved = false;
+
             $('#players').on('click', function (e) { //drops a guy down after movement if possible
-                if (teaMate.moveAura /*&& distance (mouX,mouY,teaMate.posX,teaMate.posY)>teaMate.baseRadius*.42 &&
-                    distance(teaMate.posX, teaMate.posY, mouX, mouY) <= ((teaMate.infMin > 0 ? teaMate.remainingRun : teaMate.remainingSprint) - teaMate.baseRadius
+                if (__canMove(teaMate, {options:true}) /* 
+                        //teaMate.moveAura && 
+                        distance (mouX,mouY,teaMate.posX,teaMate.posY)>teaMate.baseRadius*.42 &&
+                        distance(teaMate.posX, teaMate.posY, mouX, mouY) <= 
+                            ((teaMate.infMin > 0 ? teaMate.remainingRun : teaMate.remainingSprint) - teaMate.baseRadius
                     )*/) {
                         defaultPreventer(e);
                         teaMate.dropper(teamz);

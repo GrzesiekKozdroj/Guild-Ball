@@ -140,8 +140,8 @@ function anime(m1, teams, otherGamer, options) {
                 };
             };
             if (
-                (m1.isDodging && m1.remainingDodge  > m1.baseRadius) || 
-                (m1.isPushed  && m1.remainingPush   > m1.baseRadius) || 
+                (m1.isDodging && m1.remainingDodge  > 2/m1.baseRadius) || 
+                (m1.isPushed  && m1.remainingPush   > 2/m1.baseRadius) || 
                 (m1.isMoving  && m1.remainingRun    > m1.baseRadius) 
                 ) {
                     m1.posX = x + ((endX - x) * deltaTime);

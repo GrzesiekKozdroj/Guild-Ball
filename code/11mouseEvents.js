@@ -869,7 +869,9 @@ function deploymentPhase(event) {
 
                     $("#players").on("click", (e) => {
                         defaultPreventer(e);
-                        if (distance(m1.posX, m1.posY, mouX, mouY) <= (m1.remainingSprint) && m1.hasBall && !m1.isKicking && m1.isActivating) {
+                        m1.remainingRun = m1.remainingSprint
+                        if (/*distance(m1.posX, m1.posY, mouX, mouY) <= (m1.remainingSprint) && */
+                            m1.hasBall && !m1.isKicking && m1.isActivating) {
                             m1.dropper();
                         }
                     })

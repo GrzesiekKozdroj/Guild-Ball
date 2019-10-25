@@ -9,7 +9,7 @@ $((e) => {
         e.preventDefault();
         quickGamePic.addClass('modeChosen').removeClass('modeHover');
         ownGamePic.removeClass('modeChosen').addClass('modeHover');
-        gameMode = 'quick game';
+        gameMode = 'quickGame';
         gamePlace.val(gameMode);
     });
     ownGamePic.on('click', (e) => {
