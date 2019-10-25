@@ -458,7 +458,7 @@ Ballista = [5,8,8,6,4,6,3,1,4,0,6,1,18,1,engiFam,[0,0,200,200], "Ballista",
         [[0, 1, 0, 2, 0, 0], [0, 1, 0, 0, 0, 1]], [[], [3, 1, 0, 0, 0, 0]], [[], [4, 0, 0, 0, 0, 0]]], 8, Hunters,
         ["Raed",["Human"],"Male","Defensive Midfielder","Captain"], "Theron", [100,50,largeScale], [ [], [], [], [] ] ],
 
-    Skatha = [7, 9, 9, 15, 4, 6, 5, 0, 4, 0, 6, 1, 14, 1, huntFam, [0,-400,200,200], 'Skatha',
+    Skatha = [7, 9, 9, 5, 4, 6, 5, 0, 4, 0, 6, 1, 14, 1, huntFam, [0,-400,200,200], 'Skatha',
         [[[0, 1, 0, 0, 1, 0], [0, 1, 1, 0, 0, 0]], [[1, 0, 0, 0, 0, 0], [0, 0, 2, 0, 0, 0]], [[0, 0, 0, 0, 0, 0, 0, cold_snap], [2, 1, 0, 0, 0, 0]], [[0, 0, 0, 0, 0, 1], [0, 1, 2, 0, 0, 0]], [[], [3, 0, 0, 0, 0, 0]]], 7, Hunters,["Erskirii",["Human"],"Female","Attacking Midfielder","Captain"], "Skatha"
         , [0,50,largeScale], [ [], ["Light Footed"], [], ["Blessing of the Moon Goddess", "Cold Snap", "Snowball", "Natures Chill", "Winters Night"] ] ],
 

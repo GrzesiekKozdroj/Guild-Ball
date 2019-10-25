@@ -73,7 +73,7 @@ let rulerDopplers = [];
 let rdLength = 0;
 let rnd = Math.random();//this randomises who is to start
 let rndDeploy = Math.random();
-let cheetos = true;
+let cheetos = false;
 
 const smallBase = 1.2 * cm;
 let savedBeforVoodoo = [];
