@@ -414,6 +414,7 @@ function moseDraw () {
 moseDraw();
 const cheetah = (n) => {
     if (n) {
+        $("#gameTypeForm").off().remove();
         let bookOfLife1 = [];[Anvil,Skatha,Fahad,Zarola,Jaecar,Egret,vetHearne].forEach(el=>bookOfLife1.push(new Player(...el) ));
         let bookOfLife2 = [];[Skatha,Ox,Zarola,Egret,Jaecar,vetHearne,Fahad,vetMinx].forEach(el=>bookOfLife2.push(new Player(...el) ));
         Gamer1 = new Gajmer(

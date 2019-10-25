@@ -3827,7 +3827,7 @@ html {
   border: 0.2vw solid rgba(97, 64, 4, 0.95);
   border-bottom: 0;
   color: #af6025;
-  font-size: 1vw;
+  font-size: .9vw;
   font-weight: 800;
   animation: infoBoxMove .3s forwards;
   box-shadow: 0 0 15px black, 0 0 20px darkblue, 0 0 200px rgba(60, 60, 82, 0.932);
@@ -3886,7 +3886,7 @@ html {
   width: 103%;
   height: 60%;
   padding-top: .1vw;
-  font-size: 1.2vw;
+  font-size: 1.1vw;
   border: 0.2vw solid rgba(97, 64, 4, 0.95);
   border-bottom: 0;
   background: linear-gradient(to top, rgba(170, 150, 128, 0.411) 0%, rgba(139, 119, 95, 0.28) 10%, transparent 50%);
@@ -4211,7 +4211,7 @@ footer {
 }
 
 #wronCharWarning {
-  color: red;
+  color: #971515;
   width: 100%;
   height: 2vh;
   text-align: center;

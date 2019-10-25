@@ -5,9 +5,9 @@ function __canMove(teaMate){
 }
 
 function __validMoveDeclaration(teaMate){
-    return Boolean(teaMate.moveAura && distance (mouX,mouY,teaMate.posX,teaMate.posY)>teaMate.baseRadius*.42 &&
+    return Boolean(teaMate.moveAura && distance (mouX,mouY,teaMate.posX,teaMate.posY)>teaMate.baseRadius*.42 /* &&
     distance(teaMate.posX, teaMate.posY, mouX, mouY) <= ((teaMate.infMin > 0 ? teaMate.remainingRun : teaMate.remainingSprint) - teaMate.baseRadius
-    ))
+    )*/)
 }
 
 function __chooseModelToActivate(teaMate){
@@ -63,9 +63,9 @@ function atTheStartOfActivation(teaMate){
             Gamer.tokens.forEach(el=>el.isInHand=false);
             makeActiveOpt(teaMate,"Natures Chill");
             $('#players').on('click', function (e) { //drops a guy down after movement if possible
-                if (teaMate.moveAura && distance (mouX,mouY,teaMate.posX,teaMate.posY)>teaMate.baseRadius*.42 &&
+                if (teaMate.moveAura /*&& distance (mouX,mouY,teaMate.posX,teaMate.posY)>teaMate.baseRadius*.42 &&
                     distance(teaMate.posX, teaMate.posY, mouX, mouY) <= ((teaMate.infMin > 0 ? teaMate.remainingRun : teaMate.remainingSprint) - teaMate.baseRadius
-                    )) {
+                    )*/) {
                         defaultPreventer(e);
                         teaMate.dropper(teamz);
                 }; //if

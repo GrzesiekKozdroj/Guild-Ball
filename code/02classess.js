@@ -454,7 +454,7 @@ class Player {
         if (this.isPushed) {
             this.doppler(mouX, mouY, 0.5)
             $('canvas').on('click tap', () => {
-                if (distance(this.posX, this.posY, mouX, mouY) <= this.remainingPush + 2 / this.baseRadius && this.isPushed) {
+                if (distance(this.posX, this.posY, mouX, mouY) <= this.remainingPush + 2 / this.baseRadius+1.7*inch && this.isPushed) {
                     anime(this, teamz,otherGamer,{ox:mouX,oy:mouY});
                 }
             })
@@ -466,7 +466,7 @@ class Player {
         if (this.isDodging) {
             this.doppler(mouX, mouY, 0.5)
             $('canvas').on('click tap', () => {
-                if (distance(this.posX, this.posY, mouX, mouY) <= this.remainingDodge + 2 / this.baseRadius && this.isDodging) {
+                if (distance(this.posX, this.posY, mouX, mouY) <= this.remainingDodge + 2 / this.baseRadius+1.7*inch && this.isDodging) {
                     anime(this, teamz,otherGamer,{ox:mouX,oy:mouY,mode:mode});
                 }
             }) //onclick

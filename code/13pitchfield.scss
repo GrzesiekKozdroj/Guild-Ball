@@ -1536,7 +1536,7 @@ $blueOrbBorder:rgba(1, 157, 247, 0);
     border:.2vw solid rgba(97, 64, 4, 0.95);
     border-bottom:0;
     color:$uniqText;
-    font-size:1vw;
+    font-size:.9vw;
     font-weight: 800;
     animation: infoBoxMove .3s forwards;
     .abilHeader{
@@ -1581,7 +1581,7 @@ $blueOrbBorder:rgba(1, 157, 247, 0);
                     width:103%;
                     height:60%;
                     padding-top:.1vw;
-                    font-size:1.2vw;
+                    font-size:1.1vw;
                     border:.2vw solid rgba(97, 64, 4, 0.95);
                     border-bottom:0;
                     background:linear-gradient(to top, rgba(170, 150, 128, 0.411) 0%,rgba(139, 119, 95, 0.28)10%, transparent 50%);
@@ -1880,7 +1880,7 @@ $o2offset : -50%;
         border: .3vw solid rgb(143, 125, 75)!important;
 }
 #wronCharWarning{
-    color:red;
+    color:rgb(151, 21, 21);
     width:100%;
     height:2vh;
     text-align: center;
