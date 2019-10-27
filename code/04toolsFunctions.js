@@ -39,7 +39,7 @@ function knockedDown(m2, ball) {
             if (m2.hasBall) {
                 m2.hasBall = false;
                 ball.isOnGround = true;
-                scatterRandomiser(m2.posX, m2.posY, false, m2);
+                scatterRandomiser(m2.posX, m2.posY, false, m2, true);console.log('04-42')
             }
             //m2.hasMoved = true;
         }
@@ -1413,7 +1413,7 @@ function endSquaddieActivation(m1, Gamer1, Gamer2, Gamer, switcher, teamz, turnT
                     if (m1.hasBall) {
                         m1.hasBall = false;
                         ball.isOnGround = true;
-                        scatterRandomiser(m1.posX, m1.posY, false);
+                        scatterRandomiser(m1.posX, m1.posY, false, m1, true); console.log('04-1416')
                     }
                     m1.hpMin = m1.icySponge;
                     m1.posX = undefined;

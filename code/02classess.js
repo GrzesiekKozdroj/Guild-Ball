@@ -454,9 +454,11 @@ class Player {
         if (this.isPushed) {
             this.doppler(mouX, mouY, 0.5)
             $('canvas').on('click tap', () => {
-                if (otherGamer.squaddies.every(el=>el.isDodging===false) && 
-                distance(this.posX, this.posY, mouX, mouY) <= this.remainingPush + 2 / this.baseRadius+1.2*inch && this.isPushed) {
-                    anime(this, teamz,otherGamer,{ox:mouX,oy:mouY});
+                if (
+                    distance(this.posX, this.posY, mouX, mouY) <= this.remainingPush + 2 / this.baseRadius+1.2*inch && 
+                    this.isPushed
+                ) {
+                    if(otherGamer.squaddies.every(el=>el.isDodging===false))anime(this, teamz,otherGamer,{ox:mouX,oy:mouY});
                 }
             })
         }

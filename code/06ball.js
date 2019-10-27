@@ -105,7 +105,7 @@ class Ball_marker {
 let ball = new Ball_marker(18 * inch, 18 * inch,"theBall");
 let snowBall = new Ball_marker(undefined,undefined,"snowBall");
 
-function scatterRandomiser(x = mouX, y = mouY, mode, m1) {
+function scatterRandomiser(x = mouX, y = mouY, mode, m1, undisturbedScatter) {
     if(m1)m1.hasBall = false; ball.isOnGround = true;
     neSpotx = x, neSpoty = y;
     let degree = Math.PI / 180;
@@ -165,11 +165,13 @@ function scatterRandomiser(x = mouX, y = mouY, mode, m1) {
             if (teamz.some(el => distance(el.posX, el.posY, ball.x, ball.y) <= el.baseRadius + ball.ballSize) ) { ball.x = saveX; ball.y = saveY; };
             startTime = null; // reset startTime
             m1.hasDropped = false;
-            if(isNaN(ball.x) && deltaTime >= 1){ball.isOnGround=true;ball.x=canvas.width/2;ball.y=canvas.height/2;scatterRandomiser(canvas.width/2,canvas.height/2,false,m1)}
-            snapBallButtonCreator('end');
+            if(isNaN(ball.x) && deltaTime >= 1 && !undisturbedScatter){ball.isOnGround=true;ball.x=canvas.width/2;ball.y=canvas.height/2;
+                scatterRandomiser(canvas.width/2,canvas.height/2,false,m1)}console.log('06-169')
+                snapBallButtonCreator('end');
         } else {
             //<<-----------==  create button to snap the ball for all the interested
-            const notMe = m1?m1.name:''; snapBallButtonCreator('', notMe);
+            const notMe = m1?m1.name:''; 
+            if(!undisturbedScatter)snapBallButtonCreator('', notMe);
             ball.x = ox + ((endX - ox) * deltaTime);
             ball.y = oy + ((endY - oy) * deltaTime);
             if (!teamz.some(el => distance(el.posX, el.posY, ball.x, ball.y) <= el.baseRadius + ball.ballSize) && !shouldntbehere) { saveX = ball.x; saveY = ball.y }

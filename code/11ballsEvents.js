@@ -215,7 +215,7 @@ function theBallsGame(m1, teaMate) {
                     teaMate.infMin -= 1;
                     Gamer.momentum -= 1;
                     m1.hasDropped = true;
-                    scatterRandomiser(mouX, mouY, true, m1); //m1.hasDropped = false;
+                    scatterRandomiser(mouX, mouY, true, m1);console.log('11-218') //m1.hasDropped = false;
                     endSquaddieActivation(m1, Gamer1, Gamer2, Gamer, switcher, teamz, turnTransition);
                     /*failed goal kick*/
                 }
@@ -402,7 +402,7 @@ function theBallsGame(m1, teaMate) {
                                 m1.isKicking = false;
                                 movementHistory = [];
                                 m2.hasDropped = true;
-                                scatterRandomiser(otherGamer.gp.x, otherGamer.gp.y, true, m2); //m1.hasDropped = false;
+                                scatterRandomiser(otherGamer.gp.x, otherGamer.gp.y, true, m2, true);console.log('11-405') //m1.hasDropped = false;
                                 $('#app').empty();
                                 $('#app').append(appMaker(m1, Gamer));
                                 endSquaddieActivation(m1, Gamer1, Gamer2, Gamer, switcher, teamz, turnTransition);
@@ -441,7 +441,7 @@ function theBallsGame(m1, teaMate) {
                         movementHistory = [];
                         m1.hasDropped = true;
                         diceRolledForDisplay = [];
-                        scatterRandomiser(mouX, mouY, true, m1); //m1.hasDropped = false;
+                        scatterRandomiser(mouX, mouY, true, m1); console.log('11-444')//m1.hasDropped = false;
                         diceRolled(kickRoll, minRollToPass, Gamer1.guild.color);
                         $('#app').empty();
                         $('#app').append(appMaker(m1, Gamer));
@@ -462,7 +462,7 @@ function theBallsGame(m1, teaMate) {
                     ball.beingKicked = false;
                     m1.hasDropped = true;
                     diceRolledForDisplay = [];
-                    scatterRandomiser(mouX, mouY, true, m1); //m1.hasDropped = false;
+                    scatterRandomiser(mouX, mouY, true, m1); console.log('11-465')//m1.hasDropped = false;
                     diceRolled(kickRoll, 4, Gamer1.guild.color);
                     movementHistory = [];
                     if (kickRoll.filter(el => el >= 4).length > 0 && m1.kickReRoll < 1) {
@@ -478,7 +478,7 @@ function theBallsGame(m1, teaMate) {
                             ball.x = m1.posX; ball.y = m1.posY;
                             m1.kickReRoll++;
                             diceRolled(kickRoll, 4, Gamer1.guild.color);
-                            scatterRandomiser(neSpotx, neSpoty, true, m1);
+                            scatterRandomiser(neSpotx, neSpoty, true, m1);console.log('11-481')
                             $('#app').empty().append(appMaker(Gamer.squaddies.filter(el => el.isActivating)[0], Gamer));
                         })
 

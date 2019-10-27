@@ -225,7 +225,7 @@ let bigBang = (e)=>{//document.addEventListener('DOMContentLoaded', function (e)
                 if(m1.hasBall){
                     m1.hasBall = false;
                     ball.isOnGround = true;
-                    scatterRandomiser(m1.posX,m1.posY,false,m1);
+                    scatterRandomiser(m1.posX,m1.posY,false,m1, true);console.log('12-228')
                 }
                 m1.hpMin = m1.icySponge;
                 m1.posX = undefined;
@@ -247,7 +247,7 @@ let bigBang = (e)=>{//document.addEventListener('DOMContentLoaded', function (e)
                     m1.hasBall = false;
                     ball.x=canvas.width/2;ball.y=canvas.height/2;
                     ball.isOnGround = true;
-                    scatterRandomiser(canvas.width/2,canvas.height/2,false);
+                    scatterRandomiser(canvas.width/2,canvas.height/2,false);console.log('12-250')
                 }
 
                 removeConditionsFuncion(m1, Gamer, 0, 0);        
@@ -305,7 +305,7 @@ let bigBang = (e)=>{//document.addEventListener('DOMContentLoaded', function (e)
             m1.hasBall = false;
             ball.isOnGround = true;
             ball.x=canvas.width/2;ball.y=canvas.height/2;
-            scatterRandomiser(canvas.width/2,canvas.height/2,false,m1)
+            scatterRandomiser(canvas.width/2,canvas.height/2,false,m1,true);console.log('308-12')
         }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
