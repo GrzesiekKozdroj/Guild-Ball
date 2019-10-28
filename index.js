@@ -1,33 +1,29 @@
 'use strict';
-const
-express         = require('express'),
-http = require('http'),
-app             = express(),
-httpServer = http.Server(app);
-
+const express = require('express');
+const app = express();
+const serv = require('http').Server(app);
 let SOCKET_LIST = {};
 let PLAYER_LIST = {};
 
-//const ala = require('./sCode/controller.js');
-const io = require('socket.io')(httpServer, {});
+var io = require('socket.io')(serv, {});
 
-io.sockets.on('connection', (socket)=>{
-    socket.id = Math.random();
-    SOCKET_LIST[socket.id] = socket;
-
-
-    socket.on('disconnect',()=>{
-        delete SOCKET_LIST[socket.id];
-        delete PLAYER_LIST[socket.id];
+io.sockets.on('connection', (socket) => {
+    console.log('socket connection');
+    socket.emit('online');
+    socket.on('namePlace',(data)=>{
+        if(/^[0-9A-Za-z]+$/.test(data.nickName) && /^[0-9A-Za-z]+$/.test(data.place) ){
+            socket.emit('alfaTime');
+        }
     })
-
 })
 
-app.use(express.static(__dirname+'/'));
+
 
 app.get('/', (req,res)=>{
-    res.sendFile(path.join(__dirname+'/index.html'))
+    res.sendFile(__dirname+'/client/index.html')
 });
+app.use('/',express.static(__dirname+'/client'));
+console.log('server started');
 
-//ala(app);
-app.listen(4203);
+serv.listen(4200);
+

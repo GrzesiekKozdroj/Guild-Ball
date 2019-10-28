@@ -5,7 +5,20 @@ window.addEventListener('resize', function(e){
     hlem = window.innerHeight /100;
     wlem = window.innerWidth / 100; 
 })//windowEvent
+
+
+//SERVEROS VARIABLOS
 var canvaSqr = 70 * wlem;
+let mouX;
+let mouY;
+const backgroundTtoss = Math.floor((Math.random() * 5) + 1);
+let rnd = Math.random();//this randomises who is to start
+let rndDeploy = Math.random();
+let puddles = [];//when models suffer TO they leave bloodied puddle to remember what happened;
+let td = [];//<<<--------------===== generated terrains are stored here
+let filtered_td = [];
+
+
 //$("body").append(`<section id="teaMenuScreen" width='${canvaSqr}px'></section>`);
 $("#gameScreen").append(`<div id='app' style="z-index:6;  left:${(canvaSqr+1.5*wlem)}px; width:${27 * wlem}px;"></div>`);
 $("#gameScreen").append(`<canvas id='screentint' width='${100 * wlem}px' height='${canvaSqr}px'>I'm sorry but Your browser needs an update to enjoy this game</canvas>`);
@@ -24,8 +37,6 @@ var canvases = `
         var screentint     = document.getElementById("screentint");;
         var sctx           = screentint.getContext("2d");          ;
 
-let mouX;
-let mouY;
 document.body.style.cursor = 'none';
 
 const inch = canvaSqr / 36 //here comes the game units
@@ -49,7 +60,6 @@ const uniqColor = "rgba(97, 64, 4, 0.95)";
 const rareColor = "#F5FF6C";
 let leafletBackground = new Image();//draws background for model info on hover
     leafletBackground.src='./icons/cursor/bg.jpg';
-const backgroundTtoss = Math.floor((Math.random() * 5) + 1);
 let bleedingIco = new Image();bleedingIco.src = './icons/Conditions/Bleeding.jpg';
 let burningIco = new Image();burningIco.src = './icons/Conditions/Burning.jpg';
 let knockedDownIco = new Image();knockedDownIco.src = './icons/Conditions/knockedDown.jpg';
@@ -58,12 +68,11 @@ let snaredIco = new Image();snaredIco.src = './icons/Conditions/Snared.jpg';
 let degree = Math.PI/180;
 let healCursor = 0;//heal cursor display
 let hasConditions = (m2)=>(m2.isBleeding||m2.isBurning||m2.isDiseased||m2.isKnockedDown||m2.isPoisoned||m2.isSnared)?true:false;
-let fontz = new FontFace('IM Fell English', 'url(https://fonts.googleapis.com/css?family=Merienda)');
+let fontz = new FontFace('IM Fell English', `url('https://fonts.googleapis.com/css?family=IM+Fell+English&display=swap')`);
 let showLeaflet = true;
 let movementHistory = [];
-const savedGameState = [];
-//let endsquadieactivvariable;
-let switcher;
+const savedGameState = [];//WUT IS DAT??
+let switcher;//holds a switcher as a current variable, used for counter attacks??
 let counter = -2;//used toi check when deployment phase ends
 let wrath, receiver;//counterattacks solution??
 let Gamer1, Gamer2 ,Gamer, otherGamer, teamz;
@@ -71,9 +80,11 @@ let neSpotx, neSpoty;
 let ruler = false;//used to draw multiple doppplers
 let rulerDopplers = [];
 let rdLength = 0;
-let rnd = Math.random();//this randomises who is to start
-let rndDeploy = Math.random();
-let cheetos = true;
+let cheetos = false;
+let online = false;
+socket.on('online',()=>{
+    online = true;
+})
 
 const smallBase = 1.2 * cm;
 let savedBeforVoodoo = [];
@@ -89,12 +100,9 @@ const dummy = {//used for whe mouse has no players
     squddies:[],
 }
 let offsetX, offsetY;//used to realign mouse position
-let puddles = [];//when models suffer TO they leave bloodied puddle to remember what happened;
-let td = [];//<<<--------------===== generated terrains are stored here
-let filtered_td = [];
 let mouseDrawTemplate = false;
 
-fontz.load().then((font) => {document.fonts.add(font);});
+//fontz.load().then((font) => {document.fonts.add(font);});
 const tp = [//terrains initial generation package
     {
         dir: [
