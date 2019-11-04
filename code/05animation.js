@@ -37,6 +37,7 @@ function anime(m1, teams, otherGamer, options) {
 
 
     let anim = (time) => {
+        terrainsDetector(m1);
         if (!startTime) {
             startTime = time;
         }
@@ -61,7 +62,7 @@ function anime(m1, teams, otherGamer, options) {
             }
 
             if (m1.isMoving && (m1.isActivating || options.mode === "abilities") || m1.isMoving && counter > 5) {
-                if ((m1.remainingSprint < 26 && m1.infMin === 0) || m1.remainingRun < 26) {
+                if ((m1.remainingSprint < 26 && m1.infMin === 0) || m1.remainingRun < m1.baseRadius) {
                     m1.moveAura = false;
                     otherGamer.squaddies.forEach(m2 => { if (hasPassiveUnused(m2, "Unpredictable Movement")) { unpredictableMovement(m2) } });
                     //if(m1.runPaid && teaMate.remainingRun === teaMate.remainingSprint)m1.infMin++
@@ -138,8 +139,15 @@ function anime(m1, teams, otherGamer, options) {
                     notOnTokenX = m1.posX; notOnTokenY = m1.posY;
                 };
             };
-            m1.posX = x + ((endX - x) * deltaTime);
-            m1.posY = y + ((endY - y) * deltaTime);
+            if (
+                (m1.isDodging && m1.remainingDodge  > 2/m1.baseRadius) || 
+                (m1.isPushed  && m1.remainingPush   > 2/m1.baseRadius) || 
+                (m1.isMoving  && m1.remainingRun    > m1.baseRadius) 
+                ) {
+                    m1.posX = x + ((endX - x) * deltaTime);
+                    m1.posY = y + ((endY - y) * deltaTime);
+                }
+
             if (m1.posX > 0) {
                 if (m1.isMoving && (m1.isActivating || options.mode === "abilities") && !m1.isDodging) {
                     m1.remainingSprint -= m1.remainingSprint > 0 ? distance(m1.posX, m1.posY, safeX, safeY) : 0;
@@ -177,5 +185,9 @@ function anime(m1, teams, otherGamer, options) {
             !continueMovement ? requestAnimationFrame(anim) : false;
         }
     }
-    if ((m1.remainingRun > 0 && m1.isMoving) || m1.isDodging || m1.isPushed) { anim() };
+    if (
+        (m1.isDodging && m1.remainingDodge  > 0) || 
+        (m1.isPushed  && m1.remainingPush   > 0) || 
+        (m1.isMoving  && m1.remainingRun    > 0) 
+        ) { anim() };
 };
