@@ -129,7 +129,6 @@ let bigBang = (e)=>{//document.addEventListener('DOMContentLoaded', function (e)
 //monitors if two guys would occupate the same space, makes them move away in a unpredictably wonky way
         for (let i = 0; i < teamz.length; i++) {
             let m1 = teamz[i];
-           // terrainsDetector(m1);
             if(m1.shouldntBeHere > 0 && (counter < 2 || counter > 5) ) {m1.posY > canvas.height / 2 ? m1.posY++ : m1.posY--};
             //collisionBouncer(m1, teamz);//here only for dev cheats smothiness
             if(m1.isTakenOut){m1.posX = undefined;m1.posY=undefined}
