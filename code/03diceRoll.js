@@ -159,7 +159,7 @@ function actionButtons(teaMate, Gamer, color = Gamer.guild.color) {
     let $rulerButton = makeActiveActionButton(teaMate,'ruler',"a"+guildName,color,"Ruler",0,80);
     let $passActivationButton = counter < 2 ? makeActiveActionButton(teaMate,'passActivation',"a"+guildName,color,"End Deployment",100,20) :
         counter < 3 ? makeActiveActionButton(teaMate,'passActivation',"a"+guildName,color,"End Kick Off!",75,20) :
-        counter < 5 || counter > 6 ? makeActiveActionButton(teaMate,'passActivation',"a"+guildName,color,"End Allocation",75,20) :
+        counter >= 3 && counter < 5 || counter > 6 ? makeActiveActionButton(teaMate,'passActivation',"a"+guildName,color,"End Allocation",75,20) :
         makeActiveActionButton(teaMate,'passActivation',"a"+guildName,color,"End Activation",75,20);
     let bod = [
         $bonusTimeButton,

@@ -20,9 +20,9 @@ io.sockets.on('connection', (socket) => {
 
 
 app.get('/', (req,res)=>{
-    res.sendFile(__dirname+'/client/index.html')
+    res.sendFile(__dirname+'/index.html')
 });
-app.use('/',express.static(__dirname+'/client'));
+app.use('/',express.static(__dirname));
 console.log('server started');
 
 serv.listen(4200);

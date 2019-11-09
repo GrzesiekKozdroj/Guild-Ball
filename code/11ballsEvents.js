@@ -437,7 +437,7 @@ function theBallsGame(m1, teaMate) {
                         //ball.isOnGround = true;
                         m1.hasKicked = true;
                         m1.isKicking = false;
-                        m1.infMin -= 1;
+                        //m1.infMin -= 1;console.log(hi)
                         movementHistory = [];
                         m1.hasDropped = true;
                         diceRolledForDisplay = [];

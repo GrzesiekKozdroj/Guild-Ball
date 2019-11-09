@@ -68,7 +68,7 @@ function anime(m1, teams, otherGamer, options) {
                     //if(m1.runPaid && teaMate.remainingRun === teaMate.remainingSprint)m1.infMin++
                 }
             } else if (m1.isPushed) {
-                if (m1.remainingPush < 0.22 * inch) {
+                if (m1.remainingPush < 0.12 * inch) {
                     m1.isPushed = false;
                     if ($('#app').find('.activeOptions').length < 1 && wrath.willCounter && !teamz.some(el => el.isDodging)) {
                         distance(m1.posX, m1.posY, receiver.posX, receiver.posY) <= (wrath.meleeRadius + receiver.baseRadius) ?
@@ -79,7 +79,7 @@ function anime(m1, teams, otherGamer, options) {
                 }
                 !m1.isActivating ? snapBallButtonCreator('end') : console.log(m1.posX, m1.posY);
             } else if (m1.isDodging) {
-                if (m1.remainingDodge < 0.22 * inch) {
+                if (m1.remainingDodge < 0.12 * inch) {
                     m1.isDodging = false;
                     if (options.mode === "Back to the Shadows") { endSquaddieActivation(m1, Gamer1, Gamer2, Gamer, switcher, teamz, turnTransition) };
                     if ($('#app').find('.activeOptions').length < 1 && wrath && wrath.willCounter && !teamz.some(el => el.isPushed)) {
@@ -186,8 +186,9 @@ function anime(m1, teams, otherGamer, options) {
         }
     }
     if (
-        (m1.isDodging && m1.remainingDodge  > 0) || 
-        (m1.isPushed  && m1.remainingPush   > 0) || 
-        (m1.isMoving  && m1.remainingRun    > 0) 
+            (m1.isDodging && m1.remainingDodge  > m1.baseRadius) || 
+            (m1.isPushed  && m1.remainingPush   > m1.baseRadius) || 
+            (m1.isMoving  && m1.remainingRun    > m1.baseRadius && m1.infMin > 0) ||
+            (m1.isMoving  && m1.remainingSprint > m1.baseRadius)
         ) { anim() };
 };

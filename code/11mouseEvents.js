@@ -199,26 +199,10 @@ switcher = (event) => {
             defaultPreventer(event);
             //--01-S---activate a squaddie and display him
             
-        //////////////////////////////////////////////////////////////////////////////////////////////
-        /////////////////////____MOVEMENT___EVENT___LISTENERS__________///////////////////////////////
-        //////////////////////////////////////////////////////////////////////////////////////////////
-
-         if (__canMove(teaMate)) {
-         teaMate.moveAura = true;
-         if(teaMate.isDodging)teaMate.isDodging = false;
-         teamz.forEach(el=>!el.isActivating || el.wasCharging?el.moveAura=false:el.moveAura=true)
-         sendMessage(`if ${teaMate.nameDisplayed} has influence, ${teaMate.nameDisplayed} could sprint, left-click to move. You can cancel by pressing escape, hovering beyond movement zone or on other player.`);
-        $('#players').on('click', function (e) { //drops a guy down after movement if possible
-            if (__validMoveDeclaration(teaMate)) {
-             defaultPreventer(e);
-             teaMate.dropper(teamz);
-     }; //if
- } //if
- ); //mouseDown
-             } else if (Gamer.active && distance(teaMate.posX, teaMate.posY, mouX, mouY) < (teaMate.baseRadius) && 
-                teaMate.isActivating) {
-                    sendMessage(`${teaMate.nameDisplayed} has already moved this turn.`);
-             }
+//////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////____MOVEMENT___EVENT___LISTENERS__________///////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////
+checkBuildAndAllowMovement(teaMate);
  //##########################____MOVEMENT__ENDS___##########################################//
 
  
@@ -235,7 +219,7 @@ switcher = (event) => {
                 }
                 teaMate.isActivating = true;
                 atTheStartOfActivation(teaMate);
-                terrainsDetector(m1)
+                terrainsDetector(m1);
                 let otherSquaddie = Gamer.squaddies.filter(el => el.isActivating === true).filter(el => el.name !== teaMate.name);
                 otherSquaddie.forEach(el => {el.isActivating = false;el.moveAura = false;});
 
@@ -777,7 +761,7 @@ function deploymentPhase(event) {
                     });
 
                     $('#app').on('click', `#passActivation` + m1.name, () => { //end activation
-                        if (Gamer.active && teamz.filter(m1 => m1.hasBall).length > 0) {
+                        if ((Gamer.active && teamz.filter(m1 => m1.hasBall).length > 0)||counter===2&&ball.isOnGround) {
                             counter++;
                             deploymentPhase(event);
                             $(".infoAbilBox").remove();
@@ -832,6 +816,17 @@ function deploymentPhase(event) {
             defaultPreventer(event);
             for (let c = 0; c < Gamer.squaddies.length; c++) {
                 let m1 = Gamer.squaddies[c];
+                $('#app').on('click', `#passActivation` + m1.name, () => { //end activation
+                    console.log('ending activation')
+                    if (Gamer.active && m1.hasBall) {
+                        sendMessage('gotta kick off first');
+                    } else if (ball.isOnGround && counter === 2) {
+                        $('#app').empty().off();
+                        counter++;
+                        deploymentPhase(event);
+                    }
+                    $(".infoAbilBox").remove();
+                });
                 if (distance(m1.posX, m1.posY, mouX, mouY) < (m1.baseRadius) && m1.hasBall) {
                     //$('#app').css('background', 'url(./icons/cursor/wood.jpg) 0 0 / 390px');
                     message = `click to walk ${m1.nameDisplayed} and left-click to confirm where to move, then left-click on kick button to kick off!`;
@@ -841,17 +836,6 @@ function deploymentPhase(event) {
                     $('#app').on('click', `#leaflet` + m1.name, () => {
                         showLeaflet = showLeaflet ? false : true
                     });
-                    $('#app').on('click', `#passActivation` + m1.name, () => { //end activation
-
-                        if (Gamer.active && m1.hasBall) {
-                            sendMessage('gotta kick off first');
-                        } else if (!m1.hasBall) {
-                            $('#app').empty().off();
-                            counter++;
-                            deploymentPhase(event);
-                        }
-                        $(".infoAbilBox").remove();
-                    })
                     $("body").on(`keydown`, (e) => {
                         defaultPreventer(e);
                         if (e.key === 'Escape') {
@@ -863,16 +847,8 @@ function deploymentPhase(event) {
                         defaultPreventer(e);
                         if (distance(m1.posX, m1.posY, mouX, mouY) <= (m1.baseRadius) && m1.hasBall && !m1.isKicking) {
                             m1.isActivating = true;
-                            m1.moveAura = true;
-                        }
-                    })
-
-                    $("#players").on("click", (e) => {
-                        defaultPreventer(e);
-                        m1.remainingRun = m1.remainingSprint
-                        if (/*distance(m1.posX, m1.posY, mouX, mouY) <= (m1.remainingSprint) && */
-                            m1.hasBall && !m1.isKicking && m1.isActivating) {
-                            m1.dropper();
+                            m1.remainingRun = m1.remainingSprint;
+                            checkBuildAndAllowMovement(m1);
                         }
                     })
 
@@ -915,7 +891,7 @@ function deploymentPhase(event) {
 
                     $('#players').on('click', (e) => {
                         defaultPreventer(e);
-                        if (m1.isKicking && ball.beingKicked && distance(m1.posX, m1.posY, mouX, mouY) <= (m1.kickDist * inch + m1.baseRadius)) {
+                        if (m1.hasBall && m1.isKicking && ball.beingKicked && distance(m1.posX, m1.posY, mouX, mouY) <= (m1.kickDist * inch + m1.baseRadius)) {
                             m1.hasMoved = false;
                             m1.isMoving = false;
                             m1.remainingSprint = m1.sprint * inch + m1.baseRadius;
@@ -962,12 +938,6 @@ function deploymentPhase(event) {
                         m1.hoverButtonAura = 0;
                         $(".infoAbilBox").remove();
                     });
-                                $('#app').on('click', `#passActivation` + m1.name, () => { //end activation
-                                    $('#app').empty().off();
-                                    counter++;
-                                    deploymentPhase(event);
-                                    $(".infoAbilBox").remove();
-                                });
                                 $("#app").on('mouseenter', `#passActivation` + m1.name, function() {
                                     $(".infoAbilBox").remove();
                                     const that = {name:"Pass activation",type:"utility",desc:`The other team will now assign its influence.`};
@@ -986,8 +956,18 @@ function deploymentPhase(event) {
                                 $('#app').empty();
                                 deploymentPhase(event);
                             }
+                            $('#app').on('click', `#passActivation` + m1.name, () => { //end activation
+                                if(ball.isOnGround){
+                                $('#app').empty().off();
+                                counter++;
+                                deploymentPhase(event);
+                                $(".infoAbilBox").remove();
+                                }
+                            });
                         }
                     });
+
+
                 } else if (!ball.isOnGround && distance(m1.posX, m1.posY, mouX, mouY) < (m1.baseRadius) && !m1.hasBall) {
                     let kicker = teamz.filter(el => el.hasBall)[0]
                     message = `you must perform kick off with ${kicker.nameDisplayed}.`

@@ -455,11 +455,14 @@ class Player {
             this.doppler(mouX, mouY, 0.5)
             $('canvas').on('click tap', () => {
                 if (
-                    distance(this.posX, this.posY, mouX, mouY) <= this.remainingPush + 2 / this.baseRadius+1.2*inch && 
-                    this.isPushed
-                ) {
-                    if(otherGamer.squaddies.every(el=>el.isDodging===false))anime(this, teamz,otherGamer,{ox:mouX,oy:mouY});
-                }
+                        distance(this.posX, this.posY, mouX, mouY) <= this.remainingPush + 2 / this.baseRadius+1.2*inch && 
+                        this.isPushed && 
+                        teamz.every(    el =>
+                            el.remainingDodge<.5*inch || 
+                            distance(mouX,mouY,el.posX,el.posY)>distance(mouX,mouY,this.posX,this.posY)
+                        )
+                    )
+                        anime(this, teamz,otherGamer,{ox:mouX,oy:mouY});
             })
         }
     }; //pushSquaddie
