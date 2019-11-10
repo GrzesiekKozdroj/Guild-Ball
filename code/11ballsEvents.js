@@ -1,4 +1,4 @@
-const __snapBallClickOnButton = () =>{
+const __snapBallClickOnButton = (m1,teaMate) =>{
     teamz.forEach(el => {
         $('#app').on('click', `#snapBall` + el.name, () => {
             if (!m1.isKnockedDown && m1.isActivating && distance(ball.x, ball.y, el.posX, el.posY) < ball.ballSize + el.baseRadius + 1 * inch && ball.isOnGround) {
@@ -23,14 +23,14 @@ const __snapBallClickOnButton = () =>{
         })
     });
 };
-const __dropBall = (teaMate)=>{
+const __dropBall = (m1,teaMate)=>{
     $('#app').on('click', '#dropBall' + teaMate.name, () => {
         ball.isInHand = true;
         ball.drawDropAura(teaMate.baseRadius);
         teaMate.moveAura = false;
         $('#players').on('click', () => {
-            console.log(distance(teaMate.posX, teaMate.posY, mouX, mouY) <= (teaMate.baseRadius + 1 * inch + ball.ballSize), ball.isInHand, teaMate.hasBall, !teaMate.hasSnapped, isEngaged(m1) < 1)
-            if (distance(teaMate.posX, teaMate.posY, mouX, mouY) <= (teaMate.baseRadius + 1 * inch + ball.ballSize) && ball.isInHand && teaMate.hasBall /*&& !teaMate.hasSnapped*/ && isEngaged(m1) < 1) {
+            console.log(distance(teaMate.posX, teaMate.posY, mouX, mouY) <= (teaMate.baseRadius + 1 * inch + ball.ballSize), ball.isInHand, teaMate.hasBall, !teaMate.hasSnapped, isEngaged(teaMate) < 1)
+            if (distance(teaMate.posX, teaMate.posY, mouX, mouY) <= (teaMate.baseRadius + 1 * inch + ball.ballSize) && ball.isInHand && teaMate.hasBall /*&& !teaMate.hasSnapped*/ && isEngaged(teaMate) < 1) {
                 movementHistory = [];
                 ball.isInHand = false;
                 teaMate.hasBall = false;
@@ -55,7 +55,7 @@ const __dropBall = (teaMate)=>{
         $(".infoAbilBox").remove();
     });
 }
-const __kickButton = (teaMate) => {
+const __kickButton = (m1,teaMate) => {
         $('#app').on('click', '#kick' + teaMate.name, () => {
         $(".infoAbilBox").remove();
         if (!teaMate.hasBall) {
@@ -95,7 +95,7 @@ const __kickButton = (teaMate) => {
         $(".infoAbilBox").remove();
     });
 }
-const __snapBallClickOnPitch = (m1) => {
+const __snapBallClickOnPitch = (m1,teaMate) => {
     if (distance(m1.posX, m1.posY, ball.x, ball.y) <= (m1.baseRadius + inch + ball.ballSize) && //player-ball distance
         distance(mouX, mouY, ball.x, ball.y) <= ball.ballSize                                   //klick on ball
         && ball.isOnGround && !m1.hasSnapped && m1.isActivating && !m1.isKnockedDown) {
@@ -214,13 +214,13 @@ const __goalKick = (m1,teaMate) => {
 }
 
 function theBallsGame(m1, teaMate) {
-    __snapBallClickOnButton();
-    __dropBall(teaMate);
-    __kickButton(teaMate);
-    __kickButton(teaMate);
+    __snapBallClickOnButton(m1,teaMate);
+    __dropBall(m1,teaMate);
+    __kickButton(m1,teaMate);
+    __kickButton(m1,teaMate);
     $('#players').on('click', (e) => {//kick on the field
         defaultPreventer(e);
-        __snapBallClickOnPitch(m1);
+        __snapBallClickOnPitch(m1,teaMate);
         //<<-----------------== kicking the ball activated
         if (m1.isKicking && ball.beingKicked) {
             __goalKick(m1,teaMate);
