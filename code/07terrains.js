@@ -106,7 +106,6 @@ function terrainsDetector(teaMate) {
 
             //<<----==    FAST GROUND grants movement bonus
             if (colorClose.includes(255) && !teaMate.inFastGround && typesofTerrain.includes("fastGround")) {
-                console.log('hi from fast')
                 teaMate.inFastGround = true; teaMate.remainingRun += 2 * inch; teaMate.remainingSprint += 2 * inch;
             } //else  if ( !colorClose.includes(255) ) {teaMate.inFastGround = false;}
         } else if (
@@ -116,8 +115,22 @@ function terrainsDetector(teaMate) {
             distance(Gamer.gp.x, Gamer.gp.y, teaMate.posX, teaMate.posY) > teaMate.baseRadius + 2.5 * cm &&
             distance(otherGamer.gp.x, otherGamer.gp.y, teaMate.posX, teaMate.posY) > teaMate.baseRadius + 2.5 * cm &&
             !otherGamer.tokens.some(el => el.type === "Nature's Chill" && 
-            distance(el.posX, el.posY, teaMate.posX, teaMate.posY) <= el.baseRadius + teaMate.baseRadius)) //can place ability terrains on top of each other
-        { return true } 
+            distance(el.posX, el.posY, teaMate.posX, teaMate.posY) <= el.baseRadius + teaMate.baseRadius)) 
+            //can place ability terrains on top of each other
+        { 
+            // console.log(
+
+            // teaMate.classification === "token" , 
+            // teaMate.type === "Nature's Chill" ,
+            // !colorClose.includes(255) ,
+            // distance(Gamer.gp.x, Gamer.gp.y, teaMate.posX, teaMate.posY) > teaMate.baseRadius + 2.5 * cm ,
+            // distance(otherGamer.gp.x, otherGamer.gp.y, teaMate.posX, teaMate.posY) > teaMate.baseRadius + 2.5 * cm ,
+            // !otherGamer.tokens.some(el => el.type === "Nature's Chill" && 
+            // distance(el.posX, el.posY, teaMate.posX, teaMate.posY) <= el.baseRadius + teaMate.baseRadius)
+
+            // );
+            return true 
+        } 
         else if (
             colorClose.includes(255) && 
             (typesofTerrain.includes("wall") || typesofTerrain.includes("obstacle") ) || 
@@ -138,7 +151,7 @@ function terrainsDetector(teaMate) {
                     distance(teaMate.posX, teaMate.posY, ball.x, ball.y) <= teaMate.baseRadius + ball.ballSize
         ) 
         { return false } 
-        else 
+        else if (teaMate.type !== "Nature's Chill")
         { return true }
     }
 }//end of terrians function with posX validator check
