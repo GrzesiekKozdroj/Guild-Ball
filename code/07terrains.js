@@ -109,19 +109,37 @@ function terrainsDetector(teaMate) {
                 console.log('hi from fast')
                 teaMate.inFastGround = true; teaMate.remainingRun += 2 * inch; teaMate.remainingSprint += 2 * inch;
             } //else  if ( !colorClose.includes(255) ) {teaMate.inFastGround = false;}
-        } else if (teaMate.classification === "token" && teaMate.type === "Nature's Chill" && !colorClose.includes(255) &&
+        } else if (
+            teaMate.classification === "token" && 
+            teaMate.type === "Nature's Chill" && 
+            !colorClose.includes(255) &&
             distance(Gamer.gp.x, Gamer.gp.y, teaMate.posX, teaMate.posY) > teaMate.baseRadius + 2.5 * cm &&
             distance(otherGamer.gp.x, otherGamer.gp.y, teaMate.posX, teaMate.posY) > teaMate.baseRadius + 2.5 * cm &&
-            !otherGamer.tokens.some(el => el.type === "Nature's Chill" && distance(el.posX, el.posY, teaMate.posX, teaMate.posY) <= el.baseRadius + teaMate.baseRadius)) //can place ability terrains on top of each other
-        { return true } else
-            if (colorClose.includes(255) && (typesofTerrain.includes("wall") || typesofTerrain.includes("obstacle")) ||
-                teamz.some(el => distance(el.posX, el.posY, teaMate.posX, teaMate.posY) <= el.baseRadius + teaMate.baseRadius) ||
-                distance(Gamer.gp.x, Gamer.gp.y, teaMate.posX, teaMate.posY) <= teaMate.baseRadius + 2.5 * cm ||
-                distance(otherGamer.gp.x, otherGamer.gp.y, teaMate.posX, teaMate.posY) <= teaMate.baseRadius + 2.5 * cm ||
-                Gamer.tokens.some(el => el.type === "trap" && el.id !== teaMate.id && distance(el.posX, el.posY, teaMate.posX, teaMate.posY) <= el.baseRadius + teaMate.baseRadius) ||
-                otherGamer.tokens.some(el => el.type === "trap" && distance(el.posX, el.posY, teaMate.posX, teaMate.posY) <= el.baseRadius + teaMate.baseRadius) ||
-                distance(teaMate.posX, teaMate.posY, ball.x, ball.y) <= teaMate.baseRadius + ball.ballSize) { return false } else { return true }
-
+            !otherGamer.tokens.some(el => el.type === "Nature's Chill" && 
+            distance(el.posX, el.posY, teaMate.posX, teaMate.posY) <= el.baseRadius + teaMate.baseRadius)) //can place ability terrains on top of each other
+        { return true } 
+        else if (
+            colorClose.includes(255) && 
+            (typesofTerrain.includes("wall") || typesofTerrain.includes("obstacle") ) || 
+            teamz.some(
+                el => 
+                    distance(el.posX, el.posY, teaMate.posX, teaMate.posY) <= el.baseRadius + teaMate.baseRadius) ||
+                    distance(Gamer.gp.x, Gamer.gp.y, teaMate.posX, teaMate.posY) <= teaMate.baseRadius + 2.5 * cm ||
+                    distance(otherGamer.gp.x, otherGamer.gp.y, teaMate.posX, teaMate.posY) <= teaMate.baseRadius + 2.5 * cm ||
+                    Gamer.tokens.some(
+                        el => 
+                            el.type === "trap" && 
+                            el.id !== teaMate.id && 
+                            distance(el.posX, el.posY, teaMate.posX, teaMate.posY) <= el.baseRadius + teaMate.baseRadius) ||
+                            otherGamer.tokens.some(
+                                el => el.type === "trap" && 
+                                distance(el.posX, el.posY, teaMate.posX, teaMate.posY) <= el.baseRadius + teaMate.baseRadius
+                            ) ||
+                    distance(teaMate.posX, teaMate.posY, ball.x, ball.y) <= teaMate.baseRadius + ball.ballSize
+        ) 
+        { return false } 
+        else 
+        { return true }
     }
 }//end of terrians function with posX validator check
 

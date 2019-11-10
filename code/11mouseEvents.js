@@ -905,7 +905,7 @@ function deploymentPhase(event) {
                             Gamer.momentum += 1;
                             movementHistory = [];
                             m1.hasDropped = true;
-                            scatterRandomiser(mouX, mouY, true, m1); console.log('11-931')//m1.hasDropped = false;
+                            scatterRandomiser(mouX, mouY, true, m1);
                             diceRolled(kickRoll, 4, Gamer1.guild.color);
                             //m1.remainingSprint = m1.sprint*inch+m1.baseRadius;
 

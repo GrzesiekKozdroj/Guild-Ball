@@ -508,26 +508,30 @@ function legalPlacementDetector(m1) {
         }
     }//the below always returns false!!
     //------------------------------------------------------
-    console.log("colors",Boolean(!colorClose.includes(255) || 
-    (
-        colorClose.includes(255) && !typesofTerrain.includes("wall") && !typesofTerrain.includes("obstacle")
-    )),"ball",Boolean(!ball.isOnGround || distance(mouX, mouY, ball.x, ball.y) > ball.ballSize + m1.baseRadius),"squaddies",teamz.filter(el => el.name !== m1.name && distance(el.posX, el.posY, mouX, mouY) <= el.baseRadius + m1.baseRadius).lenth,"goalposts",Boolean(distance(mouX, mouY, Gamer.gp.x, Gamer.gp.y) > m1.baseRadius + 2.5 * cm && 
-    distance(mouX, mouY, otherGamer.gp.x, otherGamer.gp.y) > m1.baseRadius + 2.5 * cm))
-    //----------------------------------------------------------
-    if (
-        (!colorClose.includes(255) || 
-            (
-                colorClose.includes(255) && typesofTerrain.includes("forest") && typesofTerrain.includes("roughGround")
+    //console.log
+    if(
+        //"colors",
+            Boolean(!colorClose.includes(255) || 
+                (
+                    colorClose.includes(255) && 
+                    !typesofTerrain.includes("wall") && 
+                    !typesofTerrain.includes("obstacle")
+                )
             )
-        ) 
-        && 
-        (
-            !ball.isOnGround || distance(mouX, mouY, ball.x, ball.y) > ball.ballSize + m1.baseRadius
-        ) 
-        && 
-        teamz.filter(el => el.name !== m1.name && distance(el.posX, el.posY, mouX, mouY) <= el.baseRadius + m1.baseRadius).length<1 &&
-        distance(mouX, mouY, Gamer.gp.x, Gamer.gp.y) > m1.baseRadius + 2.5 * cm && 
-        distance(mouX, mouY, otherGamer.gp.x, otherGamer.gp.y) > m1.baseRadius + 2.5 * cm) 
+        &&//"ball",
+            Boolean(!ball.isOnGround || 
+                distance(mouX, mouY, ball.x, ball.y) > ball.ballSize + m1.baseRadius)
+        &&//"squaddies",
+            teamz.filter(el => 
+            el.name !== m1.name && 
+            distance(el.posX, el.posY, mouX, mouY) <= el.baseRadius + m1.baseRadius).length < 1
+        &&//"goalposts",
+            Boolean
+                (
+                    distance(mouX, mouY, Gamer.gp.x, Gamer.gp.y) > m1.baseRadius + 2.5 * cm && 
+                    distance(mouX, mouY, otherGamer.gp.x, otherGamer.gp.y) > m1.baseRadius + 2.5 * cm
+                )
+    )
         {
             return true
         } else { return false }

@@ -146,7 +146,7 @@ class Token {
         if(this.isInHand){
             this.posX = mouX;
             this.posY = mouY;
-            if(terrainsDetector(this) ) this.isPlacable = true;
+            this.isPlacable = terrainsDetector(this);
         }
     }
 }
