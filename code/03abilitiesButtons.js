@@ -124,6 +124,7 @@ function abilitiesEvents(m1, Gamer, otherGamer) {
     ///////////////////////////_____HUNTERS_____///////////////////////////////////////////////////
     $('#app').on('click', '#bigGameTraps' + m1.name, () => {
         commonPreInstruction({ m1: m1 });
+        idear = "biGameTraps"
         if (Gamer.tokens.filter(el=>el.type==="trap").length < 5 && counter === 5 && !m1.wasCharging && !m1.isDodging && $(".pW0").find(".plajBookCell").length === 0) {
             const snaret = new Token(mouX, mouY, smallBase, "trap", Gamer.guild.color);
             snaret.isInHand = true;
@@ -348,28 +349,36 @@ function abilitiesEvents(m1, Gamer, otherGamer) {
                     m3.isPushed = false;
                     m3.isDodging = false;
                     savedBeforVoodoo.push(m3.isMoving?true:false,m3.remainingRun,m3.remainingSprint);
+                    console.log(savedBeforVoodoo,"pushed, built")
                     m3.remainingRun =    m3.sprint*inch+m3.baseRadius-movementHindrances(m3);
                     m3.remainingSprint = m3.sprint*inch+m3.baseRadius-movementHindrances(m3);
-                    m1.abilities.activeOwned.forEach((el,i)=>{if(el.includes("The Power of Voodoo"))m1.abilities.activeOwned.splice(i,1)  } ) 
+                        m3.isMoving = true;
+                        m3.hasMoved = false;
+                    m1.abilities.activeOwned.forEach((el,i)=>{
+                        if(el.includes("The Power of Voodoo"))
+                            m1.abilities.activeOwned.splice(i,1)  
+                    } ) 
                     m3.abilities.activeGiven.push(["The Power of Voodoo", 0]);
                     commonAfterInstruction({ m1: m1 });
                     $('#app').empty().append(appMaker(m1, Gamer));
                     $('#players').on("click.abilitiesMove",()=>{
-                        m3.isMoving = true;
-                        m3.hasMoved = false;
                         $('#app').empty().append(appMaker(m1, Gamer));
-                        if(distance(mouX,mouY,m3.posX,m3.posY)<=m3.remainingSprint+5 &&distance(m3.posX,m3.posY,mouX,mouY)>m3.baseRadius*.5)
-                                anime(m3, teamz, otherGamer, {mode: 'abilities' });
                         if(m3.remainingSprint < 30+m3.baseRadius){
                             m3.isMoving = false;
-                            m3.hasMoved = savedBeforVoodoo[0];
+                            m3.hasMoved = savedBeforVoodoo[0];console.log(savedBeforVoodoo," m3.hasMoved ", m3.hasMoved)
                             m3.moveAura = false;
                             m3.remainingRun =    savedBeforVoodoo[0]?0:savedBeforVoodoo[1]//m3.run*inch+m3.baseRadius-movementHindrances(m3);
+                            console.log(savedBeforVoodoo,"remaining run", m3.remainingRun)
                             m3.remainingSprint = savedBeforVoodoo[2]//m3.sprint*inch+m3.baseRadius-movementHindrances(m3);
+                            console.log(savedBeforVoodoo,"sprint", m3.remainingSprint)
                             m3.abilities.activeOwned.forEach((el,i)=>{if(el.includes("The Power of Voodoo"))m1.abilities.activeGiven.splice(i,1)  } ) 
                             $('#players').off("click.abilitiesMove");
-                            savedBeforVoodoo = [];
+                            //savedBeforVoodoo = [];referencin to empty array made m3 movement undefined
                         }
+                        else if(/*distance(mouX,mouY,m3.posX,m3.posY)<=m3.remainingSprint+5 &&*/ 
+                            distance(m3.posX,m3.posY,mouX,mouY)>m3.baseRadius*.5 &&
+                            m3.remainingSprint > 30+m3.baseRadius)
+                                anime(m3, teamz, otherGamer, {mode: 'abilities' });
                     })
                 }
             })

@@ -421,7 +421,7 @@ let infoAbilBox = (lspal)=>{
                 </div>
             </div>
             <div class="abilTitle">
-                <div class="abilName">${lspal.name}</div>
+                <div class="abilName ${lspal.id}">${lspal.name}</div>
                 <div class="abilType">${lspal.type}</div>
             </div>
             <div class="rightDecour">

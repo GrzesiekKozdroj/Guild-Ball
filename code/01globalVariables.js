@@ -84,7 +84,8 @@ let cheetos = false;
 let online = false;
 socket.on('online',()=>{
     online = true;
-})
+});
+let animationPlayingDoubleClickPreventer = false;
 
 const smallBase = 1.2 * cm;
 let savedBeforVoodoo = [];

@@ -166,7 +166,7 @@ function scatterRandomiser(x = mouX, y = mouY, mode, m1, undisturbedScatter) {
             startTime = null; // reset startTime
             m1.hasDropped = false;
             if(isNaN(ball.x) && deltaTime >= 1 && !undisturbedScatter){ball.isOnGround=true;ball.x=canvas.width/2;ball.y=canvas.height/2;
-                scatterRandomiser(canvas.width/2,canvas.height/2,false,m1)}console.log('06-169')
+                scatterRandomiser(canvas.width/2,canvas.height/2,false,m1)};
                 snapBallButtonCreator('end');
         } else {
             //<<-----------==  create button to snap the ball for all the interested

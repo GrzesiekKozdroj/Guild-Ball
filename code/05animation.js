@@ -37,6 +37,7 @@ function anime(m1, teams, otherGamer, options) {
 
 
     let anim = (time) => {
+        animationPlayingDoubleClickPreventer = true;
         terrainsDetector(m1);
         if (!startTime) {
             startTime = time;
@@ -49,10 +50,15 @@ function anime(m1, teams, otherGamer, options) {
         let checkCollision = teams
             .some(el => distance(m1.posX, m1.posY, el.posX, el.posY) <= (m1.baseRadius + el.baseRadius) && el.name !== m1.name);
 //<<-------=========== conditions to stop movement combined into one list of instructions.
+
+        if (m1.remainingSprint < m1.baseRadius && m1.infMin > 0 && !m1.runPaid && !m1.isCharging && !m1.wasCharging) {
+            m1.infMin -= 1; //if model runed, looses one influence
+            m1.runPaid = true;
+        }
         if (deltaTime >= 1 || checkCollision || checkgoalcollision || m1.shouldntBeHere > 1 || (!m1.isPushed && !m1.isDodging && (distance(m1.posX,
             m1.posY, endX, endY) >= m1.remainingRun) && m1.shouldntBeHere === 1) || m1.remainingRun < 5 || (m1.isCharging && m1.shouldntBeHere === 1)) {
 
-
+                animationPlayingDoubleClickPreventer = false;
             if (!checkCollision && !checkgoalcollision && deltaTime <= 1) {
                 m1.posX = x + ((endX - x) * deltaTime);
                 m1.posY = y + ((endY - y) * deltaTime);
@@ -98,7 +104,7 @@ function anime(m1, teams, otherGamer, options) {
                 !Gamer2.tokens.every(el =>distance(m1.posX, m1.posY, el.posX, el.posY) > m1.baseRadius + el.baseRadius)) {//<<--------== can't stand on a ball, wall, or obstacle
                 m1.posX = notOnTokenX;
                 m1.posY = notOnTokenY;
-                continueMovement = false; console.log("kickback investigation point undefined");
+                continueMovement = false;
             }
             startTime = null;
             if (checkCollision || checkgoalcollision) {
@@ -125,7 +131,6 @@ function anime(m1, teams, otherGamer, options) {
                     //mia
                 }
             }
-            console.log("kickback investigation point");
             m1.chargeTarget = false;
             //unpredictableMovement(m1);
         } else {
@@ -140,9 +145,14 @@ function anime(m1, teams, otherGamer, options) {
                 };
             };
             if (
-                (m1.isDodging && m1.remainingDodge  > 2/m1.baseRadius) || 
-                (m1.isPushed  && m1.remainingPush   > 2/m1.baseRadius) || 
-                (m1.isMoving  && m1.remainingRun    > m1.baseRadius) 
+                    (m1.isDodging && m1.remainingDodge  > 2/m1.baseRadius) || 
+                    (m1.isPushed  && m1.remainingPush   > 2/m1.baseRadius) || 
+                    (
+                    m1.isMoving  && 
+                        (m1.remainingRun    > m1.baseRadius && m1.runPaid) ||
+                        (m1.remainingSprint > m1.baseRadius) || 
+                        (m1.isCharging && m1.remainingRun > m1.baseRadius)
+                    )
                 ) {
                     m1.posX = x + ((endX - x) * deltaTime);
                     m1.posY = y + ((endY - y) * deltaTime);
@@ -188,7 +198,6 @@ function anime(m1, teams, otherGamer, options) {
     if (
             (m1.isDodging && m1.remainingDodge  > m1.baseRadius) || 
             (m1.isPushed  && m1.remainingPush   > m1.baseRadius) || 
-            (m1.isMoving  && m1.remainingRun    > m1.baseRadius && m1.infMin > 0) ||
-            (m1.isMoving  && m1.remainingSprint > m1.baseRadius)
+            m1.isMoving
         ) { anim() };
 };

@@ -440,10 +440,6 @@ class Player {
             &&
             teamz.filter(el=>el.name!==this.name).every(el=>el.posX>0?distance(el.posX,el.posY,mouX,mouY)>el.baseRadius:true)//not on anyone else
         ) {
-            if (distance(this.posX, this.posY, mouX, mouY) > this.remainingSprint - this.baseRadius && !this.runPaid && !this.isCharging && !this.wasCharging) {
-                this.infMin -= 1; //if model runed, looses one influence
-                this.runPaid = true;
-            }
             this.isMoving = true;
             anime(this, teamz, otherGamer, {mode: this.isCharging ? 'charging' : '' });
 

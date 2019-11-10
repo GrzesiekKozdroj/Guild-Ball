@@ -1,8 +1,4 @@
-function theBallsGame(m1, teaMate) {
-
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////___BAAAL____GAAME___///////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+const __snapBallClickOnButton = () =>{
     teamz.forEach(el => {
         $('#app').on('click', `#snapBall` + el.name, () => {
             if (!m1.isKnockedDown && m1.isActivating && distance(ball.x, ball.y, el.posX, el.posY) < ball.ballSize + el.baseRadius + 1 * inch && ball.isOnGround) {
@@ -26,6 +22,8 @@ function theBallsGame(m1, teaMate) {
             }
         })
     });
+};
+const __dropBall = (teaMate)=>{
     $('#app').on('click', '#dropBall' + teaMate.name, () => {
         ball.isInHand = true;
         ball.drawDropAura(teaMate.baseRadius);
@@ -46,7 +44,6 @@ function theBallsGame(m1, teaMate) {
             }
         })
     });
-
     $("#app").on('mouseenter', `#dropBall` + teaMate.name, function () {
         teaMate.hoverButtonAura = teaMate.baseRadius + 1 * inch + smallBase;
         $(".infoAbilBox").remove();
@@ -57,8 +54,9 @@ function theBallsGame(m1, teaMate) {
         teaMate.hoverButtonAura = 0;
         $(".infoAbilBox").remove();
     });
-    //--kick--jQuery--button
-    $('#app').on('click', '#kick' + teaMate.name, () => {
+}
+const __kickButton = (teaMate) => {
+        $('#app').on('click', '#kick' + teaMate.name, () => {
         $(".infoAbilBox").remove();
         if (!teaMate.hasBall) {
             message = `${teaMate.nameDisplayed} doesn't have a ball to be able to kick it.`;
@@ -72,9 +70,10 @@ function theBallsGame(m1, teaMate) {
             teaMate.isKicking = true;
             ball.beingKicked = true;
             message = `left-click within aura to: scatter a free ball, or pass to a friendly team mate or score a goal.`;
-            $('#app').empty().append(appMaker(m1, Gamer));
+            $('#app').empty().append(appMaker(teaMate, Gamer));
         };
-    })
+    });
+
     $("#app").on('mouseenter', `#kick` + teaMate.name, function () {
         teaMate.hoverButtonAura = teaMate.baseRadius + teaMate.kickDist * inch;
         $(".infoAbilBox").remove();
@@ -95,131 +94,136 @@ function theBallsGame(m1, teaMate) {
         teaMate.hoverButtonAura = 0;
         $(".infoAbilBox").remove();
     });
+}
+const __snapBallClickOnPitch = (m1) => {
+    if (distance(m1.posX, m1.posY, ball.x, ball.y) <= (m1.baseRadius + inch + ball.ballSize) && //player-ball distance
+        distance(mouX, mouY, ball.x, ball.y) <= ball.ballSize                                   //klick on ball
+        && ball.isOnGround && !m1.hasSnapped && m1.isActivating && !m1.isKnockedDown) {
+        m1.moveAura = false;
+        ball.isOnGround = false;
+        m1.hasBall = true;
+        movementHistory = [];
+        $('body').find('.snapBallButton').remove();
+        $('#actionButtons').empty().append(actionButtons(m1, Gamer));
+        //<<------------------==    can't pick up dropped ball
+    } else if (distance(m1.posX, m1.posY, ball.x, ball.y) <= (m1.baseRadius + inch + ball.ballSize) && distance(mouX, mouY, ball.x, ball.y) <= ball.ballSize && ball.isOnGround && m1.hasSnapped) {
+        sendMessage(`${m1.nameDisplayed} has dropped the ball, so it can't be picked this activation.`);
+    }
+}
+const __goalKick = (m1,teaMate) => {
+    if (distance(m1.posX, m1.posY, otherGamer.gp.x, otherGamer.gp.y) < (m1.kickDist * inch + m1.baseRadius + 2.5 * cm) &&
+    distance(mouX, mouY, otherGamer.gp.x, otherGamer.gp.y) < (2.5 * cm) && 
+    m1.infMin > 0 && Gamer.momentum > 0)
+{    //--kick--happening--against--goalpost------------------------
+    if (m1.isMoving) {
+        unpredictableMovement(m1);
+        m1.isMoving = false;
+        m1.hasMoved = true;
+    }
+    teaMate.hasKicked = true;
+    let minRollToPass = distance(m1.posX, m1.posY, otherGamer.gp.x, otherGamer.gp.y) <= (m1.kickDist * inch / 2 + 2.5 * cm + m1.baseRadius) ? 3 : 4;
+    let kickRoll = diceRoller(Gamer, otherGamer, m1, m1, 'kick');//rool dies
+    let succesfulKickDice = kickRoll.filter(el => el >= minRollToPass).length;//check for succesful roll
+    diceRolledForDisplay = [];
+    diceRolled(kickRoll, minRollToPass, Gamer.guild.color);//display dies
+    if (succesfulKickDice > 0) {
+        teaMate.hasKicked = true;
+        teaMate.isKicking = false;
+        teaMate.hasBall = false;
+        ball.beingKicked = false;
+        teaMate.infMin -= 1;
+        Gamer.momentum -= 1;
+        Gamer.goals += 1;
+        Gamer.score += 4;
+        ball.x = otherGamer.gp.x;
+        ball.y = otherGamer.gp.y;
+        otherGamer.gp.hasBall = true;
+        //not yet: diceRolledForDisplay = [];
+        sendMessage(`${m1.nameDisplayed} succesfully scored goal, so either dodge or bank a momentum.`);
+        //<<--------=====       stitching team plays buttons
+        $teamplays = [];
+        $teamplays.push(
+            `<li class='teamPlays plajBookCell' id='scoreddodge${m1.name}' style="${btilPicStictcher(0, 60)}">dodge</li>
+         <li class='teamPlays plajBookCell' id='scorebankmomentum${m1.name}' style="${btilPicStictcher(75, 100)}">bank momentum</li>`
+        );
+        $('#app').on('click', `#scorebankmomentum${m1.name}`, () => {
+            Gamer.momentum += kickRoll.filter(el => el > 5).length > 1 ? 2 : 1;
+            $teamplays = [];
+            $('.playbookNodes').empty();
+            $(".infoAbilBox").remove();
+            endSquaddieActivation(m1, Gamer1, Gamer2, Gamer, switcher, teamz, turnTransition);
+        });
+        $('#app').empty();
+        $('#app').append(appMaker(m1, Gamer));
+        $('#app').on('click', `#scoreddodge${m1.name}`, () => {
+            sendMessage(`${m1.nameDisplayed} can now do his dodges, when ready, end the activation.`)
+            m1.isDodging = true;
+            $('#app').off();
+            $('#players').off();
+            sendMessage(`now you can only dodge with ${m1.nameDisplayed} and/or end this activation.`)
+            $('#app').on('click', `#passActivation` + teaMate.name, () => { //end activation
+                if (Gamer.active && teaMate.isActivating) {
+                    saveGameState();
+                    endSquaddieActivation(teaMate, Gamer1, Gamer2, Gamer, switcher, teamz, turnTransition);
+                } else if (otherGamer.gp.hasBall) { sendMessage(`click on ${otherGamer.guild.name} goal post.`) }
+            })
+            m1.dodgeSquaddie(4);
+            otherGamer.gp.hasBall = true;
+            $teamplays = [];
+            $('.playbookNodes').empty();
+            $(".infoAbilBox").remove();
+        });
+        $("#app").on('mouseenter', `#scorebankmomentum` + m1.name, function () {
+            $(".infoAbilBox").remove();
+            const that = { name: "Bank Momentum", type: "utility", desc: `Goal kick was succesful! Save just earned momentum and end ${m1.nameDisplayed} activation.` };
+            $("#gameScreen").append(infoAbilBox(that));
+        });
+        $("#app").on('mouseleave', `#scorebankmomentum` + m1.name, function () {
+            m1.hoverButtonAura = 0;
+            $(".infoAbilBox").remove();
+        });
+        $("#app").on('mouseenter', `#scoreddodge` + teaMate.name, function () {
+            teaMate.hoverButtonAura = teaMate.baseRadius + 4 * inch;
+            $(".infoAbilBox").remove();
+            const that = { name: "Run the Length", type: "utility", desc: `Goal kick was succesful! Now for the price of just earned one momentum ${teaMate.nameDisplayed} can dodge 4 inches and end activation.` };
+            $("#gameScreen").append(infoAbilBox(that));
+        });
+        $("#app").on('mouseleave', `#scoreddodge` + teaMate.name, function () {
+            teaMate.hoverButtonAura = 0;
+            $(".infoAbilBox").remove();
+        });
+        //--resolve--goal--kick------------------------------------------
+        /*failed goal kick*/
+    } else {//<<-------------===    failed goal kick
+        diceRolled(kickRoll, minRollToPass, Gamer1.guild.color);
+        diceRolledForDisplay = [];
+        $('#app').empty();
+        $('#app').append(appMaker(m1, Gamer));
+        teaMate.hasKicked = true;
+        teaMate.isKicking = false;
+        teaMate.hasBall = false;
+        ball.beingKicked = false;
+        teaMate.infMin -= 1;
+        Gamer.momentum -= 1;
+        m1.hasDropped = true;
+        scatterRandomiser(mouX, mouY, true, m1);console.log('11-218') //m1.hasDropped = false;
+        endSquaddieActivation(m1, Gamer1, Gamer2, Gamer, switcher, teamz, turnTransition);
+        /*failed goal kick*/
+    }
+}
+}
 
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+function theBallsGame(m1, teaMate) {
+    __snapBallClickOnButton();
+    __dropBall(teaMate);
+    __kickButton(teaMate);
+    __kickButton(teaMate);
     $('#players').on('click', (e) => {//kick on the field
         defaultPreventer(e);
-
-
-        //<<-----------------===    ball pick up by clicking on canvas
-        if (distance(m1.posX, m1.posY, ball.x, ball.y) <= (m1.baseRadius + inch + ball.ballSize) && //player-ball distance
-            distance(mouX, mouY, ball.x, ball.y) <= ball.ballSize                                   //klick on ball
-            && ball.isOnGround && !m1.hasSnapped && m1.isActivating && !m1.isKnockedDown) {
-            m1.moveAura = false;
-            ball.isOnGround = false;
-            m1.hasBall = true;
-            movementHistory = [];
-            $('body').find('.snapBallButton').remove();
-            $('#actionButtons').empty().append(actionButtons(teaMate, Gamer));
-            //<<------------------==    can't pick up dropped ball
-        } else if (distance(m1.posX, m1.posY, ball.x, ball.y) <= (m1.baseRadius + inch + ball.ballSize) && distance(mouX, mouY, ball.x, ball.y) <= ball.ballSize && ball.isOnGround && m1.hasSnapped) {
-            sendMessage(`${m1.nameDisplayed} has dropped the ball, so it can't be picked this activation.`);
-        }
-
+        __snapBallClickOnPitch(m1);
         //<<-----------------== kicking the ball activated
         if (m1.isKicking && ball.beingKicked) {
-            //--kick--happening--against--goalpost------------------------
-            if (distance(m1.posX, m1.posY, otherGamer.gp.x, otherGamer.gp.y) < (m1.kickDist * inch + m1.baseRadius + 2.5 * cm) &&//kickin distance to goal post
-                distance(mouX, mouY, otherGamer.gp.x, otherGamer.gp.y) < (2.5 * cm) && //detect if mouse is over goal post
-                m1.infMin > 0 && Gamer.momentum > 0)
-            ////////////////////////////////////////////////////////////////////////////////////////////////////// 
-            {    //--kick--happening--against--goalpost------------------------
-                if (m1.isMoving) {
-                    unpredictableMovement(m1);
-                    m1.isMoving = false;
-                    m1.hasMoved = true;
-                }
-                teaMate.hasKicked = true;
-                let minRollToPass = distance(m1.posX, m1.posY, otherGamer.gp.x, otherGamer.gp.y) <= (m1.kickDist * inch / 2 + 2.5 * cm + m1.baseRadius) ? 3 : 4;
-                let kickRoll = diceRoller(Gamer, otherGamer, m1, m1, 'kick');//rool dies
-                let succesfulKickDice = kickRoll.filter(el => el >= minRollToPass).length;//check for succesful roll
-                diceRolledForDisplay = [];
-                diceRolled(kickRoll, minRollToPass, Gamer.guild.color);//display dies
-                if (succesfulKickDice > 0) {
-                    teaMate.hasKicked = true;
-                    teaMate.isKicking = false;
-                    teaMate.hasBall = false;
-                    ball.beingKicked = false;
-                    teaMate.infMin -= 1;
-                    Gamer.momentum -= 1;
-                    Gamer.goals += 1;
-                    Gamer.score += 4;
-                    ball.x = otherGamer.gp.x;
-                    ball.y = otherGamer.gp.y;
-                    otherGamer.gp.hasBall = true;
-                    //not yet: diceRolledForDisplay = [];
-                    sendMessage(`${m1.nameDisplayed} succesfully scored goal, so either dodge or bank a momentum.`);
-                    //<<--------=====       stitching team plays buttons
-                    $teamplays = [];
-                    $teamplays.push(
-                        `<li class='teamPlays plajBookCell' id='scoreddodge${m1.name}'>dodge</li>
-                     <li class='teamPlays plajBookCell' id='scorebankmomentum${m1.name}'>bank momentum</li>`
-                    );
-                    $('#app').on('click', `#scorebankmomentum${m1.name}`, () => {
-                        Gamer.momentum += kickRoll.filter(el => el > 5).length > 1 ? 2 : 1;
-                        $teamplays = [];
-                        $('.playbookNodes').empty();
-                        $(".infoAbilBox").remove();
-                        endSquaddieActivation(m1, Gamer1, Gamer2, Gamer, switcher, teamz, turnTransition);
-                    });
-                    $('#app').empty();
-                    $('#app').append(appMaker(m1, Gamer));
-                    $('#app').on('click', `#scoreddodge${m1.name}`, () => {
-                        sendMessage(`${m1.nameDisplayed} can now do his dodges, when ready, end the activation.`)
-                        m1.isDodging = true;
-                        $('#app').off();
-                        $('#players').off();
-                        sendMessage(`now you can only dodge with ${m1.nameDisplayed} and/or end this activation.`)
-                        $('#app').on('click', `#passActivation` + teaMate.name, () => { //end activation
-                            if (Gamer.active && teaMate.isActivating) {
-                                saveGameState();
-                                endSquaddieActivation(teaMate, Gamer1, Gamer2, Gamer, switcher, teamz, turnTransition);
-                            } else if (otherGamer.gp.hasBall) { sendMessage(`click on ${otherGamer.guild.name} goal post.`) }
-                        })
-                        m1.dodgeSquaddie(4);
-                        otherGamer.gp.hasBall = true;
-                        $teamplays = [];
-                        $('.playbookNodes').empty();
-                        $(".infoAbilBox").remove();
-                    });
-                    $("#app").on('mouseenter', `#scorebankmomentum` + m1.name, function () {
-                        $(".infoAbilBox").remove();
-                        const that = { name: "Bank Momentum", type: "utility", desc: `Goal kick was succesful! Save just earned momentum and end ${m1.nameDisplayed} activation.` };
-                        $("#gameScreen").append(infoAbilBox(that));
-                    });
-                    $("#app").on('mouseleave', `#scorebankmomentum` + m1.name, function () {
-                        m1.hoverButtonAura = 0;
-                        $(".infoAbilBox").remove();
-                    });
-                    $("#app").on('mouseenter', `#scoreddodge` + teaMate.name, function () {
-                        teaMate.hoverButtonAura = teaMate.baseRadius + 4 * inch;
-                        $(".infoAbilBox").remove();
-                        const that = { name: "Run the Length", type: "utility", desc: `Goal kick was succesful! Now for the price of just earned one momentum ${teaMate.nameDisplayed} can dodge 4 inches and end activation.` };
-                        $("#gameScreen").append(infoAbilBox(that));
-                    });
-                    $("#app").on('mouseleave', `#scoreddodge` + teaMate.name, function () {
-                        teaMate.hoverButtonAura = 0;
-                        $(".infoAbilBox").remove();
-                    });
-                    //--resolve--goal--kick------------------------------------------
-                    /*failed goal kick*/
-                } else {//<<-------------===    failed goal kick
-                    diceRolled(kickRoll, minRollToPass, Gamer1.guild.color);
-                    diceRolledForDisplay = [];
-                    $('#app').empty();
-                    $('#app').append(appMaker(m1, Gamer));
-                    teaMate.hasKicked = true;
-                    teaMate.isKicking = false;
-                    teaMate.hasBall = false;
-                    ball.beingKicked = false;
-                    teaMate.infMin -= 1;
-                    Gamer.momentum -= 1;
-                    m1.hasDropped = true;
-                    scatterRandomiser(mouX, mouY, true, m1);console.log('11-218') //m1.hasDropped = false;
-                    endSquaddieActivation(m1, Gamer1, Gamer2, Gamer, switcher, teamz, turnTransition);
-                    /*failed goal kick*/
-                }
-            }//--end of kick against goal post
+            __goalKick(m1,teaMate);
             //////////////////////////////////////////////////////////////////////////////////////////////////////
             Gamer.squaddies.forEach(m2 => {
                 //--player is attempting to pass the ball--------------------------------------------------------
@@ -462,7 +466,7 @@ function theBallsGame(m1, teaMate) {
                     ball.beingKicked = false;
                     m1.hasDropped = true;
                     diceRolledForDisplay = [];
-                    scatterRandomiser(mouX, mouY, true, m1); console.log('11-465')//m1.hasDropped = false;
+                    scatterRandomiser(mouX, mouY, true, m1);
                     diceRolled(kickRoll, 4, Gamer1.guild.color);
                     movementHistory = [];
                     if (kickRoll.filter(el => el >= 4).length > 0 && m1.kickReRoll < 1) {

@@ -41,7 +41,8 @@ function makePassiveButton(id,text,picLink){
                 data-range="${picLink.rng?picLink.rng:-2}" 
                 data-sus="${picLink.sus?picLink.sus:-2}" 
                 data-opt="${picLink.opt?picLink.opt:-2}" 
-                data-aura="${picLink.aura?picLink.aura:-2}"
+                data-aura="${picLink.aura?picLink.aura:-2}" 
+                data-id="${id}"
             >
             <p class="o2"></p>
             ${text}

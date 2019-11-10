@@ -725,8 +725,8 @@ td{
 .teamPlays{
     margin-top: -.66vw;
     margin-bottom:2vw;
-    width:6vw;
-    height: 2.3vw;
+    width:4vw;
+    height: 4vw;
     color:rgba(255, 244, 232, 0);
     //@include bajckground(247deg,223deg,22deg,rgba(0, 0, 0, 0.932),100s);
 }
@@ -736,7 +736,6 @@ td{
     display: flex;
     justify-content: space-evenly;
 }
-
 #momentumHeader {
     display: flex;
     justify-content: space-between;
@@ -1797,6 +1796,10 @@ $o2offset : -50%;
         animation: 4s UcircleGlow infinite reverse;
         border-radius:50%;
     }
+}
+
+.unpredictableMovement{
+    font-size:.88vw!important;
 }
 
 

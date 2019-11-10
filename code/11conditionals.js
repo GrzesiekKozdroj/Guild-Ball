@@ -6,15 +6,19 @@ function __canMove(teaMate, { options } = false) {
 }
 
 function __validMoveDeclaration(teaMate) {
-    return Boolean(teaMate.moveAura && distance(mouX, mouY, teaMate.posX, teaMate.posY) > teaMate.baseRadius * .42 /* &&
-    distance(teaMate.posX, teaMate.posY, mouX, mouY) <= ((teaMate.infMin > 0 ? teaMate.remainingRun : teaMate.remainingSprint) - teaMate.baseRadius
-    )*/)
+    return Boolean(!animationPlayingDoubleClickPreventer &&
+        teaMate.moveAura && distance(mouX, mouY, teaMate.posX, teaMate.posY) > teaMate.baseRadius * .42 
+        /* &&
+            distance(teaMate.posX, teaMate.posY, mouX, mouY) <= 
+                ((teaMate.infMin > 0 ? teaMate.remainingRun : teaMate.remainingSprint) - teaMate.baseRadius
+        )*/
+    )
 }
 
 function __chooseModelToActivate(teaMate) {
     return Boolean(!Gamer.gp.hasBall && !teaMate.hasActivated && Gamer.squaddies.filter(el => el.isActivating).filter(el => el.name !== teaMate.name)
         .filter(el => el.hasMoved || el.hasAttacked || el.hasDropped || el.isKicking || el.hasKicked || el.isMoving || el.pressedAbutton || el.hasSnapped).length < 1 &&
-        Gamer.active && distance(teaMate.posX, teaMate.posY, mouX, mouY) < (teaMate.baseRadius) && $('#app').find('.plajBookCell').length < 1)
+        Gamer.active && distance(teaMate.posX, teaMate.posY, mouX, mouY) < (teaMate.baseRadius) && $('#app').find('.plajBookCell').length < 1 && !idear != 0)
 }
 
 function __hasLareadyActivated(teaMate) {

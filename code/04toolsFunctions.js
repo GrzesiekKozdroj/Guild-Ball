@@ -480,7 +480,6 @@ function drawSword() {
 
 
 function legalPlacementDetector(m1) {
-
     //color needs to be an array of these parameters and if any has a property, i means it is actvating duye to terrains:
     let x = mouX; let y = mouY;
     const shortDist = 0.73;
@@ -518,7 +517,7 @@ function legalPlacementDetector(m1) {
     if (
         (!colorClose.includes(255) || 
             (
-                colorClose.includes(255) && !typesofTerrain.includes("wall") && !typesofTerrain.includes("obstacle")
+                colorClose.includes(255) && typesofTerrain.includes("forest") && typesofTerrain.includes("roughGround")
             )
         ) 
         && 
@@ -947,7 +946,7 @@ function escapist(m1, otherGamer, m2 = m1) {
                 el.isPushed = false;
                 el.drawAbilityAura=0;
                 el.pressedAbutton = idear==="powerOfVooDoo" ? false : el.pressedAbutton;
-                if(hasActiveGiven(el,"The Power of Voodoo")){console.log("bob")
+                if(hasActiveGiven(el,"The Power of Voodoo")){
                     el.isMoving = false;
                     el.hasMoved = savedBeforVoodoo[0];
                     el.moveAura = false;

@@ -219,6 +219,7 @@ checkBuildAndAllowMovement(teaMate);
                 }
                 teaMate.isActivating = true;
                 atTheStartOfActivation(teaMate);
+                movementHindrances(m1);
                 terrainsDetector(m1);
                 let otherSquaddie = Gamer.squaddies.filter(el => el.isActivating === true).filter(el => el.name !== teaMate.name);
                 otherSquaddie.forEach(el => {el.isActivating = false;el.moveAura = false;});

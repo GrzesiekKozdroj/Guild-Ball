@@ -2972,8 +2972,8 @@ td {
 .teamPlays {
   margin-top: -.66vw;
   margin-bottom: 2vw;
-  width: 6vw;
-  height: 2.3vw;
+  width: 4vw;
+  height: 4vw;
   color: rgba(255, 244, 232, 0);
 }
 
@@ -4123,6 +4123,10 @@ footer {
   display: inline-block;
   animation: 4s UcircleGlow infinite reverse;
   border-radius: 50%;
+}
+
+.unpredictableMovement {
+  font-size: 0.88vw !important;
 }
 
 #gameTypeForm {
