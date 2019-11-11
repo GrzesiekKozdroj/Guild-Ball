@@ -150,14 +150,17 @@ function abilitiesEvents(m1, Gamer, otherGamer) {
     $('#app').on("click","#nimble"+m1.name,()=>{
         commonPreInstruction({ m1: m1 });
         m1.drawAbilityAura = 1;
-        if(hasActiveUnused(m1,"Nimble") && payPrice(1,m1)){
+        if(hasActiveUnused(m1,"Nimble") && 
+            !m1.isKnockedDown && 
+            payPrice(1,m1)){
         makeActiveOpt(m1,"Nimble");
         m1.abilities.passiveGiven.push(["Nimble",0]);
         commonAfterInstruction({ m1: m1 });
-    }else{
+    } else if(m1.isKnockedDown){sendMessage(`${m1.nameDisplayed} needs to stand up first.`)}else{
         sendMessage(`${m1.nameDisplayed} can't use this ability now.`)
         commonAfterInstruction({ m1: m1 });
-    }})
+    }}
+    )
 ///////////////////////////______________M2_______________________//////////////////////////////////
     for (let hy = 0; hy < otherGamer.squaddies.length; hy++) {
         let m2 = otherGamer.squaddies[hy];
@@ -167,7 +170,10 @@ function abilitiesEvents(m1, Gamer, otherGamer) {
         commonPreInstruction({ m1: m1 });
         m1.drawAbilityAura = m1.baseRadius+8*inch;
         $("#players").on("click.usingAbility",()=>{
-            if(idear==="chainBolas" && hasActiveUnused(m1,"Chain Bolas") && distance(m1.posX,m1.posY,m2.posX,m2.posY)<=m1.baseRadius+m2.baseRadius+8*inch &&
+            if(idear==="chainBolas" && 
+                !m1.isKnockedDown && 
+                hasActiveUnused(m1,"Chain Bolas") && 
+                distance(m1.posX,m1.posY,m2.posX,m2.posY)<=m1.baseRadius+m2.baseRadius+8*inch &&
                 distance(mouX,mouY,m2.posX,m2.posY)<=m2.baseRadius && payPrice(2,m1) ){
                     if(abilitiesRoll(m1,m2,2)>0)
                     {
@@ -179,7 +185,7 @@ function abilitiesEvents(m1, Gamer, otherGamer) {
                         makeActiveOpt(m1,"Chain Bolas");
                         commonAfterInstruction({ m1: m1 });
                     };
-            }
+            } else if(m1.isKnockedDown){sendMessage(`${m1.nameDisplayed} needs to stand up first.`)}
         })
     })
     $("#app").on("click","#coldSnap"+m1.name,()=>{
@@ -188,7 +194,9 @@ function abilitiesEvents(m1, Gamer, otherGamer) {
         m1.drawAbilityAura = m1.baseRadius + 9 * inch;
         mouseDrawTemplate = true;
         $("#players").on("click.usingAbility",()=>{
-            if(idear==="coldSnap" && hasActiveUnused(m1,"Cold Snap") && distance(m1.posX,m1.posY,mouX,mouY)<=m1.baseRadius+7.5*inch &&
+            if(idear==="coldSnap" && 
+                !m1.isKnockedDown && 
+                hasActiveUnused(m1,"Cold Snap") && distance(m1.posX,m1.posY,mouX,mouY)<=m1.baseRadius+7.5*inch &&
             payPrice(2,m1) ){
                 teamz.forEach(el=>{
                     if(distance(mouX,mouY,el.posX,el.posY)<=1.5*inch+el.baseRadius){
@@ -201,13 +209,13 @@ function abilitiesEvents(m1, Gamer, otherGamer) {
                 makeActiveOpt(m1,"Cold Snap");
                 commonAfterInstruction({ m1: m1 });
                 mouseDrawTemplate = false;
-            }
+            } else if(m1.isKnockedDown){sendMessage(`${m1.nameDisplayed} needs to stand up first.`)}
         })
     })
         $("#app").on('click', '#flurry' + m1.name, () => {
                 commonPreInstruction({ m1: m1 });
                 idear = 1;
-            if (m1.abilities.activeOwned.some(el => el.includes("Flurry") && el[1] < 1)) {
+            if (!m1.isKnockedDown && m1.abilities.activeOwned.some(el => el.includes("Flurry") && el[1] < 1)) {
                 m1.drawAbilityAura = m1.baseRadius + 8 * inch;
                 m1.drawAbilityTargetAura = 2;
 
@@ -237,14 +245,14 @@ function abilitiesEvents(m1, Gamer, otherGamer) {
                         }
                         //$("#players").off('click.flurry');
                 })//click.flurry
-            }//if has flurry
+            } else if(m1.isKnockedDown){sendMessage(`${m1.nameDisplayed} needs to stand up first.`)}//if has flurry
         })//flury
         $("#app").on("click","#skewered"+m1.name,()=>{
             idear="Skewered";
             commonPreInstruction({ m1: m1 });
             m1.drawAbilityAura = m1.baseRadius+6*inch;
             $("#players").on("click.usingAbility",()=>{
-                if(idear==="Skewered" && hasActiveUnused(m1,"Skewered") && distance(m1.posX,m1.posY,m2.posX,m2.posY)<=m1.baseRadius+m2.baseRadius+6*inch &&
+                if(!m1.isKnockedDown && idear==="Skewered" && hasActiveUnused(m1,"Skewered") && distance(m1.posX,m1.posY,m2.posX,m2.posY)<=m1.baseRadius+m2.baseRadius+6*inch &&
                     distance(mouX,mouY,m2.posX,m2.posY)<=m2.baseRadius && payPrice(2,m1) ){
                         if(abilitiesRoll(m1,m2,2)>0)
                         {
@@ -255,7 +263,7 @@ function abilitiesEvents(m1, Gamer, otherGamer) {
                             makeActiveOpt(m1,"Skewered");
                             commonAfterInstruction({ m1: m1 });
                         };
-                }
+                } else if(m1.isKnockedDown){sendMessage(`${m1.nameDisplayed} needs to stand up first.`)}
             })
         })
         $("#app").on("click", "#snapFire" + m1.name, () => {
@@ -263,7 +271,7 @@ function abilitiesEvents(m1, Gamer, otherGamer) {
             commonPreInstruction({ m1: m1 });
             m1.drawAbilityAura = m1.baseRadius + 6 * inch;
             $("#players").on("click.usingAbility", () => {
-                if (idear===2 && distance(m1.posX, m1.posY, m2.posX, m2.posY) <= m1.baseRadius + m2.baseRadius + 6 * inch &&
+                if (!m1.isKnockedDown && idear===2 && distance(m1.posX, m1.posY, m2.posX, m2.posY) <= m1.baseRadius + m2.baseRadius + 6 * inch &&
                     distance(mouX, mouY, m2.posX, m2.posY) <= m2.baseRadius && payPrice(1,m1)) {
                     if (abilitiesRoll(m1, m2, 1) > 0) {
                         trigerOnDamageEffects(m1,m2);
@@ -271,7 +279,7 @@ function abilitiesEvents(m1, Gamer, otherGamer) {
                     }
                     commonAfterInstruction({ m1: m1 });
                     //$("#players").off("click.snapFire");
-                }
+                } else if(m1.isKnockedDown){sendMessage(`${m1.nameDisplayed} needs to stand up first.`)}
             })
         })//snap fire
 
@@ -288,12 +296,14 @@ function abilitiesEvents(m1, Gamer, otherGamer) {
         m1.pressedAbutton = true;
         $("#players").on("click.usingAbility",()=>{
             if(idear==="blessingOfTheMoonGoddess" && 
+                !m1.isKnockedDown && 
                 distance(mouX, mouY, m3.posX, m3.posY) <=m3.baseRadius &&
                 distance(m1.posX, m1.posY, m3.posX, m3.posY) <= 4 * inch + m1.baseRadius + m3.baseRadius &&
                 !hasPassiveGiven(m3,"Blessing of the Moon Goddess") && payPrice(1,m1)  ){
                     m3.abilities.passiveGiven.push("Blessing of the Moon Goddess");console.log(!hasPassiveGiven(m3,"Blessing of the Moon Goddess"))
                     commonAfterInstruction({ m1: m1 });
-                }else if(hasPassiveGiven(m3,"Blessing of the Moon Goddess")&& 
+                } else if(m1.isKnockedDown){sendMessage(`${m1.nameDisplayed} needs to stand up first.`)}
+                else if(hasPassiveGiven(m3,"Blessing of the Moon Goddess")&& 
                 distance(mouX, mouY, m3.posX, m3.posY) <=m3.baseRadius &&
                 distance(m1.posX, m1.posY, m3.posX, m3.posY) <= 4 * inch + m1.baseRadius + m3.baseRadius){
                     commonAfterInstruction({ m1: m1 });
@@ -384,11 +394,11 @@ function abilitiesEvents(m1, Gamer, otherGamer) {
             })
         });
         $("#app").on("click","#snowBall"+m1.name,()=>{console.log(hasActiveUnused(m1,"Snowball") , payPrice(1,m1))
-            if(hasActiveUnused(m1,"Snowball") && (m1.drawAbilityAura = 1) && payPrice(1,m1)){
+            if(!m1.isKnockedDown && hasActiveUnused(m1,"Snowball") && (m1.drawAbilityAura = 1) && payPrice(1,m1)){
                 m1.hasSnowBall = true;
                 makeActiveOpt(m1,"Snowball");
                 commonAfterInstruction({ m1: m1 });
-            }
+            } else if(m1.isKnockedDown){sendMessage(`${m1.nameDisplayed} needs to stand up first.`)}
         })
     }
 }

@@ -43,8 +43,8 @@ function anime(m1, teams, otherGamer, options) {
             startTime = time;
         }
         let deltaTime = (time - startTime) / duration;
-        Gamer.interaction(m1);
-        otherGamer.interaction(m1);
+        Gamer.interaction(m1,{isMovingNow:true});
+        otherGamer.interaction(m1,{isMovingNow:true});
         let checkgoalcollision = distance(m1.posX, m1.posY, 18 * inch, 6 * inch - 2.5 * cm) < 2.5 * cm ||
             distance(m1.posX, m1.posY, 18 * inch, 30 * inch + 2.5 * cm) < 2.5 * cm ? true : false;
         let checkCollision = teams
@@ -55,8 +55,14 @@ function anime(m1, teams, otherGamer, options) {
             m1.infMin -= 1; //if model runed, looses one influence
             m1.runPaid = true;
         }
-        if (deltaTime >= 1 || checkCollision || checkgoalcollision || m1.shouldntBeHere > 1 || (!m1.isPushed && !m1.isDodging && (distance(m1.posX,
-            m1.posY, endX, endY) >= m1.remainingRun) && m1.shouldntBeHere === 1) || m1.remainingRun < 5 || (m1.isCharging && m1.shouldntBeHere === 1)) {
+        if (deltaTime >= 1 || checkCollision || checkgoalcollision || m1.shouldntBeHere > 1 || 
+                (!m1.isPushed && !m1.isDodging && 
+                        (distance(m1.posX, m1.posY, endX, endY) >= m1.remainingRun) && m1.shouldntBeHere === 1) || 
+                        m1.remainingRun < 5 || (m1.isCharging && m1.shouldntBeHere === 1
+                ) ||
+                m1.isPushed && m1.remainingPush < m1.baseRadius/2.2 ||
+                m1.isDodging && m1.remainingDodge < m1.baseRadius/2.2
+            ) {
 
                 animationPlayingDoubleClickPreventer = false;
             if (!checkCollision && !checkgoalcollision && deltaTime <= 1) {
@@ -74,7 +80,7 @@ function anime(m1, teams, otherGamer, options) {
                     //if(m1.runPaid && teaMate.remainingRun === teaMate.remainingSprint)m1.infMin++
                 }
             } else if (m1.isPushed) {
-                if (m1.remainingPush < 0.12 * inch) {
+                if (m1.remainingPush < m1.baseRadius/2.2) {
                     m1.isPushed = false;
                     if ($('#app').find('.activeOptions').length < 1 && wrath.willCounter && !teamz.some(el => el.isDodging)) {
                         distance(m1.posX, m1.posY, receiver.posX, receiver.posY) <= (wrath.meleeRadius + receiver.baseRadius) ?
@@ -85,7 +91,7 @@ function anime(m1, teams, otherGamer, options) {
                 }
                 !m1.isActivating ? snapBallButtonCreator('end') : console.log(m1.posX, m1.posY);
             } else if (m1.isDodging) {
-                if (m1.remainingDodge < 0.12 * inch) {
+                if (m1.remainingDodge < m1.baseRadius/2.2) {
                     m1.isDodging = false;
                     if (options.mode === "Back to the Shadows") { endSquaddieActivation(m1, Gamer1, Gamer2, Gamer, switcher, teamz, turnTransition) };
                     if ($('#app').find('.activeOptions').length < 1 && wrath && wrath.willCounter && !teamz.some(el => el.isPushed)) {
@@ -145,8 +151,8 @@ function anime(m1, teams, otherGamer, options) {
                 };
             };
             if (
-                    (m1.isDodging && m1.remainingDodge  > 2/m1.baseRadius) || 
-                    (m1.isPushed  && m1.remainingPush   > 2/m1.baseRadius) || 
+                    (m1.isDodging && m1.remainingDodge  > m1.baseRadius/2.3) || 
+                    (m1.isPushed  && m1.remainingPush   > m1.baseRadius/2.3) || 
                     (
                     m1.isMoving  && 
                         (m1.remainingRun    > m1.baseRadius && m1.runPaid) ||

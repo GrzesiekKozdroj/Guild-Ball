@@ -111,7 +111,7 @@ function playbookStitcher(m1,m2, i, wrap, mode) {
         // }//sitching plajbook FOR
     }
     //--------bottom--of--playbook-------------------------------------
-    let dmg = m1.playBook[i][1][0]===0?0: m1.playBook[i][1][0] + (m2.isSnared && hasPassive(m1,"Isolated Target") ? 1 : 0);
+    let dmg = m1.playBook[i][1][0] === 0 ? 0: m1.playBook[i][1][0] + (m2.isSnared && hasPassive(m1,"Isolated Target") ? 1 : 0);
     let mom = mode === 'attack' ? m1.playBook[i][1][1] : 0;
     let ddge = mode !== 'parting blow' ? m1.playBook[i][1][2] : 0;
     let psh = mode !== 'parting blow' ? m1.playBook[i][1][3] : 0;

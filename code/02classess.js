@@ -509,10 +509,10 @@ class Gajmer {
         this.tokens = [];
         this.oponent;
     }
-    interaction(teaMate){
+    interaction(teaMate, options = {}){
         if(this.tokens)
             this.tokens.forEach( (el,i)=>{
-                if(!el.isInHand && el.type ==="trap" &&
+                if(!el.isInHand && el.type ==="trap" && options.isMovingNow &&
                     distance(teaMate.posX,teaMate.posY,el.posX,el.posY)<=el.baseRadius+teaMate.baseRadius+1*inch && 
                     this.oponent.squaddies && this.oponent.squaddies.some(el=>el.name===teaMate.name) )
                         {
