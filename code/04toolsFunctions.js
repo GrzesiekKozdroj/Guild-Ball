@@ -1034,7 +1034,7 @@ function sendMessage(txt) {
 }
 
 const snapBallButtonCreator = (mode, name) =>
-    ball.isOnGround ?
+    ball.isOnGround && counter> 3 ?
         teamz.filter(el => distance(el.posX, el.posY, ball.x, ball.y) <= (el.baseRadius + ball.ballSize + (mode === 'end' ? inch : 0))).filter(el => el.name !== name).filter(el => !el.canSnap).filter(el => !el.isKnockedDown).forEach((el, i) => {
             el.canSnap = true;
             $('body').append(`
