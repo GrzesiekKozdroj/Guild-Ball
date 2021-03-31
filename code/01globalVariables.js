@@ -80,7 +80,7 @@ let neSpotx, neSpoty;
 let ruler = false;//used to draw multiple doppplers
 let rulerDopplers = [];
 let rdLength = 0;
-let cheetos = false;
+let cheetos = true;
 let online = false;
 socket.on('online',()=>{
     online = true;
