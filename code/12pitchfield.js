@@ -458,4 +458,4 @@ const cheetah = (n) => {
     socket.emit('gameOn');
 }
 cheetah(cheetos);
-alfa();
+//alfa();
