@@ -22,14 +22,14 @@ $((e) => {
     $("#beginGameButton").on('click', (e) => {
         e.preventDefault();
         if( /^[0-9A-Za-z]+$/.test($("#gamePlayerName").val()) && /^[0-9A-Za-z]+$/.test($("#gamePlaceName").val())   ){
-            socket.emit('namePlace',{nickName:$("#gamePlayerName").val(), place:$("#gamePlaceName").val() }  );
+            //socket.emit('namePlace',{nickName:$("#gamePlayerName").val(), place:$("#gamePlaceName").val() }  );
             if(online === false) alfa();//starts everythhing if offline....
         } else{
             $("#wronCharWarning").text("Your name and game name can't contain special characters and spaces.");
         }
     });
 
-socket.on('alfaTime',alfa);//begins everything if online
+//socket.on('alfaTime',alfa);//begins everything if online
 
 
 

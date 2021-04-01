@@ -455,7 +455,7 @@ const cheetah = (n) => {
         bigBang();
         switcher();
     }
-    socket.emit('gameOn');
+    //socket.emit('gameOn');
 }
 cheetah(cheetos);
-//alfa();
+alfa();
