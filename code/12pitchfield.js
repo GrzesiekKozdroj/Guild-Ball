@@ -439,7 +439,6 @@ const cheetah = (n) => {
             rndDeploy > 0.5 ? 'bottom'  : 'top'
         );
 
-        $("#teaMenuScreen").remove();
         teamz = [...Gamer1.squaddies, ...Gamer2.squaddies];
         Gamer = rnd > 0.5 ? Gamer1 : Gamer2;
         otherGamer = rnd > 0.5 ? Gamer2 : Gamer1;
@@ -454,6 +453,7 @@ const cheetah = (n) => {
         Gamer2.oponent = Gamer1;
         bigBang();
         switcher();
+        $("#teaMenuScreen").remove();
     }
     //socket.emit('gameOn');
 }
